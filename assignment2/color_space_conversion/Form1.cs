@@ -45,33 +45,67 @@ namespace color_space_conversion
                         btnMoveLeft.Enabled = true;
                         g2 = Graphics.FromImage(pictureBox2.Image);
                     }
-                    EnableControls();
                 }
-                EnableControls();
             }
             catch (Exception)
             {
                 throw new ApplicationException("Failed loading image");
             }
+            EnableControls();
+            refreshHistogramRGB();
         }
 
-        private void moveRight()
+        private void refreshHistogramRGB()
         {
- 
-            pictureBox2.Image = (Image)pictureBox1.Image.Clone();
-            g2 = Graphics.FromImage(pictureBox2.Image);
-            pictureBox2.Refresh();
-            btnMoveLeft.Enabled = true;
-            radioButton2.Enabled = true;
-        }
+            chartRGB.Series[0].Points.Clear();
+            chartRGB.Series[1].Points.Clear();
+            chartRGB.Series[2].Points.Clear();
+            if (pictureBoxCurrent.Image != null)
+            {
+                for (int i = 0; i < 256; i++)
+                {
+                    chartRGB.Series[0].Points.Add(0);
+                    chartRGB.Series[1].Points.Add(0);
+                    chartRGB.Series[2].Points.Add(0);
+                }
+            
+                Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
-        private void moveLeft()
-        {
-            pictureBox1.Image = (Image)pictureBox2.Image.Clone();
-            g1 = Graphics.FromImage(pictureBox1.Image);
-            pictureBox1.Refresh();
-            btnMoveRight.Enabled = true;
-            radioButton1.Enabled = true;
+                // Lock the bitmap's bits. 
+                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                System.Drawing.Imaging.BitmapData bmpData =
+                    bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                    bmp.PixelFormat);
+
+                // Get the address of the first line.
+                IntPtr ptr = bmpData.Scan0;
+
+                // Declare an array to hold the bytes of the bitmap.
+                int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
+                byte[] rgbValues = new byte[bytes];
+
+                // Copy the RGB values into the array.
+                System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+
+                // Set every third value to 255. A 24bpp bitmap will look red.  
+                for (int i = 0; i < rgbValues.Length; i += 3)
+                {
+                    chartRGB.Series[0].Points[rgbValues[i + 2]].YValues[0] += 1;
+                    chartRGB.Series[1].Points[rgbValues[i + 1]].YValues[0] += 1;
+                    chartRGB.Series[2].Points[rgbValues[i + 0]].YValues[0] += 1;
+                }
+                chartRGB.Series[0].Points[0].YValues[0] = 0;
+                chartRGB.Series[1].Points[0].YValues[0] = 0;
+                chartRGB.Series[2].Points[0].YValues[0] = 0;
+
+                // Copy the RGB values back to the bitmap
+                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+
+                // Unlock the bits.
+                bmp.UnlockBits(bmpData);
+
+                pictureBoxCurrent.Refresh();
+            }
         }
 
         private void EnableControls()
@@ -92,118 +126,145 @@ namespace color_space_conversion
 
         private void btnRed_Click(object sender, EventArgs e)
         {
-            Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
-
-            // Lock the bitmap's bits. 
-            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-            System.Drawing.Imaging.BitmapData bmpData =
-                bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                bmp.PixelFormat);
-
-            // Get the address of the first line.
-            IntPtr ptr = bmpData.Scan0;
-
-            // Declare an array to hold the bytes of the bitmap.
-            int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
-            byte[] rgbValues = new byte[bytes];
-
-            // Copy the RGB values into the array.
-            System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
-
-            // Set every third value to 255. A 24bpp bitmap will look red.  
-            for (int i = 0; i < rgbValues.Length; i += 3)
+            if (pictureBoxCurrent.Image != null)
             {
-                rgbValues[i + 0] = 0;
-                rgbValues[i + 1] = 0;
+                Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
+
+                // Lock the bitmap's bits. 
+                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                System.Drawing.Imaging.BitmapData bmpData =
+                    bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                    bmp.PixelFormat);
+
+                // Get the address of the first line.
+                IntPtr ptr = bmpData.Scan0;
+
+                // Declare an array to hold the bytes of the bitmap.
+                int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
+                byte[] rgbValues = new byte[bytes];
+
+                // Copy the RGB values into the array.
+                System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+
+                // Set every third value to 255. A 24bpp bitmap will look red.  
+                for (int i = 0; i < rgbValues.Length; i += 3)
+                {
+                    rgbValues[i + 0] = 0;
+                    rgbValues[i + 1] = 0;
+                }
+                // Copy the RGB values back to the bitmap
+                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+
+                // Unlock the bits.
+                bmp.UnlockBits(bmpData);
+
+                pictureBoxCurrent.Refresh();
+                refreshHistogramRGB();
             }
-            // Copy the RGB values back to the bitmap
-            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
-
-            // Unlock the bits.
-            bmp.UnlockBits(bmpData);
-
-            pictureBoxCurrent.Refresh();
-            //pictureBox2.Refresh();
         }
 
         private void btnGreen_Click(object sender, EventArgs e)
         {
-            Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
-
-            // Lock the bitmap's bits. 
-            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-            System.Drawing.Imaging.BitmapData bmpData =
-                bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                bmp.PixelFormat);
-
-            // Get the address of the first line.
-            IntPtr ptr = bmpData.Scan0;
-
-            // Declare an array to hold the bytes of the bitmap.
-            int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
-            byte[] rgbValues = new byte[bytes];
-
-            // Copy the RGB values into the array.
-            System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
-
-            // Set every third value to 255. A 24bpp bitmap will look red.  
-            for (int i = 0; i < rgbValues.Length; i += 3)
+            if (pictureBoxCurrent.Image != null)
             {
-                rgbValues[i + 0] = 0;
-                rgbValues[i + 2] = 0;
+                Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
+
+                // Lock the bitmap's bits. 
+                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                System.Drawing.Imaging.BitmapData bmpData =
+                    bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                    bmp.PixelFormat);
+
+                // Get the address of the first line.
+                IntPtr ptr = bmpData.Scan0;
+
+                // Declare an array to hold the bytes of the bitmap.
+                int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
+                byte[] rgbValues = new byte[bytes];
+
+                // Copy the RGB values into the array.
+                System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+
+                // Set every third value to 255. A 24bpp bitmap will look red.  
+                for (int i = 0; i < rgbValues.Length; i += 3)
+                {
+                    rgbValues[i + 0] = 0;
+                    rgbValues[i + 2] = 0;
+                }
+                // Copy the RGB values back to the bitmap
+                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+
+                // Unlock the bits.
+                bmp.UnlockBits(bmpData);
+
+                pictureBoxCurrent.Refresh();
+                refreshHistogramRGB();
             }
-            // Copy the RGB values back to the bitmap
-            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
-
-            // Unlock the bits.
-            bmp.UnlockBits(bmpData);
-
-            pictureBoxCurrent.Refresh();
         }
 
         private void btnBlue_Click(object sender, EventArgs e)
         {
-            Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
-
-            // Lock the bitmap's bits. 
-            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-            System.Drawing.Imaging.BitmapData bmpData =
-                bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                bmp.PixelFormat);
-
-            // Get the address of the first line.
-            IntPtr ptr = bmpData.Scan0;
-
-            // Declare an array to hold the bytes of the bitmap.
-            int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
-            byte[] rgbValues = new byte[bytes];
-
-            // Copy the RGB values into the array.
-            System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
-
-            // Set every third value to 255. A 24bpp bitmap will look red.  
-            for (int i = 0; i < rgbValues.Length; i += 3)
+            if (pictureBoxCurrent.Image != null)
             {
-                rgbValues[i + 1] = 0;
-                rgbValues[i + 2] = 0;
+                Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
+
+                // Lock the bitmap's bits. 
+                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                System.Drawing.Imaging.BitmapData bmpData =
+                    bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                    bmp.PixelFormat);
+
+                // Get the address of the first line.
+                IntPtr ptr = bmpData.Scan0;
+
+                // Declare an array to hold the bytes of the bitmap.
+                int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
+                byte[] rgbValues = new byte[bytes];
+
+                // Copy the RGB values into the array.
+                System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+
+                // Set every third value to 255. A 24bpp bitmap will look red.  
+                for (int i = 0; i < rgbValues.Length; i += 3)
+                {
+                    rgbValues[i + 1] = 0;
+                    rgbValues[i + 2] = 0;
+                }
+                // Copy the RGB values back to the bitmap
+                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+
+                // Unlock the bits.
+                bmp.UnlockBits(bmpData);
+
+                pictureBoxCurrent.Refresh();
+                refreshHistogramRGB();
             }
-            // Copy the RGB values back to the bitmap
-            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
-
-            // Unlock the bits.
-            bmp.UnlockBits(bmpData);
-
-            pictureBoxCurrent.Refresh();
         }
 
         private void btnMoveRight_Click(object sender, EventArgs e)
         {
-            moveRight();
+            if (pictureBox1.Image != null)
+            {
+                pictureBox2.Image = (Image)pictureBox1.Image.Clone();
+                g2 = Graphics.FromImage(pictureBox2.Image);
+                pictureBox2.Refresh();
+                btnMoveLeft.Enabled = true;
+                radioButton2.Checked = true;
+                refreshHistogramRGB();
+            }
         }
 
         private void btnMoveLeft_Click(object sender, EventArgs e)
         {
-            moveLeft();
+            if (pictureBox2.Image != null)
+            {
+                pictureBox1.Image = (Image)pictureBox2.Image.Clone();
+                g1 = Graphics.FromImage(pictureBox1.Image);
+                pictureBox1.Refresh();
+                btnMoveRight.Enabled = true;
+                radioButton1.Checked = true;
+                refreshHistogramRGB();
+            }
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -212,6 +273,7 @@ namespace color_space_conversion
             {
                 pictureBoxCurrent = pictureBox1;
                 radioButton2.Checked = false;
+                refreshHistogramRGB();
             }
         }
 
@@ -221,6 +283,7 @@ namespace color_space_conversion
             {
                 pictureBoxCurrent = pictureBox2;
                 radioButton1.Checked = false;
+                refreshHistogramRGB();
             }
         }
 
@@ -233,7 +296,7 @@ namespace color_space_conversion
         {
             radioButton2.Checked = true;
         }
-
+        
 
 
 
