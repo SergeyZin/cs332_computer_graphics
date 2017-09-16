@@ -249,8 +249,6 @@ namespace color_space_conversion
                 g2 = Graphics.FromImage(pictureBox2.Image);
                 pictureBox2.Refresh();
                 btnMoveLeft.Enabled = true;
-                radioButton2.Checked = true;
-                refreshHistogramRGB();
             }
         }
 
@@ -262,8 +260,6 @@ namespace color_space_conversion
                 g1 = Graphics.FromImage(pictureBox1.Image);
                 pictureBox1.Refresh();
                 btnMoveRight.Enabled = true;
-                radioButton1.Checked = true;
-                refreshHistogramRGB();
             }
         }
 
