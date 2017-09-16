@@ -13,6 +13,7 @@ namespace color_space_conversion
     public partial class Form1 : Form
     {
         Graphics g1, g2;
+        PictureBox pictureBoxCurrent;
 
         public Form1()
         {
@@ -20,6 +21,8 @@ namespace color_space_conversion
             DisableControls();
             btnMoveLeft.Enabled = false;
             btnMoveRight.Enabled = false;
+            radioButton1.Checked = true;
+            pictureBoxCurrent = pictureBox1;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -31,9 +34,18 @@ namespace color_space_conversion
                 if (open.ShowDialog() == DialogResult.OK)
                 {
                     Bitmap bmp = new Bitmap(open.FileName);
-                    pictureBox1.Image = bmp;
-                    g1 = Graphics.FromImage(pictureBox1.Image);
-                    btnMoveRight.Enabled = true;
+                    pictureBoxCurrent.Image = bmp;
+                    if (radioButton1.Checked)
+                    {
+                        btnMoveRight.Enabled = true;
+                        g1 = Graphics.FromImage(pictureBox1.Image);
+                    }
+                    else
+                    {
+                        btnMoveLeft.Enabled = true;
+                        g2 = Graphics.FromImage(pictureBox2.Image);
+                    }
+                    EnableControls();
                 }
                 EnableControls();
             }
@@ -50,6 +62,7 @@ namespace color_space_conversion
             g2 = Graphics.FromImage(pictureBox2.Image);
             pictureBox2.Refresh();
             btnMoveLeft.Enabled = true;
+            radioButton2.Enabled = true;
         }
 
         private void moveLeft()
@@ -58,6 +71,7 @@ namespace color_space_conversion
             g1 = Graphics.FromImage(pictureBox1.Image);
             pictureBox1.Refresh();
             btnMoveRight.Enabled = true;
+            radioButton1.Enabled = true;
         }
 
         private void EnableControls()
@@ -78,9 +92,7 @@ namespace color_space_conversion
 
         private void btnRed_Click(object sender, EventArgs e)
         {
-            moveRight();
-
-            Bitmap bmp = pictureBox2.Image as Bitmap;
+            Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
             // Lock the bitmap's bits. 
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
@@ -110,15 +122,13 @@ namespace color_space_conversion
             // Unlock the bits.
             bmp.UnlockBits(bmpData);
 
-            pictureBox1.Refresh();
-            pictureBox2.Refresh();
+            pictureBoxCurrent.Refresh();
+            //pictureBox2.Refresh();
         }
 
         private void btnGreen_Click(object sender, EventArgs e)
         {
-            moveRight();
-
-            Bitmap bmp = pictureBox2.Image as Bitmap;
+            Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
             // Lock the bitmap's bits. 
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
@@ -148,14 +158,12 @@ namespace color_space_conversion
             // Unlock the bits.
             bmp.UnlockBits(bmpData);
 
-            pictureBox2.Refresh();
+            pictureBoxCurrent.Refresh();
         }
 
         private void btnBlue_Click(object sender, EventArgs e)
         {
-            moveRight();
-
-            Bitmap bmp = pictureBox2.Image as Bitmap;
+            Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
             // Lock the bitmap's bits. 
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
@@ -185,7 +193,7 @@ namespace color_space_conversion
             // Unlock the bits.
             bmp.UnlockBits(bmpData);
 
-            pictureBox2.Refresh();
+            pictureBoxCurrent.Refresh();
         }
 
         private void btnMoveRight_Click(object sender, EventArgs e)
@@ -197,6 +205,35 @@ namespace color_space_conversion
         {
             moveLeft();
         }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                pictureBoxCurrent = pictureBox1;
+                radioButton2.Checked = false;
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                pictureBoxCurrent = pictureBox2;
+                radioButton1.Checked = false;
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            radioButton1.Checked = true;
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            radioButton2.Checked = true;
+        }
+
 
 
 

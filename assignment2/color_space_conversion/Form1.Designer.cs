@@ -52,6 +52,8 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -111,6 +113,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // pictureBox2
             // 
@@ -118,12 +121,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Location = new System.Drawing.Point(4, 3);
+            this.pictureBox2.Location = new System.Drawing.Point(3, 3);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(407, 407);
+            this.pictureBox2.Size = new System.Drawing.Size(408, 407);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // splitContainer1
             // 
@@ -135,11 +139,13 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.radioButton1);
             this.splitContainer1.Panel1.Controls.Add(this.btnMoveRight);
             this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.radioButton2);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
             this.splitContainer1.Panel2.Controls.Add(this.btnMoveLeft);
             this.splitContainer1.Size = new System.Drawing.Size(847, 442);
@@ -152,7 +158,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMoveRight.Location = new System.Drawing.Point(3, 416);
             this.btnMoveRight.Name = "btnMoveRight";
-            this.btnMoveRight.Size = new System.Drawing.Size(423, 23);
+            this.btnMoveRight.Size = new System.Drawing.Size(403, 23);
             this.btnMoveRight.TabIndex = 1;
             this.btnMoveRight.TabStop = false;
             this.btnMoveRight.Text = ">>";
@@ -163,9 +169,9 @@
             // 
             this.btnMoveLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveLeft.Location = new System.Drawing.Point(3, 416);
+            this.btnMoveLeft.Location = new System.Drawing.Point(23, 416);
             this.btnMoveLeft.Name = "btnMoveLeft";
-            this.btnMoveLeft.Size = new System.Drawing.Size(408, 23);
+            this.btnMoveLeft.Size = new System.Drawing.Size(388, 23);
             this.btnMoveLeft.TabIndex = 0;
             this.btnMoveLeft.TabStop = false;
             this.btnMoveLeft.Text = "<<";
@@ -322,6 +328,31 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Костыль";
             // 
+            // radioButton1
+            // 
+            this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(412, 421);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(14, 13);
+            this.radioButton1.TabIndex = 2;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(3, 421);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(14, 13);
+            this.radioButton2.TabIndex = 3;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -338,7 +369,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -380,6 +413,8 @@
         private System.Windows.Forms.Button btnMoveLeft;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
     }
 }
 
