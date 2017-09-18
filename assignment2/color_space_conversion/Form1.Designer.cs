@@ -57,6 +57,9 @@
             this.btnBW1 = new System.Windows.Forms.Button();
             this.trackBarHue = new System.Windows.Forms.TrackBar();
             this.groupBoxHSV = new System.Windows.Forms.GroupBox();
+            this.ValV = new System.Windows.Forms.Label();
+            this.ValS = new System.Windows.Forms.Label();
+            this.ValH = new System.Windows.Forms.Label();
             this.SetHSV = new System.Windows.Forms.Button();
             this.trackBarVal = new System.Windows.Forms.TrackBar();
             this.trackBarSat = new System.Windows.Forms.TrackBar();
@@ -66,9 +69,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.ValH = new System.Windows.Forms.Label();
-            this.ValS = new System.Windows.Forms.Label();
-            this.ValV = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -329,6 +329,37 @@
             this.groupBoxHSV.Text = "HSV";
             this.groupBoxHSV.Enter += new System.EventHandler(this.groupBoxHSV_Enter);
             // 
+            // ValV
+            // 
+            this.ValV.AutoSize = true;
+            this.ValV.Location = new System.Drawing.Point(10, 135);
+            this.ValV.Name = "ValV";
+            this.ValV.Size = new System.Drawing.Size(13, 13);
+            this.ValV.TabIndex = 14;
+            this.ValV.Text = "0";
+            this.ValV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ValS
+            // 
+            this.ValS.AutoSize = true;
+            this.ValS.Location = new System.Drawing.Point(10, 84);
+            this.ValS.Name = "ValS";
+            this.ValS.Size = new System.Drawing.Size(13, 13);
+            this.ValS.TabIndex = 13;
+            this.ValS.Text = "0";
+            this.ValS.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ValH
+            // 
+            this.ValH.AutoSize = true;
+            this.ValH.Location = new System.Drawing.Point(10, 33);
+            this.ValH.Name = "ValH";
+            this.ValH.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.ValH.Size = new System.Drawing.Size(13, 13);
+            this.ValH.TabIndex = 12;
+            this.ValH.Text = "0";
+            this.ValH.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // SetHSV
             // 
             this.SetHSV.Location = new System.Drawing.Point(151, 170);
@@ -452,36 +483,6 @@
             // 
             this.timer1.Interval = 10000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // ValH
-            // 
-            this.ValH.AutoSize = true;
-            this.ValH.Location = new System.Drawing.Point(24, 33);
-            this.ValH.Name = "ValH";
-            this.ValH.Size = new System.Drawing.Size(13, 13);
-            this.ValH.TabIndex = 12;
-            this.ValH.Text = "0";
-            this.ValH.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // ValS
-            // 
-            this.ValS.AutoSize = true;
-            this.ValS.Location = new System.Drawing.Point(24, 84);
-            this.ValS.Name = "ValS";
-            this.ValS.Size = new System.Drawing.Size(13, 13);
-            this.ValS.TabIndex = 13;
-            this.ValS.Text = "0";
-            this.ValS.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // ValV
-            // 
-            this.ValV.AutoSize = true;
-            this.ValV.Location = new System.Drawing.Point(24, 135);
-            this.ValV.Name = "ValV";
-            this.ValV.Size = new System.Drawing.Size(13, 13);
-            this.ValV.TabIndex = 14;
-            this.ValV.Text = "0";
-            this.ValV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Form1
             // 
