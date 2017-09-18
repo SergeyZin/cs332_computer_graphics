@@ -28,13 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel1 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel2 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel3 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
             System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel4 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,6 +67,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.chartBr = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -76,7 +82,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartRGB)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartBr)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -236,6 +244,7 @@
             this.btnBW2.TabIndex = 6;
             this.btnBW2.Text = "Оттенки серого 2";
             this.btnBW2.UseVisualStyleBackColor = true;
+            this.btnBW2.Click += new System.EventHandler(this.btnBW2_Click);
             // 
             // btnBlue
             // 
@@ -265,6 +274,7 @@
             this.btnSubtract.TabIndex = 7;
             this.btnSubtract.Text = "Разность";
             this.btnSubtract.UseVisualStyleBackColor = true;
+            this.btnSubtract.Click += new System.EventHandler(this.btnSubtract_Click);
             // 
             // btnGreen
             // 
@@ -284,6 +294,7 @@
             this.btnBW1.TabIndex = 5;
             this.btnBW1.Text = "Оттенки серого 1";
             this.btnBW1.UseVisualStyleBackColor = true;
+            this.btnBW1.Click += new System.EventHandler(this.btnBW1_Click);
             // 
             // trackBar1
             // 
@@ -333,40 +344,41 @@
             // 
             // chartRGB
             // 
-            chartArea2.AxisX.CustomLabels.Add(customLabel3);
-            chartArea2.AxisY.CustomLabels.Add(customLabel4);
-            chartArea2.AxisY.Interval = 10D;
-            chartArea2.Name = "ChartArea1";
-            this.chartRGB.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.CustomLabels.Add(customLabel1);
+            chartArea1.AxisY.CustomLabels.Add(customLabel2);
+            chartArea1.AxisY.Interval = 10D;
+            chartArea1.Name = "ChartArea1";
+            this.chartRGB.ChartAreas.Add(chartArea1);
             this.chartRGB.Location = new System.Drawing.Point(6, 19);
             this.chartRGB.Name = "chartRGB";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Color = System.Drawing.Color.Red;
-            series4.LabelFormat = "\"\"";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            series4.Points.Add(dataPoint2);
-            series4.SmartLabelStyle.Enabled = false;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Color = System.Drawing.Color.Lime;
-            series5.Legend = "Legend1";
-            series5.Name = "Series2";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Color = System.Drawing.Color.Blue;
-            series6.Legend = "Legend1";
-            series6.Name = "Series3";
-            this.chartRGB.Series.Add(series4);
-            this.chartRGB.Series.Add(series5);
-            this.chartRGB.Series.Add(series6);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Red;
+            series1.LabelFormat = "\"\"";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series1.Points.Add(dataPoint1);
+            series1.SmartLabelStyle.Enabled = false;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Color = System.Drawing.Color.Lime;
+            series2.Legend = "Legend1";
+            series2.Name = "Series2";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.Blue;
+            series3.Legend = "Legend1";
+            series3.Name = "Series3";
+            this.chartRGB.Series.Add(series1);
+            this.chartRGB.Series.Add(series2);
+            this.chartRGB.Series.Add(series3);
             this.chartRGB.Size = new System.Drawing.Size(230, 125);
             this.chartRGB.TabIndex = 0;
             this.chartRGB.Text = "chart1";
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.chartBr);
             this.groupBox4.Location = new System.Drawing.Point(3, 159);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(242, 150);
@@ -398,6 +410,28 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Костыль";
             // 
+            // chartBr
+            // 
+            chartArea2.AxisX.CustomLabels.Add(customLabel3);
+            chartArea2.AxisY.CustomLabels.Add(customLabel4);
+            chartArea2.AxisY.Interval = 10D;
+            chartArea2.Name = "ChartArea1";
+            this.chartBr.ChartAreas.Add(chartArea2);
+            this.chartBr.Location = new System.Drawing.Point(6, 19);
+            this.chartBr.Name = "chartBr";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series4.Color = System.Drawing.Color.Gray;
+            series4.LabelFormat = "\"\"";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            series4.Points.Add(dataPoint2);
+            series4.SmartLabelStyle.Enabled = false;
+            this.chartBr.Series.Add(series4);
+            this.chartBr.Size = new System.Drawing.Size(230, 125);
+            this.chartBr.TabIndex = 1;
+            this.chartBr.Text = "chart1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -427,8 +461,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartRGB)).EndInit();
+            this.groupBox4.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartBr)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -463,6 +499,7 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartRGB;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartBr;
     }
 }
 
