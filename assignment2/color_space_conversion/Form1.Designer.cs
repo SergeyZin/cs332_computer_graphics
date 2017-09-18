@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel1 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel2 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel5 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel6 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +57,8 @@
             this.btnBW1 = new System.Windows.Forms.Button();
             this.trackBarHue = new System.Windows.Forms.TrackBar();
             this.groupBoxHSV = new System.Windows.Forms.GroupBox();
-            this.trackBarBr = new System.Windows.Forms.TrackBar();
+            this.SetHSV = new System.Windows.Forms.Button();
+            this.trackBarVal = new System.Windows.Forms.TrackBar();
             this.trackBarSat = new System.Windows.Forms.TrackBar();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chartRGB = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -65,8 +66,9 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.опцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.convertToHSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ValH = new System.Windows.Forms.Label();
+            this.ValS = new System.Windows.Forms.Label();
+            this.ValV = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -77,7 +79,7 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarHue)).BeginInit();
             this.groupBoxHSV.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSat)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartRGB)).BeginInit();
@@ -88,8 +90,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuToolStripMenuItem,
-            this.опцииToolStripMenuItem});
+            this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1184, 24);
@@ -301,44 +302,66 @@
             // 
             // trackBarHue
             // 
-            this.trackBarHue.Location = new System.Drawing.Point(6, 19);
-            this.trackBarHue.Maximum = 360;
+            this.trackBarHue.Location = new System.Drawing.Point(35, 19);
+            this.trackBarHue.Maximum = 255;
+            this.trackBarHue.Minimum = -255;
             this.trackBarHue.Name = "trackBarHue";
-            this.trackBarHue.Size = new System.Drawing.Size(230, 45);
+            this.trackBarHue.Size = new System.Drawing.Size(201, 45);
             this.trackBarHue.TabIndex = 8;
+            this.trackBarHue.TickFrequency = 10;
             this.trackBarHue.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trackBarHue.Scroll += new System.EventHandler(this.trackBarHue_Scroll);
+            this.trackBarHue.ValueChanged += new System.EventHandler(this.trackBarHue_Scroll);
             // 
             // groupBoxHSV
             // 
-            this.groupBoxHSV.Controls.Add(this.trackBarBr);
+            this.groupBoxHSV.Controls.Add(this.ValV);
+            this.groupBoxHSV.Controls.Add(this.ValS);
+            this.groupBoxHSV.Controls.Add(this.ValH);
+            this.groupBoxHSV.Controls.Add(this.SetHSV);
+            this.groupBoxHSV.Controls.Add(this.trackBarVal);
             this.groupBoxHSV.Controls.Add(this.trackBarSat);
             this.groupBoxHSV.Controls.Add(this.trackBarHue);
             this.groupBoxHSV.Location = new System.Drawing.Point(3, 297);
             this.groupBoxHSV.Name = "groupBoxHSV";
-            this.groupBoxHSV.Size = new System.Drawing.Size(242, 181);
+            this.groupBoxHSV.Size = new System.Drawing.Size(242, 199);
             this.groupBoxHSV.TabIndex = 9;
             this.groupBoxHSV.TabStop = false;
             this.groupBoxHSV.Text = "HSV";
             this.groupBoxHSV.Enter += new System.EventHandler(this.groupBoxHSV_Enter);
             // 
-            // trackBarBr
+            // SetHSV
             // 
-            this.trackBarBr.Location = new System.Drawing.Point(6, 121);
-            this.trackBarBr.Maximum = 100;
-            this.trackBarBr.Name = "trackBarBr";
-            this.trackBarBr.Size = new System.Drawing.Size(230, 45);
-            this.trackBarBr.TabIndex = 10;
-            this.trackBarBr.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.SetHSV.Location = new System.Drawing.Point(151, 170);
+            this.SetHSV.Name = "SetHSV";
+            this.SetHSV.Size = new System.Drawing.Size(85, 23);
+            this.SetHSV.TabIndex = 11;
+            this.SetHSV.Text = "Применить";
+            this.SetHSV.UseVisualStyleBackColor = true;
+            this.SetHSV.Click += new System.EventHandler(this.SetHSV_Click);
+            // 
+            // trackBarVal
+            // 
+            this.trackBarVal.Location = new System.Drawing.Point(35, 121);
+            this.trackBarVal.Maximum = 255;
+            this.trackBarVal.Minimum = -255;
+            this.trackBarVal.Name = "trackBarVal";
+            this.trackBarVal.Size = new System.Drawing.Size(201, 45);
+            this.trackBarVal.TabIndex = 10;
+            this.trackBarVal.TickFrequency = 10;
+            this.trackBarVal.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBarVal.ValueChanged += new System.EventHandler(this.trackBarVal_Scroll);
             // 
             // trackBarSat
             // 
-            this.trackBarSat.Location = new System.Drawing.Point(6, 70);
-            this.trackBarSat.Maximum = 100;
+            this.trackBarSat.Location = new System.Drawing.Point(35, 70);
+            this.trackBarSat.Maximum = 255;
+            this.trackBarSat.Minimum = -255;
             this.trackBarSat.Name = "trackBarSat";
-            this.trackBarSat.Size = new System.Drawing.Size(230, 45);
+            this.trackBarSat.Size = new System.Drawing.Size(201, 45);
             this.trackBarSat.TabIndex = 9;
+            this.trackBarSat.TickFrequency = 10;
             this.trackBarSat.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBarSat.ValueChanged += new System.EventHandler(this.trackBarSat_Scroll);
             // 
             // groupBox3
             // 
@@ -353,46 +376,46 @@
             // chartRGB
             // 
             this.chartRGB.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.AxisX.CustomLabels.Add(customLabel1);
-            chartArea1.AxisX.MajorGrid.Enabled = false;
-            chartArea1.AxisX2.MajorGrid.Enabled = false;
-            chartArea1.AxisY.CustomLabels.Add(customLabel2);
-            chartArea1.AxisY.Interval = 10D;
-            chartArea1.AxisY.MajorGrid.Enabled = false;
-            chartArea1.AxisY2.MajorGrid.Enabled = false;
-            chartArea1.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.BorderColor = System.Drawing.Color.Transparent;
-            chartArea1.BorderWidth = 0;
-            chartArea1.Name = "ChartArea1";
-            this.chartRGB.ChartAreas.Add(chartArea1);
+            chartArea3.AxisX.CustomLabels.Add(customLabel5);
+            chartArea3.AxisX.MajorGrid.Enabled = false;
+            chartArea3.AxisX2.MajorGrid.Enabled = false;
+            chartArea3.AxisY.CustomLabels.Add(customLabel6);
+            chartArea3.AxisY.Interval = 10D;
+            chartArea3.AxisY.MajorGrid.Enabled = false;
+            chartArea3.AxisY2.MajorGrid.Enabled = false;
+            chartArea3.BackColor = System.Drawing.Color.Transparent;
+            chartArea3.BorderColor = System.Drawing.Color.Transparent;
+            chartArea3.BorderWidth = 0;
+            chartArea3.Name = "ChartArea1";
+            this.chartRGB.ChartAreas.Add(chartArea3);
             this.chartRGB.Location = new System.Drawing.Point(6, 19);
             this.chartRGB.Name = "chartRGB";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series1.Color = System.Drawing.Color.DarkGray;
-            series1.Name = "Series4";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Red;
-            series2.LabelFormat = "\"\"";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            series2.Points.Add(dataPoint1);
-            series2.SmartLabelStyle.Enabled = false;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series3.Legend = "Legend1";
-            series3.Name = "Series2";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Color = System.Drawing.Color.Blue;
-            series4.Legend = "Legend1";
-            series4.Name = "Series3";
-            this.chartRGB.Series.Add(series1);
-            this.chartRGB.Series.Add(series2);
-            this.chartRGB.Series.Add(series3);
-            this.chartRGB.Series.Add(series4);
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series9.Color = System.Drawing.Color.DarkGray;
+            series9.Name = "Series4";
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series10.Color = System.Drawing.Color.Red;
+            series10.LabelFormat = "\"\"";
+            series10.Legend = "Legend1";
+            series10.Name = "Series1";
+            series10.Points.Add(dataPoint3);
+            series10.SmartLabelStyle.Enabled = false;
+            series11.ChartArea = "ChartArea1";
+            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series11.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            series11.Legend = "Legend1";
+            series11.Name = "Series2";
+            series12.ChartArea = "ChartArea1";
+            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series12.Color = System.Drawing.Color.Blue;
+            series12.Legend = "Legend1";
+            series12.Name = "Series3";
+            this.chartRGB.Series.Add(series9);
+            this.chartRGB.Series.Add(series10);
+            this.chartRGB.Series.Add(series11);
+            this.chartRGB.Series.Add(series12);
             this.chartRGB.Size = new System.Drawing.Size(230, 125);
             this.chartRGB.TabIndex = 0;
             this.chartRGB.Text = "chart1";
@@ -430,20 +453,35 @@
             this.timer1.Interval = 10000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // опцииToolStripMenuItem
+            // ValH
             // 
-            this.опцииToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.convertToHSVToolStripMenuItem});
-            this.опцииToolStripMenuItem.Name = "опцииToolStripMenuItem";
-            this.опцииToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.опцииToolStripMenuItem.Text = "Опции";
+            this.ValH.AutoSize = true;
+            this.ValH.Location = new System.Drawing.Point(24, 33);
+            this.ValH.Name = "ValH";
+            this.ValH.Size = new System.Drawing.Size(13, 13);
+            this.ValH.TabIndex = 12;
+            this.ValH.Text = "0";
+            this.ValH.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // convertToHSVToolStripMenuItem
+            // ValS
             // 
-            this.convertToHSVToolStripMenuItem.Name = "convertToHSVToolStripMenuItem";
-            this.convertToHSVToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.convertToHSVToolStripMenuItem.Text = "Преобразовать в HSV";
-            this.convertToHSVToolStripMenuItem.Click += new System.EventHandler(this.convertToHSVToolStripMenuItem_Click);
+            this.ValS.AutoSize = true;
+            this.ValS.Location = new System.Drawing.Point(24, 84);
+            this.ValS.Name = "ValS";
+            this.ValS.Size = new System.Drawing.Size(13, 13);
+            this.ValS.TabIndex = 13;
+            this.ValS.Text = "0";
+            this.ValS.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ValV
+            // 
+            this.ValV.AutoSize = true;
+            this.ValV.Location = new System.Drawing.Point(24, 135);
+            this.ValV.Name = "ValV";
+            this.ValV.Size = new System.Drawing.Size(13, 13);
+            this.ValV.TabIndex = 14;
+            this.ValV.Text = "0";
+            this.ValV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Form1
             // 
@@ -471,7 +509,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarHue)).EndInit();
             this.groupBoxHSV.ResumeLayout(false);
             this.groupBoxHSV.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSat)).EndInit();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartRGB)).EndInit();
@@ -501,7 +539,7 @@
         private System.Windows.Forms.TrackBar trackBarHue;
         private System.Windows.Forms.GroupBox groupBoxHSV;
         private System.Windows.Forms.TrackBar trackBarSat;
-        private System.Windows.Forms.TrackBar trackBarBr;
+        private System.Windows.Forms.TrackBar trackBarVal;
         private System.Windows.Forms.Button btnBW2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnMoveRight;
@@ -513,8 +551,10 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ToolStripMenuItem опцииToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem convertToHSVToolStripMenuItem;
+        private System.Windows.Forms.Button SetHSV;
+        private System.Windows.Forms.Label ValV;
+        private System.Windows.Forms.Label ValS;
+        private System.Windows.Forms.Label ValH;
     }
 }
 

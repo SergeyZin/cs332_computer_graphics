@@ -14,6 +14,9 @@ namespace color_space_conversion
     {
         Graphics g1, g2;
         PictureBox pictureBoxCurrent;
+        int Hue = 0;
+        int Sat = 0;
+        int Val = 0;
 
         public Form1()
         {
@@ -417,19 +420,23 @@ namespace color_space_conversion
             timer1.Stop();
         }
 
-        private void convertRGBToHSV(byte r, byte g, byte b, ref double h, ref double s, ref double v)
+        private void convertRGBToHSV(int rr, int gg, int bb, ref int hh, ref int ss, ref int vv)
         {
-            h = 0;
-            s = 0;
-            v = 0;
+            double h = 0;
+            double s = 0;
+            double v = 0;
 
-            int max = Math.Max(r, Math.Max(g, b));
-            int min = Math.Min(r, Math.Min(g, b));
+            double r = rr / 255.0;
+            double g = gg / 255.0;
+            double b = bb / 255.0;
+
+            double max = Math.Max(r, Math.Max(g, b));
+            double min = Math.Min(r, Math.Min(g, b));
 
             if (max == min)
                 h = 0;
             else if (max == r && g >= b)
-                h = 60 * ((g - b) / max - min);
+                h = 60 * ((g - b) / (max - min));
             else if (max == r && g < b)
                 h = 60 * ((g - b) / (max - min)) + 360;
             else if (max == g)
@@ -443,52 +450,64 @@ namespace color_space_conversion
                 s = 1 - min / max;
 
             v = max;
+
+            hh = Convert.ToInt32(h /360*255);
+            ss = Convert.ToInt32(s * 255);
+            vv = Convert.ToInt32(v * 255);
         }
 
-        private void convertHSVToRGB(double h, double s, double v, ref byte r, ref byte g, ref byte b)
+        private void convertHSVToRGB(int hh, int ss, int vv, ref int rr, ref int gg, ref int bb)
         {
-            r = 0;
-            g = 0;
-            b = 0;
+            double r = 0;
+            double g = 0;
+            double b = 0;
+
+            double h = hh / 255.0 * 360;
+            double s = ss / 255.0 * 100;
+            double v = vv / 255.0 * 100;
 
             int hi = Convert.ToInt32(Math.Floor(h / 60) % 6);
-            double vmin = (100 - s * 100) * v;
+            double vmin = ((100 - s) * v) / 100;
             double a = (v - vmin) * (h % 60) / 60;
             double vinc = vmin + a;
             double vdec = v - a;
 
             switch (hi) {
                 case 0:
-                    r = (byte)v;
-                    g = (byte)vinc;
-                    b = (byte)vmin;
+                    r = v;
+                    g = vinc;
+                    b = vmin;
                     break;
                 case 1:
-                    r = (byte)vdec;
-                    g = (byte)v;
-                    b = (byte)vmin;
+                    r = vdec;
+                    g = v;
+                    b = vmin;
                     break;
                 case 2:
-                    r = (byte)vmin;
-                    g = (byte)v;
-                    b = (byte)vinc;
+                    r = vmin;
+                    g = v;
+                    b = vinc;
                     break;
                 case 3:
-                    r = (byte)vmin;
-                    g = (byte)vdec;
-                    b = (byte)v;
+                    r = vmin;
+                    g = vdec;
+                    b = v;
                     break;
                 case 4:
-                    r = (byte)vinc;
-                    g = (byte)vmin;
-                    b = (byte)v;
+                    r = vinc;
+                    g = vmin;
+                    b = v;
                     break;
                 case 5:
-                    r = (byte)v;
-                    g = (byte)vmin;
-                    b = (byte)vdec;
+                    r = v;
+                    g = vmin;
+                    b = vdec;
                     break;
             }
+
+            rr = Convert.ToInt32(r / 100 * 255);
+            gg = Convert.ToInt32(g / 100 * 255);
+            bb = Convert.ToInt32(b / 100 * 255);
         }            
 
         private void groupBoxHSV_Enter(object sender, EventArgs e)
@@ -496,7 +515,7 @@ namespace color_space_conversion
            //            
         }
 
-        private void convertToHSVToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SetHSV_Click(object sender, EventArgs e)
         {
             if (pictureBoxCurrent.Image != null)
             {
@@ -518,20 +537,39 @@ namespace color_space_conversion
                 // Copy the RGB values into the array.
                 System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-                double h = 0;
-                double s = 0;
-                double v = 0;
-
                 for (int i = 0; i < rgbValues.Length; i += 3)
                 {
+                    int h = 0;
+                    int s = 0;
+                    int v = 0;
+                    int r = 0;
+                    int g = 0;
+                    int b = 0;
                     convertRGBToHSV(rgbValues[i + 2], rgbValues[i + 1], rgbValues[i + 0], ref h, ref s, ref v);
-                    byte r = 0;
-                    byte g = 0;
-                    byte b = 0;
+
+                    h += Hue;
+                    s += Sat;
+                    v += Val;
+
+                    if (h < 0)
+                        h = 0;
+                    else if (h > 255)
+                        h = 255;
+
+                    if (s < 0)
+                        s = 0;
+                    else if (s > 255)
+                        s = 255;
+
+                    if (v < 0)
+                        v = 0;
+                    else if (v > 255)
+                        v = 255;
+
                     convertHSVToRGB(h, s, v, ref r, ref g, ref b);
-                    rgbValues[i + 0] = b;
-                    rgbValues[i + 1] = g;
-                    rgbValues[i + 2] = r;
+                    rgbValues[i + 0] = (byte)b;
+                    rgbValues[i + 1] = (byte)g;
+                    rgbValues[i + 2] = (byte)r;
                 }
 
                 // Copy the RGB values back to the bitmap
@@ -542,48 +580,28 @@ namespace color_space_conversion
 
                 pictureBoxCurrent.Refresh();
                 refreshHistogram();
+                trackBarHue.Value = 0;
+                trackBarSat.Value = 0;
+                trackBarVal.Value = 0;
             }
         }
 
         private void trackBarHue_Scroll(object sender, EventArgs e)
         {
-            if (pictureBoxCurrent.Image != null)
-            {
-                Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
+            Hue = trackBarHue.Value;
+            ValH.Text = Convert.ToString(trackBarHue.Value);
+        }
 
-                // Lock the bitmap's bits. 
-                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-                System.Drawing.Imaging.BitmapData bmpData =
-                    bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                    bmp.PixelFormat);
+        private void trackBarSat_Scroll(object sender, EventArgs e)
+        {
+            Sat = trackBarSat.Value;
+            ValS.Text = Convert.ToString(trackBarSat.Value);
+        }
 
-                // Get the address of the first line.
-                IntPtr ptr = bmpData.Scan0;
-
-                // Declare an array to hold the bytes of the bitmap.
-                int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
-                byte[] rgbValues = new byte[bytes];
-
-                // Copy the RGB values into the array.
-                System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
-
-                // Set every third value to 255. A 24bpp bitmap will look red.  
-                for (int i = 0; i < rgbValues.Length; i += 3)
-                {
-                    int gray = Convert.ToInt32(0.0722 * rgbValues[i + 0] + 0.7152 * rgbValues[i + 1] + 0.2126 * rgbValues[i + 2]);
-                    rgbValues[i + 0] = (byte)gray;
-                    rgbValues[i + 1] = (byte)gray;
-                    rgbValues[i + 2] = (byte)gray;
-                }
-                // Copy the RGB values back to the bitmap
-                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
-
-                // Unlock the bits.
-                bmp.UnlockBits(bmpData);
-
-                pictureBoxCurrent.Refresh();
-                refreshHistogram();
-            }
+        private void trackBarVal_Scroll(object sender, EventArgs e)
+        {
+            Val = trackBarVal.Value;
+            ValV.Text = Convert.ToString(trackBarVal.Value);
         }
 
         private void btnSubtract_Click(object sender, EventArgs e)
