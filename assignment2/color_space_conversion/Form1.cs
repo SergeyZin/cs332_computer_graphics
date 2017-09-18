@@ -55,6 +55,36 @@ namespace color_space_conversion
             refreshHistogram();
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBoxCurrent.Image != null)
+            {
+                SaveFileDialog savedialog = new SaveFileDialog();
+                savedialog.Title = "Сохранить как...";
+                //отображать ли предупреждение, если пользователь указывает имя уже существующего файла
+                savedialog.OverwritePrompt = true;
+                //отображать ли предупреждение, если пользователь указывает несуществующий путь
+                savedialog.CheckPathExists = true;
+                //список форматов файла, отображаемый в поле "Тип файла"
+                savedialog.Filter = "Image Files(*.BMP)|*.BMP|Image Files(*.JPG)|*.JPG|Image Files(*.GIF)|*.GIF|Image Files(*.PNG)|*.PNG|All files (*.*)|*.*";
+                //отображается ли кнопка "Справка" в диалоговом окне
+                savedialog.ShowHelp = true;
+                if (savedialog.ShowDialog() == DialogResult.OK) //если в диалоговом окне нажата кнопка "ОК"
+                {
+                    try
+                    {
+                        pictureBoxCurrent.Image.Save(savedialog.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Невозможно сохранить изображение", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+
+        }
+
         private void refreshHistogram()
         {
             chartRGB.Series[0].Points.Clear();
@@ -293,6 +323,11 @@ namespace color_space_conversion
             radioButton1.Checked = true;
         }
 
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            radioButton2.Checked = true;
+        }
+
         private void btnBW1_Click(object sender, EventArgs e)
         {
             if (pictureBoxCurrent.Image != null)
@@ -377,7 +412,9 @@ namespace color_space_conversion
 
         private void btnSubtract_Click(object sender, EventArgs e)
         {
-            if (pictureBox1.Image != null && pictureBox2.Image != null)
+            if (pictureBox1.Image != null && pictureBox2.Image != null && 
+                pictureBox1.Image.Width == pictureBox2.Image.Width &&
+                pictureBox1.Image.Height == pictureBox2.Image.Height)
             {
                 Bitmap bmp1 = pictureBoxCurrent.Image as Bitmap;
                 Bitmap bmp2;
@@ -437,40 +474,7 @@ namespace color_space_conversion
             }
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (pictureBoxCurrent.Image != null) 
-            {
-                SaveFileDialog savedialog = new SaveFileDialog();
-                savedialog.Title = "Сохранить как...";
-                //отображать ли предупреждение, если пользователь указывает имя уже существующего файла
-                savedialog.OverwritePrompt = true;
-                //отображать ли предупреждение, если пользователь указывает несуществующий путь
-                savedialog.CheckPathExists = true;
-                //список форматов файла, отображаемый в поле "Тип файла"
-                savedialog.Filter = "Image Files(*.BMP)|*.BMP|Image Files(*.JPG)|*.JPG|Image Files(*.GIF)|*.GIF|Image Files(*.PNG)|*.PNG|All files (*.*)|*.*";
-                //отображается ли кнопка "Справка" в диалоговом окне
-                savedialog.ShowHelp = true;
-                if (savedialog.ShowDialog() == DialogResult.OK) //если в диалоговом окне нажата кнопка "ОК"
-                {
-                    try
-                    {
-                        pictureBoxCurrent.Image.Save(savedialog.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Невозможно сохранить изображение", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
 
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-            radioButton2.Checked = true;
-        }
         
 
 

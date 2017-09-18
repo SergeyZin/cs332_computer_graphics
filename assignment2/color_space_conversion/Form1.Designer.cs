@@ -342,8 +342,12 @@
             // 
             this.chartRGB.BackColor = System.Drawing.Color.Transparent;
             chartArea1.AxisX.CustomLabels.Add(customLabel1);
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisX2.MajorGrid.Enabled = false;
             chartArea1.AxisY.CustomLabels.Add(customLabel2);
             chartArea1.AxisY.Interval = 10D;
+            chartArea1.AxisY.MajorGrid.Enabled = false;
+            chartArea1.AxisY2.MajorGrid.Enabled = false;
             chartArea1.BackColor = System.Drawing.Color.Transparent;
             chartArea1.BorderColor = System.Drawing.Color.Transparent;
             chartArea1.BorderWidth = 0;
