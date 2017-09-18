@@ -65,9 +65,9 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chartRGB = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.chartBr = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.chartBr = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -83,8 +83,8 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartRGB)).BeginInit();
             this.groupBox4.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartBr)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -103,21 +103,22 @@
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-            this.menuToolStripMenuItem.Text = "Menu";
+            this.menuToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.menuToolStripMenuItem.Text = "Меню";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.openToolStripMenuItem.Text = "Открыть";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.saveToolStripMenuItem.Text = "Сохранить как...";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
@@ -386,6 +387,28 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Гистограмма интенсивности";
             // 
+            // chartBr
+            // 
+            chartArea2.AxisX.CustomLabels.Add(customLabel3);
+            chartArea2.AxisY.CustomLabels.Add(customLabel4);
+            chartArea2.AxisY.Interval = 10D;
+            chartArea2.Name = "ChartArea1";
+            this.chartBr.ChartAreas.Add(chartArea2);
+            this.chartBr.Location = new System.Drawing.Point(6, 19);
+            this.chartBr.Name = "chartBr";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series4.Color = System.Drawing.Color.Gray;
+            series4.LabelFormat = "\"\"";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            series4.Points.Add(dataPoint2);
+            series4.SmartLabelStyle.Enabled = false;
+            this.chartBr.Series.Add(series4);
+            this.chartBr.Size = new System.Drawing.Size(230, 125);
+            this.chartBr.TabIndex = 1;
+            this.chartBr.Text = "chart1";
+            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -410,28 +433,6 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Костыль";
             // 
-            // chartBr
-            // 
-            chartArea2.AxisX.CustomLabels.Add(customLabel3);
-            chartArea2.AxisY.CustomLabels.Add(customLabel4);
-            chartArea2.AxisY.Interval = 10D;
-            chartArea2.Name = "ChartArea1";
-            this.chartBr.ChartAreas.Add(chartArea2);
-            this.chartBr.Location = new System.Drawing.Point(6, 19);
-            this.chartBr.Name = "chartBr";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series4.Color = System.Drawing.Color.Gray;
-            series4.LabelFormat = "\"\"";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            series4.Points.Add(dataPoint2);
-            series4.SmartLabelStyle.Enabled = false;
-            this.chartBr.Series.Add(series4);
-            this.chartBr.Size = new System.Drawing.Size(230, 125);
-            this.chartBr.TabIndex = 1;
-            this.chartBr.Text = "chart1";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -442,7 +443,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Color space conversion";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -462,9 +463,9 @@
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartRGB)).EndInit();
             this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartBr)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartBr)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

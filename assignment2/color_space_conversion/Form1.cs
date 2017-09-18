@@ -54,6 +54,7 @@ namespace color_space_conversion
             EnableControls();
             refreshHistogramRGB();
         }
+
         private void refreshHistogram()
         {
             refreshHistogramRGB();
@@ -425,41 +426,92 @@ namespace color_space_conversion
         {
             if (pictureBox1.Image != null && pictureBox2.Image != null)
             {
-                Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
+                Bitmap bmp1 = pictureBoxCurrent.Image as Bitmap;
+                Bitmap bmp2;
+                if (pictureBoxCurrent.Name.Equals("pictureBox1"))
+                    bmp2 = pictureBox2.Image as Bitmap;
+                else
+                    bmp2 = pictureBox1.Image as Bitmap;
 
                 // Lock the bitmap's bits. 
-                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-                System.Drawing.Imaging.BitmapData bmpData =
-                    bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                    bmp.PixelFormat);
+                Rectangle rect1 = new Rectangle(0, 0, bmp1.Width, bmp1.Height);
+                System.Drawing.Imaging.BitmapData bmpData1 =
+                    bmp1.LockBits(rect1, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                    bmp1.PixelFormat);
+
+                Rectangle rect2 = new Rectangle(0, 0, bmp2.Width, bmp2.Height);
+                System.Drawing.Imaging.BitmapData bmpData2 =
+                    bmp2.LockBits(rect2, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                    bmp2.PixelFormat);
 
                 // Get the address of the first line.
-                IntPtr ptr = bmpData.Scan0;
+                IntPtr ptr1 = bmpData1.Scan0;
+                IntPtr ptr2 = bmpData2.Scan0;
 
                 // Declare an array to hold the bytes of the bitmap.
-                int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
-                byte[] rgbValues = new byte[bytes];
+                int bytes1 = Math.Abs(bmpData1.Stride) * bmp1.Height;
+                byte[] rgbValues1 = new byte[bytes1];
+
+                int bytes2 = Math.Abs(bmpData2.Stride) * bmp2.Height;
+                byte[] rgbValues2 = new byte[bytes2];
 
                 // Copy the RGB values into the array.
-                System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+                System.Runtime.InteropServices.Marshal.Copy(ptr1, rgbValues1, 0, bytes1);
+                System.Runtime.InteropServices.Marshal.Copy(ptr2, rgbValues2, 0, bytes2);
 
                 // Set every third value to 255. A 24bpp bitmap will look red.  
-                for (int i = 0; i < rgbValues.Length; i += 3)
+                for (int i = 0; i < rgbValues1.Length; i += 3)
                 {
-                    int gray = Convert.ToInt32(0.0722 * rgbValues[i + 0] + 0.7152 * rgbValues[i + 1] + 0.2126 * rgbValues[i + 2]);
-                    rgbValues[i + 0] = (byte)gray;
-                    rgbValues[i + 1] = (byte)gray;
-                    rgbValues[i + 2] = (byte)gray;
+                    int bDiff = Math.Abs(rgbValues1[i + 0] - rgbValues2[i + 0]);
+                    int gDiff = Math.Abs(rgbValues1[i + 1] - rgbValues2[i + 1]);
+                    int rDiff = Math.Abs(rgbValues1[i + 2] - rgbValues2[i + 2]);
+
+                    rgbValues1[i + 0] = (byte)bDiff;
+                    rgbValues1[i + 1] = (byte)gDiff;
+                    rgbValues1[i + 2] = (byte)rDiff;
                 }
                 // Copy the RGB values back to the bitmap
-                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+                System.Runtime.InteropServices.Marshal.Copy(rgbValues1, 0, ptr1, bytes1);
+                System.Runtime.InteropServices.Marshal.Copy(rgbValues2, 0, ptr2, bytes2);
 
                 // Unlock the bits.
-                bmp.UnlockBits(bmpData);
+                bmp1.UnlockBits(bmpData1);
+                bmp2.UnlockBits(bmpData2);
 
-                pictureBoxCurrent.Refresh();
+                pictureBox1.Refresh();
+                pictureBox2.Refresh();
                 refreshHistogram();
             }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBoxCurrent.Image != null) 
+            {
+                SaveFileDialog savedialog = new SaveFileDialog();
+                savedialog.Title = "Сохранить как...";
+                //отображать ли предупреждение, если пользователь указывает имя уже существующего файла
+                savedialog.OverwritePrompt = true;
+                //отображать ли предупреждение, если пользователь указывает несуществующий путь
+                savedialog.CheckPathExists = true;
+                //список форматов файла, отображаемый в поле "Тип файла"
+                savedialog.Filter = "Image Files(*.BMP)|*.BMP|Image Files(*.JPG)|*.JPG|Image Files(*.GIF)|*.GIF|Image Files(*.PNG)|*.PNG|All files (*.*)|*.*";
+                //отображается ли кнопка "Справка" в диалоговом окне
+                savedialog.ShowHelp = true;
+                if (savedialog.ShowDialog() == DialogResult.OK) //если в диалоговом окне нажата кнопка "ОК"
+                {
+                    try
+                    {
+                        pictureBoxCurrent.Image.Save(savedialog.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Невозможно сохранить изображение", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
