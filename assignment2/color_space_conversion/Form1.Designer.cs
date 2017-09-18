@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel11 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel12 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-            System.Windows.Forms.DataVisualization.Charting.Series series21 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series22 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
-            System.Windows.Forms.DataVisualization.Charting.Series series23 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series24 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel17 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel18 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+            System.Windows.Forms.DataVisualization.Charting.Series series33 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series34 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
+            System.Windows.Forms.DataVisualization.Charting.Series series35 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series36 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,7 +127,7 @@
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(437, 445);
+            this.pictureBox1.Size = new System.Drawing.Size(437, 436);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -141,7 +141,7 @@
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox2.Location = new System.Drawing.Point(3, 3);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(437, 445);
+            this.pictureBox2.Size = new System.Drawing.Size(437, 436);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
@@ -174,7 +174,7 @@
             // 
             this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(426, 459);
+            this.radioButton1.Location = new System.Drawing.Point(426, 450);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(14, 13);
             this.radioButton1.TabIndex = 2;
@@ -186,7 +186,7 @@
             // 
             this.btnMoveRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveRight.Location = new System.Drawing.Point(3, 454);
+            this.btnMoveRight.Location = new System.Drawing.Point(3, 445);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(417, 23);
             this.btnMoveRight.TabIndex = 1;
@@ -200,7 +200,7 @@
             this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(3, 459);
+            this.radioButton2.Location = new System.Drawing.Point(3, 450);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(14, 13);
             this.radioButton2.TabIndex = 3;
@@ -212,7 +212,7 @@
             // 
             this.btnMoveLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveLeft.Location = new System.Drawing.Point(23, 454);
+            this.btnMoveLeft.Location = new System.Drawing.Point(23, 445);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(417, 23);
             this.btnMoveLeft.TabIndex = 0;
@@ -345,46 +345,46 @@
             // chartRGB
             // 
             this.chartRGB.BackColor = System.Drawing.Color.Transparent;
-            chartArea6.AxisX.CustomLabels.Add(customLabel11);
-            chartArea6.AxisX.MajorGrid.Enabled = false;
-            chartArea6.AxisX2.MajorGrid.Enabled = false;
-            chartArea6.AxisY.CustomLabels.Add(customLabel12);
-            chartArea6.AxisY.Interval = 10D;
-            chartArea6.AxisY.MajorGrid.Enabled = false;
-            chartArea6.AxisY2.MajorGrid.Enabled = false;
-            chartArea6.BackColor = System.Drawing.Color.Transparent;
-            chartArea6.BorderColor = System.Drawing.Color.Transparent;
-            chartArea6.BorderWidth = 0;
-            chartArea6.Name = "ChartArea1";
-            this.chartRGB.ChartAreas.Add(chartArea6);
+            chartArea9.AxisX.CustomLabels.Add(customLabel17);
+            chartArea9.AxisX.MajorGrid.Enabled = false;
+            chartArea9.AxisX2.MajorGrid.Enabled = false;
+            chartArea9.AxisY.CustomLabels.Add(customLabel18);
+            chartArea9.AxisY.Interval = 10D;
+            chartArea9.AxisY.MajorGrid.Enabled = false;
+            chartArea9.AxisY2.MajorGrid.Enabled = false;
+            chartArea9.BackColor = System.Drawing.Color.Transparent;
+            chartArea9.BorderColor = System.Drawing.Color.Transparent;
+            chartArea9.BorderWidth = 0;
+            chartArea9.Name = "ChartArea1";
+            this.chartRGB.ChartAreas.Add(chartArea9);
             this.chartRGB.Location = new System.Drawing.Point(6, 19);
             this.chartRGB.Name = "chartRGB";
-            series21.ChartArea = "ChartArea1";
-            series21.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series21.Color = System.Drawing.Color.DarkGray;
-            series21.Name = "Series4";
-            series22.ChartArea = "ChartArea1";
-            series22.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series22.Color = System.Drawing.Color.Red;
-            series22.LabelFormat = "\"\"";
-            series22.Legend = "Legend1";
-            series22.Name = "Series1";
-            series22.Points.Add(dataPoint6);
-            series22.SmartLabelStyle.Enabled = false;
-            series23.ChartArea = "ChartArea1";
-            series23.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series23.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series23.Legend = "Legend1";
-            series23.Name = "Series2";
-            series24.ChartArea = "ChartArea1";
-            series24.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series24.Color = System.Drawing.Color.Blue;
-            series24.Legend = "Legend1";
-            series24.Name = "Series3";
-            this.chartRGB.Series.Add(series21);
-            this.chartRGB.Series.Add(series22);
-            this.chartRGB.Series.Add(series23);
-            this.chartRGB.Series.Add(series24);
+            series33.ChartArea = "ChartArea1";
+            series33.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series33.Color = System.Drawing.Color.DarkGray;
+            series33.Name = "Series4";
+            series34.ChartArea = "ChartArea1";
+            series34.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series34.Color = System.Drawing.Color.Red;
+            series34.LabelFormat = "\"\"";
+            series34.Legend = "Legend1";
+            series34.Name = "Series1";
+            series34.Points.Add(dataPoint9);
+            series34.SmartLabelStyle.Enabled = false;
+            series35.ChartArea = "ChartArea1";
+            series35.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series35.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            series35.Legend = "Legend1";
+            series35.Name = "Series2";
+            series36.ChartArea = "ChartArea1";
+            series36.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series36.Color = System.Drawing.Color.Blue;
+            series36.Legend = "Legend1";
+            series36.Name = "Series3";
+            this.chartRGB.Series.Add(series33);
+            this.chartRGB.Series.Add(series34);
+            this.chartRGB.Series.Add(series35);
+            this.chartRGB.Series.Add(series36);
             this.chartRGB.Size = new System.Drawing.Size(230, 125);
             this.chartRGB.TabIndex = 0;
             this.chartRGB.Text = "chart1";
@@ -415,8 +415,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
             // timer1
             // 
