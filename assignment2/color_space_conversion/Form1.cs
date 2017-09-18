@@ -518,13 +518,20 @@ namespace color_space_conversion
                 // Copy the RGB values into the array.
                 System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-                double[] hsvValues = convertRGBToHSV(rgbValues);
+                double h = 0;
+                double s = 0;
+                double v = 0;
 
                 for (int i = 0; i < rgbValues.Length; i += 3)
                 {
-                    rgbValues[i + 0] = (byte)hsvValues[i + 0];
-                    rgbValues[i + 1] = (byte)hsvValues[i + 1];
-                    rgbValues[i + 2] = (byte)hsvValues[i + 2];
+                    convertRGBToHSV(rgbValues[i + 2], rgbValues[i + 1], rgbValues[i + 0], ref h, ref s, ref v);
+                    byte r = 0;
+                    byte g = 0;
+                    byte b = 0;
+                    convertHSVToRGB(h, s, v, ref r, ref g, ref b);
+                    rgbValues[i + 0] = b;
+                    rgbValues[i + 1] = g;
+                    rgbValues[i + 2] = r;
                 }
 
                 // Copy the RGB values back to the bitmap
