@@ -55,10 +55,10 @@
             this.btnSubtract = new System.Windows.Forms.Button();
             this.btnGreen = new System.Windows.Forms.Button();
             this.btnBW1 = new System.Windows.Forms.Button();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.trackBarHue = new System.Windows.Forms.TrackBar();
             this.groupBoxHSV = new System.Windows.Forms.GroupBox();
-            this.trackBar3 = new System.Windows.Forms.TrackBar();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.trackBarBr = new System.Windows.Forms.TrackBar();
+            this.trackBarSat = new System.Windows.Forms.TrackBar();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chartRGB = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -75,10 +75,10 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarHue)).BeginInit();
             this.groupBoxHSV.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarSat)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartRGB)).BeginInit();
             this.panel1.SuspendLayout();
@@ -299,19 +299,21 @@
             this.btnBW1.UseVisualStyleBackColor = true;
             this.btnBW1.Click += new System.EventHandler(this.btnBW1_Click);
             // 
-            // trackBar1
+            // trackBarHue
             // 
-            this.trackBar1.Location = new System.Drawing.Point(6, 19);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(230, 45);
-            this.trackBar1.TabIndex = 8;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBarHue.Location = new System.Drawing.Point(6, 19);
+            this.trackBarHue.Maximum = 360;
+            this.trackBarHue.Name = "trackBarHue";
+            this.trackBarHue.Size = new System.Drawing.Size(230, 45);
+            this.trackBarHue.TabIndex = 8;
+            this.trackBarHue.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBarHue.Scroll += new System.EventHandler(this.trackBarHue_Scroll);
             // 
             // groupBoxHSV
             // 
-            this.groupBoxHSV.Controls.Add(this.trackBar3);
-            this.groupBoxHSV.Controls.Add(this.trackBar2);
-            this.groupBoxHSV.Controls.Add(this.trackBar1);
+            this.groupBoxHSV.Controls.Add(this.trackBarBr);
+            this.groupBoxHSV.Controls.Add(this.trackBarSat);
+            this.groupBoxHSV.Controls.Add(this.trackBarHue);
             this.groupBoxHSV.Location = new System.Drawing.Point(3, 297);
             this.groupBoxHSV.Name = "groupBoxHSV";
             this.groupBoxHSV.Size = new System.Drawing.Size(242, 181);
@@ -320,21 +322,23 @@
             this.groupBoxHSV.Text = "HSV";
             this.groupBoxHSV.Enter += new System.EventHandler(this.groupBoxHSV_Enter);
             // 
-            // trackBar3
+            // trackBarBr
             // 
-            this.trackBar3.Location = new System.Drawing.Point(6, 121);
-            this.trackBar3.Name = "trackBar3";
-            this.trackBar3.Size = new System.Drawing.Size(230, 45);
-            this.trackBar3.TabIndex = 10;
-            this.trackBar3.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBarBr.Location = new System.Drawing.Point(6, 121);
+            this.trackBarBr.Maximum = 100;
+            this.trackBarBr.Name = "trackBarBr";
+            this.trackBarBr.Size = new System.Drawing.Size(230, 45);
+            this.trackBarBr.TabIndex = 10;
+            this.trackBarBr.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             // 
-            // trackBar2
+            // trackBarSat
             // 
-            this.trackBar2.Location = new System.Drawing.Point(6, 70);
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(230, 45);
-            this.trackBar2.TabIndex = 9;
-            this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBarSat.Location = new System.Drawing.Point(6, 70);
+            this.trackBarSat.Maximum = 100;
+            this.trackBarSat.Name = "trackBarSat";
+            this.trackBarSat.Size = new System.Drawing.Size(230, 45);
+            this.trackBarSat.TabIndex = 9;
+            this.trackBarSat.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             // 
             // groupBox3
             // 
@@ -464,11 +468,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarHue)).EndInit();
             this.groupBoxHSV.ResumeLayout(false);
             this.groupBoxHSV.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarSat)).EndInit();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartRGB)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -494,10 +498,10 @@
         private System.Windows.Forms.Button btnRed;
         private System.Windows.Forms.Button btnBW1;
         private System.Windows.Forms.Button btnSubtract;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar trackBarHue;
         private System.Windows.Forms.GroupBox groupBoxHSV;
-        private System.Windows.Forms.TrackBar trackBar2;
-        private System.Windows.Forms.TrackBar trackBar3;
+        private System.Windows.Forms.TrackBar trackBarSat;
+        private System.Windows.Forms.TrackBar trackBarBr;
         private System.Windows.Forms.Button btnBW2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnMoveRight;
