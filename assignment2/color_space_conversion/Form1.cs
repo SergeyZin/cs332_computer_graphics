@@ -147,14 +147,14 @@ namespace color_space_conversion
         private void EnableControls()
         {
             groupBox1.Enabled = true;
-            groupBox2.Enabled = true;
+            groupBoxHSV.Enabled = true;
             groupBox3.Enabled = true;
         }
 
         private void DisableControls()
         {
             groupBox1.Enabled = false;
-            groupBox2.Enabled = false;
+            groupBoxHSV.Enabled = false;
             groupBox3.Enabled = false;
         }
 
@@ -417,6 +417,95 @@ namespace color_space_conversion
             timer1.Stop();
         }
 
+        double[] convertRGBToHSV(byte[] rgbValues)
+        {
+            double[] hsvValues = new double[rgbValues.Length];
+            double h = 0;
+            double s = 0;
+            double v = 0;
+
+            for (int i = 0; i < rgbValues.Length; i += 3)
+            {
+                int r = rgbValues[i + 2];
+                int g = rgbValues[i + 1];
+                int b = rgbValues[i + 0];
+
+                int max = Math.Max(r, Math.Max(g, b));
+                int min = Math.Min(r, Math.Min(g, b));
+
+                if (max == min)
+                    h = 0;
+                else if (max == r && g >= b)
+                    h = 60 * ((g - b) / max - min);
+                else if (max == r && g < b)
+                    h = 60 * ((g - b) / (max - min)) + 360;
+                else if (max == g)
+                    h = 60 * ((b - r) / (max - min)) + 120;
+                else
+                    h = 60 * ((r - g) / (max - min)) + 240;
+
+                if (max == 0)
+                    s = 0;
+                else
+                    s = 1 - min / max;
+
+                v = max;
+
+                hsvValues[i + 0] = h;
+                hsvValues[i + 1] = s;
+                hsvValues[i + 2] = v;
+            }
+
+            return hsvValues;
+        }
+
+        private void groupBoxHSV_Enter(object sender, EventArgs e)
+        {
+           //            
+        }
+
+        private void convertToHSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBoxCurrent.Image != null)
+            {
+                Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
+
+                // Lock the bitmap's bits. 
+                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                System.Drawing.Imaging.BitmapData bmpData =
+                    bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                    bmp.PixelFormat);
+
+                // Get the address of the first line.
+                IntPtr ptr = bmpData.Scan0;
+
+                // Declare an array to hold the bytes of the bitmap.
+                int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
+                byte[] rgbValues = new byte[bytes];
+
+                // Copy the RGB values into the array.
+                System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+
+                double[] hsvValues = convertRGBToHSV(rgbValues);
+
+                for (int i = 0; i < rgbValues.Length; i += 3)
+                {
+                    rgbValues[i + 0] = (byte)hsvValues[i + 0];
+                    rgbValues[i + 1] = (byte)hsvValues[i + 1];
+                    rgbValues[i + 2] = (byte)hsvValues[i + 2];
+                }
+
+                // Copy the RGB values back to the bitmap
+                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+
+                // Unlock the bits.
+                bmp.UnlockBits(bmpData);
+
+                pictureBoxCurrent.Refresh();
+                refreshHistogram();
+            }
+        }
+
         private void btnSubtract_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null && pictureBox2.Image != null && 
@@ -485,11 +574,5 @@ namespace color_space_conversion
                 timer1.Start();
             }
         }
-
-
-        
-
-
-
     }
 }
