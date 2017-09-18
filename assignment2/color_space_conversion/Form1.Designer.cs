@@ -28,14 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel1 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel2 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel11 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel12 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+            System.Windows.Forms.DataVisualization.Charting.Series series21 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series22 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
+            System.Windows.Forms.DataVisualization.Charting.Series series23 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series24 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +62,9 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chartRGB = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -77,6 +80,7 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartRGB)).BeginInit();
             this.panel1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -85,7 +89,7 @@
             this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1141, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1184, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -123,7 +127,7 @@
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(423, 407);
+            this.pictureBox1.Size = new System.Drawing.Size(437, 445);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -137,7 +141,7 @@
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox2.Location = new System.Drawing.Point(3, 3);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(408, 407);
+            this.pictureBox2.Size = new System.Drawing.Size(437, 445);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
@@ -162,15 +166,15 @@
             this.splitContainer1.Panel2.Controls.Add(this.radioButton2);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
             this.splitContainer1.Panel2.Controls.Add(this.btnMoveLeft);
-            this.splitContainer1.Size = new System.Drawing.Size(847, 442);
-            this.splitContainer1.SplitterDistance = 429;
+            this.splitContainer1.Size = new System.Drawing.Size(890, 489);
+            this.splitContainer1.SplitterDistance = 443;
             this.splitContainer1.TabIndex = 3;
             // 
             // radioButton1
             // 
             this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(412, 421);
+            this.radioButton1.Location = new System.Drawing.Point(426, 459);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(14, 13);
             this.radioButton1.TabIndex = 2;
@@ -182,9 +186,9 @@
             // 
             this.btnMoveRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveRight.Location = new System.Drawing.Point(3, 416);
+            this.btnMoveRight.Location = new System.Drawing.Point(3, 454);
             this.btnMoveRight.Name = "btnMoveRight";
-            this.btnMoveRight.Size = new System.Drawing.Size(403, 23);
+            this.btnMoveRight.Size = new System.Drawing.Size(417, 23);
             this.btnMoveRight.TabIndex = 1;
             this.btnMoveRight.TabStop = false;
             this.btnMoveRight.Text = ">>";
@@ -196,7 +200,7 @@
             this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(3, 421);
+            this.radioButton2.Location = new System.Drawing.Point(3, 459);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(14, 13);
             this.radioButton2.TabIndex = 3;
@@ -208,9 +212,9 @@
             // 
             this.btnMoveLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveLeft.Location = new System.Drawing.Point(23, 416);
+            this.btnMoveLeft.Location = new System.Drawing.Point(23, 454);
             this.btnMoveLeft.Name = "btnMoveLeft";
-            this.btnMoveLeft.Size = new System.Drawing.Size(388, 23);
+            this.btnMoveLeft.Size = new System.Drawing.Size(417, 23);
             this.btnMoveLeft.TabIndex = 0;
             this.btnMoveLeft.TabStop = false;
             this.btnMoveLeft.Text = "<<";
@@ -305,7 +309,7 @@
             this.groupBox2.Controls.Add(this.trackBar3);
             this.groupBox2.Controls.Add(this.trackBar2);
             this.groupBox2.Controls.Add(this.trackBar1);
-            this.groupBox2.Location = new System.Drawing.Point(3, 300);
+            this.groupBox2.Location = new System.Drawing.Point(3, 297);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(242, 181);
             this.groupBox2.TabIndex = 9;
@@ -341,46 +345,46 @@
             // chartRGB
             // 
             this.chartRGB.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.AxisX.CustomLabels.Add(customLabel1);
-            chartArea1.AxisX.MajorGrid.Enabled = false;
-            chartArea1.AxisX2.MajorGrid.Enabled = false;
-            chartArea1.AxisY.CustomLabels.Add(customLabel2);
-            chartArea1.AxisY.Interval = 10D;
-            chartArea1.AxisY.MajorGrid.Enabled = false;
-            chartArea1.AxisY2.MajorGrid.Enabled = false;
-            chartArea1.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.BorderColor = System.Drawing.Color.Transparent;
-            chartArea1.BorderWidth = 0;
-            chartArea1.Name = "ChartArea1";
-            this.chartRGB.ChartAreas.Add(chartArea1);
+            chartArea6.AxisX.CustomLabels.Add(customLabel11);
+            chartArea6.AxisX.MajorGrid.Enabled = false;
+            chartArea6.AxisX2.MajorGrid.Enabled = false;
+            chartArea6.AxisY.CustomLabels.Add(customLabel12);
+            chartArea6.AxisY.Interval = 10D;
+            chartArea6.AxisY.MajorGrid.Enabled = false;
+            chartArea6.AxisY2.MajorGrid.Enabled = false;
+            chartArea6.BackColor = System.Drawing.Color.Transparent;
+            chartArea6.BorderColor = System.Drawing.Color.Transparent;
+            chartArea6.BorderWidth = 0;
+            chartArea6.Name = "ChartArea1";
+            this.chartRGB.ChartAreas.Add(chartArea6);
             this.chartRGB.Location = new System.Drawing.Point(6, 19);
             this.chartRGB.Name = "chartRGB";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series1.Color = System.Drawing.Color.DarkGray;
-            series1.Name = "Series4";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Red;
-            series2.LabelFormat = "\"\"";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            series2.Points.Add(dataPoint1);
-            series2.SmartLabelStyle.Enabled = false;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series3.Legend = "Legend1";
-            series3.Name = "Series2";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Color = System.Drawing.Color.Blue;
-            series4.Legend = "Legend1";
-            series4.Name = "Series3";
-            this.chartRGB.Series.Add(series1);
-            this.chartRGB.Series.Add(series2);
-            this.chartRGB.Series.Add(series3);
-            this.chartRGB.Series.Add(series4);
+            series21.ChartArea = "ChartArea1";
+            series21.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series21.Color = System.Drawing.Color.DarkGray;
+            series21.Name = "Series4";
+            series22.ChartArea = "ChartArea1";
+            series22.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series22.Color = System.Drawing.Color.Red;
+            series22.LabelFormat = "\"\"";
+            series22.Legend = "Legend1";
+            series22.Name = "Series1";
+            series22.Points.Add(dataPoint6);
+            series22.SmartLabelStyle.Enabled = false;
+            series23.ChartArea = "ChartArea1";
+            series23.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series23.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            series23.Legend = "Legend1";
+            series23.Name = "Series2";
+            series24.ChartArea = "ChartArea1";
+            series24.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series24.Color = System.Drawing.Color.Blue;
+            series24.Legend = "Legend1";
+            series24.Name = "Series3";
+            this.chartRGB.Series.Add(series21);
+            this.chartRGB.Series.Add(series22);
+            this.chartRGB.Series.Add(series23);
+            this.chartRGB.Series.Add(series24);
             this.chartRGB.Size = new System.Drawing.Size(230, 125);
             this.chartRGB.TabIndex = 0;
             this.chartRGB.Text = "chart1";
@@ -391,28 +395,40 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Location = new System.Drawing.Point(12, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(264, 442);
+            this.panel1.Size = new System.Drawing.Size(264, 489);
             this.panel1.TabIndex = 13;
             // 
-            // label1
+            // statusStrip1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 484);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "Костыль";
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 519);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1184, 22);
+            this.statusStrip1.TabIndex = 14;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 10000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1141, 481);
+            this.ClientSize = new System.Drawing.Size(1184, 541);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
@@ -438,7 +454,8 @@
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartRGB)).EndInit();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -468,10 +485,12 @@
         private System.Windows.Forms.Button btnMoveRight;
         private System.Windows.Forms.Button btnMoveLeft;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartRGB;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

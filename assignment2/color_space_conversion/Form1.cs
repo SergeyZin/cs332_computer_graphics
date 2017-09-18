@@ -19,6 +19,7 @@ namespace color_space_conversion
         {
             InitializeComponent();
             DisableControls();
+            splitContainer1.SplitterDistance = splitContainer1.Width / 2;
             btnMoveLeft.Enabled = false;
             btnMoveRight.Enabled = false;
             radioButton1.Checked = true;
@@ -410,6 +411,12 @@ namespace color_space_conversion
             }
         }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            toolStripStatusLabel1.Text = "";
+            timer1.Stop();
+        }
+
         private void btnSubtract_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null && pictureBox2.Image != null && 
@@ -471,6 +478,11 @@ namespace color_space_conversion
                 pictureBox1.Refresh();
                 pictureBox2.Refresh();
                 refreshHistogram();
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = "Размеры изображений не совпадают!";
+                timer1.Start();
             }
         }
 
