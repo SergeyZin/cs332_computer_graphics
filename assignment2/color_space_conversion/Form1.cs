@@ -52,20 +52,16 @@ namespace color_space_conversion
                 throw new ApplicationException("Failed loading image");
             }
             EnableControls();
-            refreshHistogramRGB();
+            refreshHistogram();
         }
 
         private void refreshHistogram()
         {
-            refreshHistogramRGB();
-            refreshHistogramBrightness();
-        }
-
-        private void refreshHistogramRGB()
-        {
             chartRGB.Series[0].Points.Clear();
             chartRGB.Series[1].Points.Clear();
             chartRGB.Series[2].Points.Clear();
+            chartRGB.Series[3].Points.Clear();
+
             if (pictureBoxCurrent.Image != null)
             {
                 for (int i = 0; i < 256; i++)
@@ -73,55 +69,7 @@ namespace color_space_conversion
                     chartRGB.Series[0].Points.Add(0);
                     chartRGB.Series[1].Points.Add(0);
                     chartRGB.Series[2].Points.Add(0);
-                }
-            
-                Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
-
-                // Lock the bitmap's bits. 
-                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-                System.Drawing.Imaging.BitmapData bmpData =
-                    bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                    bmp.PixelFormat);
-
-                // Get the address of the first line.
-                IntPtr ptr = bmpData.Scan0;
-
-                // Declare an array to hold the bytes of the bitmap.
-                int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
-                byte[] rgbValues = new byte[bytes];
-
-                // Copy the RGB values into the array.
-                System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
-
-                // Set every third value to 255. A 24bpp bitmap will look red.  
-                for (int i = 0; i < rgbValues.Length; i += 3)
-                {
-                    chartRGB.Series[0].Points[rgbValues[i + 2]].YValues[0] += 1;
-                    chartRGB.Series[1].Points[rgbValues[i + 1]].YValues[0] += 1;
-                    chartRGB.Series[2].Points[rgbValues[i + 0]].YValues[0] += 1;
-                }
-                chartRGB.Series[0].Points[0].YValues[0] = 0;
-                chartRGB.Series[1].Points[0].YValues[0] = 0;
-                chartRGB.Series[2].Points[0].YValues[0] = 0;
-
-                // Copy the RGB values back to the bitmap
-                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
-
-                // Unlock the bits.
-                bmp.UnlockBits(bmpData);
-
-                pictureBoxCurrent.Refresh();
-            }
-        }
-
-        private void refreshHistogramBrightness()
-        {
-            chartBr.Series[0].Points.Clear();
-            if (pictureBoxCurrent.Image != null)
-            {
-                for (int i = 0; i < 256; i++)
-                {
-                    chartBr.Series[0].Points.Add(0);
+                    chartRGB.Series[3].Points.Add(0);
                 }
 
                 Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
@@ -146,9 +94,14 @@ namespace color_space_conversion
                 for (int i = 0; i < rgbValues.Length; i += 3)
                 {
                     int avg = (rgbValues[i + 0] + rgbValues[i + 1] + rgbValues[i + 2]) / 3;
-                    chartBr.Series[0].Points[avg].YValues[0] += 1;
+                    chartRGB.Series[0].Points[avg].YValues[0] += 1;
+                    chartRGB.Series[1].Points[rgbValues[i + 2]].YValues[0] += 1;
+                    chartRGB.Series[2].Points[rgbValues[i + 1]].YValues[0] += 1;
+                    chartRGB.Series[3].Points[rgbValues[i + 0]].YValues[0] += 1;
                 }
-                
+                chartRGB.Series[1].Points[0].YValues[0] = 0;
+                chartRGB.Series[2].Points[0].YValues[0] = 0;
+                chartRGB.Series[3].Points[0].YValues[0] = 0;
 
                 // Copy the RGB values back to the bitmap
                 System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
@@ -165,7 +118,6 @@ namespace color_space_conversion
             groupBox1.Enabled = true;
             groupBox2.Enabled = true;
             groupBox3.Enabled = true;
-            groupBox4.Enabled = true;
         }
 
         private void DisableControls()
@@ -173,7 +125,6 @@ namespace color_space_conversion
             groupBox1.Enabled = false;
             groupBox2.Enabled = false;
             groupBox3.Enabled = false;
-            groupBox4.Enabled = false;
         }
 
         private void btnRed_Click(object sender, EventArgs e)
@@ -300,6 +251,7 @@ namespace color_space_conversion
                 pictureBox2.Image = (Image)pictureBox1.Image.Clone();
                 g2 = Graphics.FromImage(pictureBox2.Image);
                 pictureBox2.Refresh();
+                refreshHistogram();
                 btnMoveLeft.Enabled = true;
             }
         }
@@ -311,6 +263,7 @@ namespace color_space_conversion
                 pictureBox1.Image = (Image)pictureBox2.Image.Clone();
                 g1 = Graphics.FromImage(pictureBox1.Image);
                 pictureBox1.Refresh();
+                refreshHistogram();
                 btnMoveRight.Enabled = true;
             }
         }
