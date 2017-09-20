@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel3 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel4 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel1 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel2 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,10 +57,10 @@
             this.btnBW1 = new System.Windows.Forms.Button();
             this.trackBarHue = new System.Windows.Forms.TrackBar();
             this.groupBoxHSV = new System.Windows.Forms.GroupBox();
+            this.btnReset = new System.Windows.Forms.Button();
             this.ValV = new System.Windows.Forms.Label();
             this.ValS = new System.Windows.Forms.Label();
             this.ValH = new System.Windows.Forms.Label();
-            this.SetHSV = new System.Windows.Forms.Button();
             this.trackBarVal = new System.Windows.Forms.TrackBar();
             this.trackBarSat = new System.Windows.Forms.TrackBar();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -311,13 +311,14 @@
             this.trackBarHue.TickFrequency = 10;
             this.trackBarHue.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.trackBarHue.ValueChanged += new System.EventHandler(this.trackBarHue_Scroll);
+            this.trackBarHue.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBarSat_MouseUp);
             // 
             // groupBoxHSV
             // 
+            this.groupBoxHSV.Controls.Add(this.btnReset);
             this.groupBoxHSV.Controls.Add(this.ValV);
             this.groupBoxHSV.Controls.Add(this.ValS);
             this.groupBoxHSV.Controls.Add(this.ValH);
-            this.groupBoxHSV.Controls.Add(this.SetHSV);
             this.groupBoxHSV.Controls.Add(this.trackBarVal);
             this.groupBoxHSV.Controls.Add(this.trackBarSat);
             this.groupBoxHSV.Controls.Add(this.trackBarHue);
@@ -327,7 +328,16 @@
             this.groupBoxHSV.TabIndex = 9;
             this.groupBoxHSV.TabStop = false;
             this.groupBoxHSV.Text = "HSV";
-            this.groupBoxHSV.Enter += new System.EventHandler(this.groupBoxHSV_Enter);
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(161, 170);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 15;
+            this.btnReset.Text = "Сброс";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // ValV
             // 
@@ -360,16 +370,6 @@
             this.ValH.Text = "0";
             this.ValH.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // SetHSV
-            // 
-            this.SetHSV.Location = new System.Drawing.Point(151, 170);
-            this.SetHSV.Name = "SetHSV";
-            this.SetHSV.Size = new System.Drawing.Size(85, 23);
-            this.SetHSV.TabIndex = 11;
-            this.SetHSV.Text = "Применить";
-            this.SetHSV.UseVisualStyleBackColor = true;
-            this.SetHSV.Click += new System.EventHandler(this.SetHSV_Click);
-            // 
             // trackBarVal
             // 
             this.trackBarVal.Location = new System.Drawing.Point(35, 121);
@@ -381,6 +381,7 @@
             this.trackBarVal.TickFrequency = 10;
             this.trackBarVal.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.trackBarVal.ValueChanged += new System.EventHandler(this.trackBarVal_Scroll);
+            this.trackBarVal.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBarSat_MouseUp);
             // 
             // trackBarSat
             // 
@@ -393,6 +394,7 @@
             this.trackBarSat.TickFrequency = 10;
             this.trackBarSat.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.trackBarSat.ValueChanged += new System.EventHandler(this.trackBarSat_Scroll);
+            this.trackBarSat.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBarSat_MouseUp);
             // 
             // groupBox3
             // 
@@ -407,46 +409,46 @@
             // chartRGB
             // 
             this.chartRGB.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.AxisX.CustomLabels.Add(customLabel3);
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.AxisX2.MajorGrid.Enabled = false;
-            chartArea2.AxisY.CustomLabels.Add(customLabel4);
-            chartArea2.AxisY.Interval = 10D;
-            chartArea2.AxisY.MajorGrid.Enabled = false;
-            chartArea2.AxisY2.MajorGrid.Enabled = false;
-            chartArea2.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.BorderColor = System.Drawing.Color.Transparent;
-            chartArea2.BorderWidth = 0;
-            chartArea2.Name = "ChartArea1";
-            this.chartRGB.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.CustomLabels.Add(customLabel1);
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisX2.MajorGrid.Enabled = false;
+            chartArea1.AxisY.CustomLabels.Add(customLabel2);
+            chartArea1.AxisY.Interval = 10D;
+            chartArea1.AxisY.MajorGrid.Enabled = false;
+            chartArea1.AxisY2.MajorGrid.Enabled = false;
+            chartArea1.BackColor = System.Drawing.Color.Transparent;
+            chartArea1.BorderColor = System.Drawing.Color.Transparent;
+            chartArea1.BorderWidth = 0;
+            chartArea1.Name = "ChartArea1";
+            this.chartRGB.ChartAreas.Add(chartArea1);
             this.chartRGB.Location = new System.Drawing.Point(6, 19);
             this.chartRGB.Name = "chartRGB";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series5.Color = System.Drawing.Color.DarkGray;
-            series5.Name = "Series4";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Color = System.Drawing.Color.Red;
-            series6.LabelFormat = "\"\"";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            series6.Points.Add(dataPoint2);
-            series6.SmartLabelStyle.Enabled = false;
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series7.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series7.Legend = "Legend1";
-            series7.Name = "Series2";
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series8.Color = System.Drawing.Color.Blue;
-            series8.Legend = "Legend1";
-            series8.Name = "Series3";
-            this.chartRGB.Series.Add(series5);
-            this.chartRGB.Series.Add(series6);
-            this.chartRGB.Series.Add(series7);
-            this.chartRGB.Series.Add(series8);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series1.Color = System.Drawing.Color.DarkGray;
+            series1.Name = "Series4";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Color = System.Drawing.Color.Red;
+            series2.LabelFormat = "\"\"";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            series2.Points.Add(dataPoint1);
+            series2.SmartLabelStyle.Enabled = false;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            series3.Legend = "Legend1";
+            series3.Name = "Series2";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Color = System.Drawing.Color.Blue;
+            series4.Legend = "Legend1";
+            series4.Name = "Series3";
+            this.chartRGB.Series.Add(series1);
+            this.chartRGB.Series.Add(series2);
+            this.chartRGB.Series.Add(series3);
+            this.chartRGB.Series.Add(series4);
             this.chartRGB.Size = new System.Drawing.Size(230, 125);
             this.chartRGB.TabIndex = 0;
             this.chartRGB.Text = "chart1";
@@ -552,10 +554,10 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Button SetHSV;
         private System.Windows.Forms.Label ValV;
         private System.Windows.Forms.Label ValS;
         private System.Windows.Forms.Label ValH;
-    }
+		private System.Windows.Forms.Button btnReset;
+	}
 }
 
