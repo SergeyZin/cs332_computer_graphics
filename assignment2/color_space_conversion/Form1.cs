@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,7 +29,6 @@ namespace color_space_conversion
             pictureBoxCurrent = pictureBox1;
         }
 
-        // открыть файл с изображением
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -60,7 +59,6 @@ namespace color_space_conversion
             refreshHistogram();
         }
 
-        // сохранить изображение в файл
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (pictureBoxCurrent.Image != null)
@@ -91,7 +89,6 @@ namespace color_space_conversion
 
         }
 
-        // обновить гистограмму
         private void refreshHistogram()
         {
             chartRGB.Series[0].Points.Clear();
@@ -111,7 +108,7 @@ namespace color_space_conversion
 
                 Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
-                // Lock the bitmap's bits. 
+                // Lock the bitmap's bits.
                 Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
                 System.Drawing.Imaging.BitmapData bmpData =
                     bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
@@ -127,7 +124,7 @@ namespace color_space_conversion
                 // Copy the RGB values into the array.
                 System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-                // Set every third value to 255. A 24bpp bitmap will look red.  
+                // Set every third value to 255. A 24bpp bitmap will look red.
                 for (int i = 0; i < rgbValues.Length; i += 3)
                 {
                     int avg = (rgbValues[i + 0] + rgbValues[i + 1] + rgbValues[i + 2]) / 3;
@@ -150,7 +147,6 @@ namespace color_space_conversion
             }
         }
 
-        // включить элементы управления
         private void EnableControls()
         {
             groupBox1.Enabled = true;
@@ -158,7 +154,6 @@ namespace color_space_conversion
             groupBox3.Enabled = true;
         }
 
-        // выклчючить элементы управления
         private void DisableControls()
         {
             groupBox1.Enabled = false;
@@ -166,14 +161,13 @@ namespace color_space_conversion
             groupBox3.Enabled = false;
         }
 
-        // выделить красный канал
         private void btnRed_Click(object sender, EventArgs e)
         {
             if (pictureBoxCurrent.Image != null)
             {
                 Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
-                // Lock the bitmap's bits. 
+                // Lock the bitmap's bits.
                 Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
                 System.Drawing.Imaging.BitmapData bmpData =
                     bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
@@ -189,7 +183,7 @@ namespace color_space_conversion
                 // Copy the RGB values into the array.
                 System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-                // Set every third value to 255. A 24bpp bitmap will look red.  
+                // Set every third value to 255. A 24bpp bitmap will look red.
                 for (int i = 0; i < rgbValues.Length; i += 3)
                 {
                     rgbValues[i + 0] = 0;
@@ -206,14 +200,13 @@ namespace color_space_conversion
             }
         }
 
-        // выделить зеленый канал
         private void btnGreen_Click(object sender, EventArgs e)
         {
             if (pictureBoxCurrent.Image != null)
             {
                 Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
-                // Lock the bitmap's bits. 
+                // Lock the bitmap's bits.
                 Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
                 System.Drawing.Imaging.BitmapData bmpData =
                     bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
@@ -229,7 +222,7 @@ namespace color_space_conversion
                 // Copy the RGB values into the array.
                 System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-                // Set every third value to 255. A 24bpp bitmap will look red.  
+                // Set every third value to 255. A 24bpp bitmap will look red.
                 for (int i = 0; i < rgbValues.Length; i += 3)
                 {
                     rgbValues[i + 0] = 0;
@@ -246,14 +239,13 @@ namespace color_space_conversion
             }
         }
 
-        // выделить синий канал
         private void btnBlue_Click(object sender, EventArgs e)
         {
             if (pictureBoxCurrent.Image != null)
             {
                 Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
-                // Lock the bitmap's bits. 
+                // Lock the bitmap's bits.
                 Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
                 System.Drawing.Imaging.BitmapData bmpData =
                     bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
@@ -269,7 +261,7 @@ namespace color_space_conversion
                 // Copy the RGB values into the array.
                 System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-                // Set every third value to 255. A 24bpp bitmap will look red.  
+                // Set every third value to 255. A 24bpp bitmap will look red.
                 for (int i = 0; i < rgbValues.Length; i += 3)
                 {
                     rgbValues[i + 1] = 0;
@@ -286,7 +278,6 @@ namespace color_space_conversion
             }
         }
 
-        // копировать изображение в правый pictureBox
         private void btnMoveRight_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -299,7 +290,6 @@ namespace color_space_conversion
             }
         }
 
-        // копировать изображение в левый pictureBox
         private void btnMoveLeft_Click(object sender, EventArgs e)
         {
             if (pictureBox2.Image != null)
@@ -312,7 +302,6 @@ namespace color_space_conversion
             }
         }
 
-        // сделать активным левый pictureBox
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton1.Checked)
@@ -323,7 +312,6 @@ namespace color_space_conversion
             }
         }
 
-        // сделать активным правый pictureBox
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton2.Checked)
@@ -344,14 +332,13 @@ namespace color_space_conversion
             radioButton2.Checked = true;
         }
 
-        // преобразовать в оттенки серого с равными весами
         private void btnBW1_Click(object sender, EventArgs e)
         {
             if (pictureBoxCurrent.Image != null)
             {
                 Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
-                // Lock the bitmap's bits. 
+                // Lock the bitmap's bits.
                 Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
                 System.Drawing.Imaging.BitmapData bmpData =
                     bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
@@ -367,7 +354,7 @@ namespace color_space_conversion
                 // Copy the RGB values into the array.
                 System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-                // Set every third value to 255. A 24bpp bitmap will look red.  
+                // Set every third value to 255. A 24bpp bitmap will look red.
                 for (int i = 0; i < rgbValues.Length; i += 3)
                 {
                     int avg = (rgbValues[i + 0] + rgbValues[i + 1] + rgbValues[i + 2]) / 3;
@@ -386,14 +373,13 @@ namespace color_space_conversion
             }
         }
 
-        // преобразовать в оттенки серого с учетом весов
         private void btnBW2_Click(object sender, EventArgs e)
         {
             if (pictureBoxCurrent.Image != null)
             {
                 Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
-                // Lock the bitmap's bits. 
+                // Lock the bitmap's bits.
                 Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
                 System.Drawing.Imaging.BitmapData bmpData =
                     bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
@@ -409,7 +395,7 @@ namespace color_space_conversion
                 // Copy the RGB values into the array.
                 System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-                // Set every third value to 255. A 24bpp bitmap will look red.  
+                // Set every third value to 255. A 24bpp bitmap will look red.
                 for (int i = 0; i < rgbValues.Length; i += 3)
                 {
                     int gray = Convert.ToInt32(0.0722 * rgbValues[i + 0] + 0.7152 * rgbValues[i + 1] + 0.2126 * rgbValues[i + 2]);
@@ -434,7 +420,6 @@ namespace color_space_conversion
             timer1.Stop();
         }
 
-        // конвертировать из rgb в hsv
         private void convertRGBToHSV(int rr, int gg, int bb, ref int hh, ref int ss, ref int vv)
         {
             double h = 0;
@@ -471,7 +456,6 @@ namespace color_space_conversion
             vv = Convert.ToInt32(v * 255);
         }
 
-        // конвертировать из hsv в rgb
         private void convertHSVToRGB(int hh, int ss, int vv, ref int rr, ref int gg, ref int bb)
         {
             double r = 0;
@@ -524,22 +508,20 @@ namespace color_space_conversion
             rr = Convert.ToInt32(r / 100 * 255);
             gg = Convert.ToInt32(g / 100 * 255);
             bb = Convert.ToInt32(b / 100 * 255);
-        }            
-
+        }
 
         private void groupBoxHSV_Enter(object sender, EventArgs e)
         {
-           //            
+           //
         }
 
-        // применить настройки для hsv
         private void SetHSV_Click(object sender, EventArgs e)
         {
             if (pictureBoxCurrent.Image != null)
             {
                 Bitmap bmp = pictureBoxCurrent.Image as Bitmap;
 
-                // Lock the bitmap's bits. 
+                // Lock the bitmap's bits.
                 Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
                 System.Drawing.Imaging.BitmapData bmpData =
                     bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
@@ -622,10 +604,9 @@ namespace color_space_conversion
             ValV.Text = Convert.ToString(trackBarVal.Value);
         }
 
-        // разность между изображениями
         private void btnSubtract_Click(object sender, EventArgs e)
         {
-            if (pictureBox1.Image != null && pictureBox2.Image != null && 
+            if (pictureBox1.Image != null && pictureBox2.Image != null &&
                 pictureBox1.Image.Width == pictureBox2.Image.Width &&
                 pictureBox1.Image.Height == pictureBox2.Image.Height)
             {
@@ -636,7 +617,7 @@ namespace color_space_conversion
                 else
                     bmp2 = pictureBox1.Image as Bitmap;
 
-                // Lock the bitmap's bits. 
+                // Lock the bitmap's bits.
                 Rectangle rect1 = new Rectangle(0, 0, bmp1.Width, bmp1.Height);
                 System.Drawing.Imaging.BitmapData bmpData1 =
                     bmp1.LockBits(rect1, System.Drawing.Imaging.ImageLockMode.ReadWrite,
@@ -662,7 +643,7 @@ namespace color_space_conversion
                 System.Runtime.InteropServices.Marshal.Copy(ptr1, rgbValues1, 0, bytes1);
                 System.Runtime.InteropServices.Marshal.Copy(ptr2, rgbValues2, 0, bytes2);
 
-                // Set every third value to 255. A 24bpp bitmap will look red.  
+                // Set every third value to 255. A 24bpp bitmap will look red.
                 for (int i = 0; i < rgbValues1.Length; i += 3)
                 {
                     int bDiff = Math.Abs(rgbValues1[i + 0] - rgbValues2[i + 0]);
