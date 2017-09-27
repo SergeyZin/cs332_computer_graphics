@@ -16,7 +16,7 @@ namespace raster_algorithms
         private Graphics g;
         Point lastPoint = Point.Empty;
         bool isMouseDown = false;
-
+        Color floodColor = Color.Wheat;
 
         public Form1()
         {
@@ -50,7 +50,6 @@ namespace raster_algorithms
                         g.DrawLine(new Pen(Color.Black, 2), lastPoint, e.Location);
                         g.SmoothingMode = SmoothingMode.AntiAlias;
                         
-
                     }
 
                     pictureBox1.Invalidate(); //refreshes the picturebox
@@ -66,6 +65,36 @@ namespace raster_algorithms
         {
             isMouseDown = false;
             lastPoint = Point.Empty;
+        }
+
+        private void chooseColorBtn_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDlg = new ColorDialog();
+            if (colorDlg.ShowDialog() == DialogResult.OK)
+            {
+                floodColor = colorDlg.Color;
+            }
+        }
+
+        private void chooseImageBtn_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Filter =
+                "Image Files(*.BMP;*.JPG;*.JPEG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    image = new Bitmap(openDialog.FileName);
+                    sourcePictureBox.Image = image;
+                    sourcePictureBox.Invalidate();
+                }
+                catch
+                {
+                    DialogResult rezult = MessageBox.Show("Невозможно открыть выбранный файл",
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
