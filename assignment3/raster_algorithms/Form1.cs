@@ -17,6 +17,7 @@ namespace raster_algorithms
         Point lastPoint = Point.Empty;
         bool isMouseDown = false;
         Color floodColor = Color.Wheat;
+        private static Color borderColor = Color.Black;
 
         public Form1()
         {
@@ -47,7 +48,7 @@ namespace raster_algorithms
 
                     using (Graphics g = Graphics.FromImage(pictureBox1.Image))
                     {
-                        g.DrawLine(new Pen(Color.Black, 2), lastPoint, e.Location);
+                        g.DrawLine(new Pen(borderColor, 2), lastPoint, e.Location);
                         g.SmoothingMode = SmoothingMode.AntiAlias;
                         
                     }
@@ -67,6 +68,13 @@ namespace raster_algorithms
             lastPoint = Point.Empty;
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            MouseEventArgs m = (MouseEventArgs)e;
+            Point p = m.Location;
+            //simpleFloodFill(p);
+        }
+
         private void chooseColorBtn_Click(object sender, EventArgs e)
         {
             ColorDialog colorDlg = new ColorDialog();
@@ -84,10 +92,8 @@ namespace raster_algorithms
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 try
-                {
-                    image = new Bitmap(openDialog.FileName);
-                    sourcePictureBox.Image = image;
-                    sourcePictureBox.Invalidate();
+                {                    
+                    // тут, вестимо, функция Гриши с обработкой файла
                 }
                 catch
                 {
@@ -96,5 +102,22 @@ namespace raster_algorithms
                 }
             }
         }
+
+        private void floodRedrawBtn_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void exitBtn_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
+
+        private Color getColorAt(Point point)
+        {
+            return ((Bitmap)pictureBox1.Image).GetPixel(point.X, point.Y);
+        }
+
+       
     }
 }
