@@ -33,6 +33,8 @@
             this.chooseImageBtn = new System.Windows.Forms.Button();
             this.exitBtn = new System.Windows.Forms.Button();
             this.floodRedrawBtn = new System.Windows.Forms.Button();
+            this.floodFIllBtn = new System.Windows.Forms.Button();
+            this.penBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,7 +43,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(16, 32);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(809, 399);
+            this.pictureBox1.Size = new System.Drawing.Size(830, 504);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -51,7 +53,7 @@
             // 
             // chooseColorBtn
             // 
-            this.chooseColorBtn.Location = new System.Drawing.Point(889, 32);
+            this.chooseColorBtn.Location = new System.Drawing.Point(889, 204);
             this.chooseColorBtn.Name = "chooseColorBtn";
             this.chooseColorBtn.Size = new System.Drawing.Size(145, 54);
             this.chooseColorBtn.TabIndex = 1;
@@ -61,7 +63,7 @@
             // 
             // chooseImageBtn
             // 
-            this.chooseImageBtn.Location = new System.Drawing.Point(889, 142);
+            this.chooseImageBtn.Location = new System.Drawing.Point(889, 289);
             this.chooseImageBtn.Name = "chooseImageBtn";
             this.chooseImageBtn.Size = new System.Drawing.Size(145, 54);
             this.chooseImageBtn.TabIndex = 2;
@@ -71,7 +73,7 @@
             // 
             // exitBtn
             // 
-            this.exitBtn.Location = new System.Drawing.Point(889, 377);
+            this.exitBtn.Location = new System.Drawing.Point(889, 454);
             this.exitBtn.Name = "exitBtn";
             this.exitBtn.Size = new System.Drawing.Size(145, 54);
             this.exitBtn.TabIndex = 3;
@@ -81,7 +83,7 @@
             // 
             // floodRedrawBtn
             // 
-            this.floodRedrawBtn.Location = new System.Drawing.Point(889, 259);
+            this.floodRedrawBtn.Location = new System.Drawing.Point(889, 376);
             this.floodRedrawBtn.Name = "floodRedrawBtn";
             this.floodRedrawBtn.Size = new System.Drawing.Size(145, 54);
             this.floodRedrawBtn.TabIndex = 4;
@@ -89,11 +91,33 @@
             this.floodRedrawBtn.UseVisualStyleBackColor = true;
             this.floodRedrawBtn.Click += new System.EventHandler(this.floodRedrawBtn_Click);
             // 
+            // floodFIllBtn
+            // 
+            this.floodFIllBtn.Location = new System.Drawing.Point(889, 109);
+            this.floodFIllBtn.Name = "floodFIllBtn";
+            this.floodFIllBtn.Size = new System.Drawing.Size(145, 32);
+            this.floodFIllBtn.TabIndex = 6;
+            this.floodFIllBtn.Text = "Заливка";
+            this.floodFIllBtn.UseVisualStyleBackColor = true;
+            this.floodFIllBtn.Click += new System.EventHandler(this.floodFIllBtn_Click);
+            // 
+            // penBtn
+            // 
+            this.penBtn.Location = new System.Drawing.Point(889, 52);
+            this.penBtn.Name = "penBtn";
+            this.penBtn.Size = new System.Drawing.Size(145, 32);
+            this.penBtn.TabIndex = 7;
+            this.penBtn.Text = "Карандаш";
+            this.penBtn.UseVisualStyleBackColor = true;
+            this.penBtn.Click += new System.EventHandler(this.penBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1094, 486);
+            this.ClientSize = new System.Drawing.Size(1079, 564);
+            this.Controls.Add(this.penBtn);
+            this.Controls.Add(this.floodFIllBtn);
             this.Controls.Add(this.floodRedrawBtn);
             this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.chooseImageBtn);
@@ -114,6 +138,8 @@
         private System.Windows.Forms.Button chooseImageBtn;
         private System.Windows.Forms.Button exitBtn;
         private System.Windows.Forms.Button floodRedrawBtn;
+        private System.Windows.Forms.Button floodFIllBtn;
+        private System.Windows.Forms.Button penBtn;
     }
 }
 

@@ -16,8 +16,10 @@ namespace raster_algorithms
         private Graphics g;
         Point lastPoint = Point.Empty;
         bool isMouseDown = false;
-        Color floodColor = Color.Wheat;
-        private static Color borderColor = Color.Black;
+        Color floodColor;        
+        Color borderColor;
+        Pen pencil;
+        private bool floodFlag = false;
 
         public Form1()
         {
@@ -25,6 +27,8 @@ namespace raster_algorithms
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(pictureBox1.Image);
             g.Clear(Color.White);
+            borderColor = Color.FromArgb(255, 0, 0, 0);
+            g.DrawRectangle(new Pen(borderColor, 2), 5, 5, 50, 50);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -48,17 +52,15 @@ namespace raster_algorithms
 
                     using (Graphics g = Graphics.FromImage(pictureBox1.Image))
                     {
-                        g.DrawLine(new Pen(borderColor, 2), lastPoint, e.Location);
+                        g.DrawLine(pencil, lastPoint, e.Location);
                         g.SmoothingMode = SmoothingMode.AntiAlias;
                         
                     }
 
                     pictureBox1.Invalidate(); //refreshes the picturebox
-
                     lastPoint = e.Location;//keep assigning the lastPoint to the current mouse position
 
-                }
-
+                }            
             }
         }
 
@@ -70,9 +72,24 @@ namespace raster_algorithms
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            MouseEventArgs m = (MouseEventArgs)e;
-            Point p = m.Location;
-            //simpleFloodFill(p);
+            if (floodFlag)
+            {
+                MouseEventArgs m = (MouseEventArgs)e;
+                Point p = m.Location;
+                simpleFloodFill(p);
+            }                
+        }
+
+        private void penBtn_Click(object sender, EventArgs e)
+        {
+            floodFlag = false;
+            pencil = new Pen(borderColor, 2);
+        }
+
+        private void floodFIllBtn_Click(object sender, EventArgs e)
+        {
+            floodFlag = true;
+            pencil = new Pen(floodColor, 2);
         }
 
         private void chooseColorBtn_Click(object sender, EventArgs e)
@@ -118,6 +135,46 @@ namespace raster_algorithms
             return ((Bitmap)pictureBox1.Image).GetPixel(point.X, point.Y);
         }
 
-       
+        
+        //заливка выбранным цветом
+        private void simpleFloodFill(Point p)
+        {
+            Color curr = getColorAt(p);
+            Point leftPoint = p;
+            Point rightPoint = p;
+            if (curr != borderColor && curr != floodColor)
+            {
+                while (curr != borderColor)
+                {
+                    leftPoint.X -= 1;
+                    curr = getColorAt(leftPoint);
+                }
+                leftPoint.X += 1;
+                curr = getColorAt(leftPoint);
+                while (curr != borderColor)
+                {
+                    rightPoint.X += 1;
+                    curr = getColorAt(rightPoint);
+                }
+                rightPoint.X -= 1;
+                g.DrawLine(new Pen(floodColor, 1), leftPoint, rightPoint);
+
+                for (int i = leftPoint.X; i <= rightPoint.X; ++i)
+                {
+                    Point upPoint = new Point(i, p.Y + 1);
+                    Color upC = getColorAt(upPoint);
+                    if (upC.ToArgb() != borderColor.ToArgb() && upC.ToArgb() != floodColor.ToArgb())
+                        simpleFloodFill(upPoint);
+                }
+                for (int i = leftPoint.X; i < rightPoint.X; ++i)
+                {
+                    Point downPoint = new Point(i, p.Y - 1);
+                    Color downC = getColorAt(downPoint);
+                    if (downC.ToArgb() != borderColor.ToArgb() && downC.ToArgb() != floodColor.ToArgb())
+                        simpleFloodFill(downPoint);
+                }
+                return;
+            }
+        }
     }
 }
