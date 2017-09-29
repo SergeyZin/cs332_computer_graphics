@@ -21,8 +21,8 @@ namespace raster_algorithms
         Color fillColor = Color.Green;        
         Pen borderPen;
         Pen fillPen;
-        Image fillImage;
-        List<Point> filledPoints = new List<Point>();
+        TextureBrush textureBrush;
+        HashSet<Point> filledPoints = new HashSet<Point>();
 
         public Form1()
         {
@@ -39,7 +39,6 @@ namespace raster_algorithms
             radioPen.Checked = true;
 
             g.DrawRectangle(new Pen(borderColor, 2), 5, 5, 200, 200);
-            g.DrawRectangle(borderPen, 10, 10, 0, 0);
 
         }
 
@@ -120,8 +119,9 @@ namespace raster_algorithms
             {
                 try
                 {
-                    fillImage = Image.FromFile(openDialog.FileName);
-                    pictureBox2.Image = fillImage;
+                    Image img = Image.FromFile(openDialog.FileName);
+                    pictureBox2.Image = (Image)img.Clone();
+                    textureBrush = new TextureBrush(img);
                 }
                 catch
                 {
@@ -149,15 +149,6 @@ namespace raster_algorithms
             else
                 return Color.Black;
         }
-
-        private Color getColorAt(ref Image img, int x, int y)
-        {
-            if (x < img.Width && y < img.Height)
-                return ((Bitmap)img).GetPixel(x, y);
-            else
-                return Color.Black;
-        }
-
 
         private void simpleFloodFill(Point p)
         {
@@ -201,17 +192,14 @@ namespace raster_algorithms
 
         private void DrawHorizontalLineTexture(int x1, int x2, int y)
         {
+            g.FillRectangle(textureBrush, x1, y, Math.Abs(x2 - x1) + 1, 1);
             for (int i = x1; i <= x2; ++i)
-            {
-                Color c = getColorAt(ref fillImage, i % fillImage.Width, y % fillImage.Height);
-                g.FillRectangle(new SolidBrush(c), i, y, 1, 1);
                 filledPoints.Add(new Point(i, y));
-            }
         }
 
         private void textureFill(Point p)
         {
-            if (fillImage == null)
+            if (textureBrush == null)
                 loadFillImage();
             else
             {
@@ -219,7 +207,6 @@ namespace raster_algorithms
                 textureFill2(p);
             }
         }
-
 
         private void textureFill2(Point p)
         {
@@ -260,6 +247,7 @@ namespace raster_algorithms
             }
         }
 
+     
         private void radioPen_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
