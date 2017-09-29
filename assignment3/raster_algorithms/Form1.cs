@@ -22,6 +22,7 @@ namespace raster_algorithms
         Pen borderPen;
         Pen fillPen;
         Image fillImage;
+        List<Point> filledPoints = new List<Point>();
 
         public Form1()
         {
@@ -30,7 +31,6 @@ namespace raster_algorithms
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(pictureBox1.Image);
             g.Clear(Color.White);
-            g.SmoothingMode = SmoothingMode.AntiAlias;
 
             borderColorPan.BackColor = borderColor;
             fillColorPan.BackColor = fillColor;
@@ -38,7 +38,9 @@ namespace raster_algorithms
 
             radioPen.Checked = true;
 
-            g.DrawRectangle(new Pen(borderColor, 2), 5, 5, 50, 50);
+            g.DrawRectangle(new Pen(borderColor, 2), 5, 5, 200, 200);
+            g.DrawRectangle(borderPen, 10, 10, 0, 0);
+
         }
 
         private void update_pens()
@@ -136,31 +138,42 @@ namespace raster_algorithms
 
         private void floodRedrawBtn_Click(object sender, EventArgs e)
         {
-            
+            if (pictureBox1.ClientRectangle.Contains(new Point(0, 20)))
+                floodRedrawBtn.Visible = false;
         }
 
         private Color getColorAt(Point point)
         {
-            return ((Bitmap)pictureBox1.Image).GetPixel(point.X, point.Y);
+            if (pictureBox1.ClientRectangle.Contains(point))
+                return ((Bitmap)pictureBox1.Image).GetPixel(point.X, point.Y);
+            else
+                return Color.Black;
         }
 
-        
-        //заливка выбранным цветом
+        private Color getColorAt(ref Image img, int x, int y)
+        {
+            if (x < img.Width && y < img.Height)
+                return ((Bitmap)img).GetPixel(x, y);
+            else
+                return Color.Black;
+        }
+
+
         private void simpleFloodFill(Point p)
         {
             Color curr = getColorAt(p);
             Point leftPoint = p;
             Point rightPoint = p;
-            if (curr != borderColor && curr != fillColor)
+            if (curr != borderColor && curr != fillColor && pictureBox1.ClientRectangle.Contains(p))
             {
-                while (curr != borderColor)
+                while (curr != borderColor && pictureBox1.ClientRectangle.Contains(leftPoint))
                 {
                     leftPoint.X -= 1;
                     curr = getColorAt(leftPoint);
                 }
                 leftPoint.X += 1;
-                curr = getColorAt(leftPoint);
-                while (curr != borderColor)
+                curr = getColorAt(p);
+                while (curr != borderColor && pictureBox1.ClientRectangle.Contains(rightPoint))
                 {
                     rightPoint.X += 1;
                     curr = getColorAt(rightPoint);
@@ -172,23 +185,79 @@ namespace raster_algorithms
                 {
                     Point upPoint = new Point(i, p.Y + 1);
                     Color upC = getColorAt(upPoint);
-                    if (upC.ToArgb() != borderColor.ToArgb() && upC.ToArgb() != fillColor.ToArgb())
+                    if (upC.ToArgb() != borderColor.ToArgb() && upC.ToArgb() != fillColor.ToArgb() && pictureBox1.ClientRectangle.Contains(upPoint))
                         simpleFloodFill(upPoint);
                 }
                 for (int i = leftPoint.X; i < rightPoint.X; ++i)
                 {
                     Point downPoint = new Point(i, p.Y - 1);
                     Color downC = getColorAt(downPoint);
-                    if (downC.ToArgb() != borderColor.ToArgb() && downC.ToArgb() != fillColor.ToArgb())
+                    if (downC.ToArgb() != borderColor.ToArgb() && downC.ToArgb() != fillColor.ToArgb() && pictureBox1.ClientRectangle.Contains(downPoint))
                         simpleFloodFill(downPoint);
                 }
                 return;
             }
         }
 
+        private void DrawHorizontalLineTexture(int x1, int x2, int y)
+        {
+            for (int i = x1; i <= x2; ++i)
+            {
+                Color c = getColorAt(ref fillImage, i % fillImage.Width, y % fillImage.Height);
+                g.FillRectangle(new SolidBrush(c), i, y, 1, 1);
+                filledPoints.Add(new Point(i, y));
+            }
+        }
+
         private void textureFill(Point p)
         {
+            if (fillImage == null)
+                loadFillImage();
+            else
+            {
+                filledPoints.Clear();
+                textureFill2(p);
+            }
+        }
 
+
+        private void textureFill2(Point p)
+        {
+            Color curr = getColorAt(p);
+            Point leftPoint = p;
+            Point rightPoint = p;
+            if (!filledPoints.Contains(p) && pictureBox1.ClientRectangle.Contains(p) && curr != borderColor)
+            {
+                while (curr != borderColor && pictureBox1.ClientRectangle.Contains(leftPoint))
+                {
+                    leftPoint.X -= 1;
+                    curr = getColorAt(leftPoint);
+                }
+                leftPoint.X += 1;
+                curr = getColorAt(p);
+                while (curr != borderColor && pictureBox1.ClientRectangle.Contains(rightPoint))
+                {
+                    rightPoint.X += 1;
+                    curr = getColorAt(rightPoint);
+                }
+                rightPoint.X -= 1;
+                DrawHorizontalLineTexture(leftPoint.X, rightPoint.X, leftPoint.Y);
+                for (int i = leftPoint.X; i <= rightPoint.X; ++i)
+                {
+                    Point upPoint = new Point(i, p.Y + 1);
+                    Color upC = getColorAt(upPoint);
+                    if (!filledPoints.Contains(upPoint) && upC.ToArgb() != borderColor.ToArgb() && pictureBox1.ClientRectangle.Contains(upPoint))
+                        textureFill2(upPoint);
+                }
+                for (int i = leftPoint.X; i < rightPoint.X; ++i)
+                {
+                    Point downPoint = new Point(i, p.Y - 1);
+                    Color downC = getColorAt(downPoint);
+                    if (!filledPoints.Contains(downPoint) && downC.ToArgb() != borderColor.ToArgb() && pictureBox1.ClientRectangle.Contains(downPoint))
+                        textureFill2(downPoint);
+                }
+                return;
+            }
         }
 
         private void radioPen_CheckedChanged(object sender, EventArgs e)
