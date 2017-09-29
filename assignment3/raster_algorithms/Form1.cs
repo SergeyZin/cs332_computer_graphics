@@ -16,19 +16,35 @@ namespace raster_algorithms
         private Graphics g;
         Point lastPoint = Point.Empty;
         bool isMouseDown = false;
-        Color floodColor;        
-        Color borderColor;
-        Pen pencil;
-        private bool floodFlag = false;
+        int penThickness = 1;
+        Color borderColor = Color.FromArgb(255, 0, 0, 0);
+        Color fillColor = Color.Green;        
+        Pen borderPen;
+        Pen fillPen;
+        Image fillImage;
 
         public Form1()
         {
             InitializeComponent();
+
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(pictureBox1.Image);
             g.Clear(Color.White);
-            borderColor = Color.FromArgb(255, 0, 0, 0);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            borderColorPan.BackColor = borderColor;
+            fillColorPan.BackColor = fillColor;
+            update_pens();
+
+            radioPen.Checked = true;
+
             g.DrawRectangle(new Pen(borderColor, 2), 5, 5, 50, 50);
+        }
+
+        private void update_pens()
+        {
+            borderPen = new Pen(borderColor, penThickness);
+            fillPen = new Pen(fillColor, 1);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -39,28 +55,11 @@ namespace raster_algorithms
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isMouseDown == true)//check to see if the mouse button is down
+            if (isMouseDown && radioPen.Checked && lastPoint != null)
             {
-                if (lastPoint != null)//if our last point is not null, which in this case we have assigned above
-                {
-                    if (pictureBox1.Image == null)//if no available bitmap exists on the picturebox to draw on
-                    {
-                        //create a new bitmap
-                        Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-                        pictureBox1.Image = bmp; //assign the picturebox.Image property to the bitmap created
-                    }
-
-                    using (Graphics g = Graphics.FromImage(pictureBox1.Image))
-                    {
-                        g.DrawLine(pencil, lastPoint, e.Location);
-                        g.SmoothingMode = SmoothingMode.AntiAlias;
-                        
-                    }
-
-                    pictureBox1.Invalidate(); //refreshes the picturebox
-                    lastPoint = e.Location;//keep assigning the lastPoint to the current mouse position
-
-                }            
+                    g.DrawLine(borderPen, lastPoint, e.Location);
+                    lastPoint = e.Location; //keep assigning the lastPoint to the current mouse position
+                    pictureBox1.Invalidate();    
             }
         }
 
@@ -72,24 +71,31 @@ namespace raster_algorithms
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            if (floodFlag)
+            if (radioFillColor.Checked)
             {
                 MouseEventArgs m = (MouseEventArgs)e;
                 Point p = m.Location;
                 simpleFloodFill(p);
-            }                
+                pictureBox1.Invalidate();
+            }
+            if (radioFillTexture.Checked)
+            {
+                MouseEventArgs m = (MouseEventArgs)e;
+                Point p = m.Location;
+                textureFill(p);
+                pictureBox1.Invalidate();
+            }
         }
 
-        private void penBtn_Click(object sender, EventArgs e)
+        private void chooseBorderColorBtn_Click(object sender, EventArgs e)
         {
-            floodFlag = false;
-            pencil = new Pen(borderColor, 2);
-        }
-
-        private void floodFIllBtn_Click(object sender, EventArgs e)
-        {
-            floodFlag = true;
-            pencil = new Pen(floodColor, 2);
+            ColorDialog colorDlg = new ColorDialog();
+            if (colorDlg.ShowDialog() == DialogResult.OK)
+            {
+                borderColor = colorDlg.Color;
+                borderColorPan.BackColor = colorDlg.Color;
+                update_pens();
+            }
         }
 
         private void chooseColorBtn_Click(object sender, EventArgs e)
@@ -97,11 +103,13 @@ namespace raster_algorithms
             ColorDialog colorDlg = new ColorDialog();
             if (colorDlg.ShowDialog() == DialogResult.OK)
             {
-                floodColor = colorDlg.Color;
+                fillColor = colorDlg.Color;
+                fillColorPan.BackColor = colorDlg.Color;
+                update_pens();
             }
         }
 
-        private void chooseImageBtn_Click(object sender, EventArgs e)
+        private void loadFillImage()
         {
             OpenFileDialog openDialog = new OpenFileDialog();
             openDialog.Filter =
@@ -109,8 +117,9 @@ namespace raster_algorithms
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 try
-                {                    
-                    // тут, вестимо, функция Гриши с обработкой файла
+                {
+                    fillImage = Image.FromFile(openDialog.FileName);
+                    pictureBox2.Image = fillImage;
                 }
                 catch
                 {
@@ -120,14 +129,14 @@ namespace raster_algorithms
             }
         }
 
+        private void chooseImageBtn_Click(object sender, EventArgs e)
+        {
+            loadFillImage();
+        }
+
         private void floodRedrawBtn_Click(object sender, EventArgs e)
         {
             
-        }
-
-        private void exitBtn_Click(object sender, EventArgs e)
-        {
-            System.Windows.Forms.Application.Exit();
         }
 
         private Color getColorAt(Point point)
@@ -142,7 +151,7 @@ namespace raster_algorithms
             Color curr = getColorAt(p);
             Point leftPoint = p;
             Point rightPoint = p;
-            if (curr != borderColor && curr != floodColor)
+            if (curr != borderColor && curr != fillColor)
             {
                 while (curr != borderColor)
                 {
@@ -157,24 +166,55 @@ namespace raster_algorithms
                     curr = getColorAt(rightPoint);
                 }
                 rightPoint.X -= 1;
-                g.DrawLine(new Pen(floodColor, 1), leftPoint, rightPoint);
+                g.DrawLine(fillPen, leftPoint, rightPoint);
 
                 for (int i = leftPoint.X; i <= rightPoint.X; ++i)
                 {
                     Point upPoint = new Point(i, p.Y + 1);
                     Color upC = getColorAt(upPoint);
-                    if (upC.ToArgb() != borderColor.ToArgb() && upC.ToArgb() != floodColor.ToArgb())
+                    if (upC.ToArgb() != borderColor.ToArgb() && upC.ToArgb() != fillColor.ToArgb())
                         simpleFloodFill(upPoint);
                 }
                 for (int i = leftPoint.X; i < rightPoint.X; ++i)
                 {
                     Point downPoint = new Point(i, p.Y - 1);
                     Color downC = getColorAt(downPoint);
-                    if (downC.ToArgb() != borderColor.ToArgb() && downC.ToArgb() != floodColor.ToArgb())
+                    if (downC.ToArgb() != borderColor.ToArgb() && downC.ToArgb() != fillColor.ToArgb())
                         simpleFloodFill(downPoint);
                 }
                 return;
             }
         }
+
+        private void textureFill(Point p)
+        {
+
+        }
+
+        private void radioPen_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+
+            }
+        }
+
+        private void radioFillColor_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+
+            }
+        }
+
+        private void radioFillTexture_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+
+            }
+        }
+
+
     }
 }
