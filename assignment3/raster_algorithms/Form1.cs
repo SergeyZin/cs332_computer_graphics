@@ -274,17 +274,13 @@ namespace raster_algorithms
             int y = mouseCoord.Y;
 
             Color bgColor = bmp.GetPixel(mouseCoord.X, mouseCoord.Y);
-            Color currColor = bgColor;
-            while (y > 1 && currColor.ToArgb() == bgColor.ToArgb())
+            Color currColor = bgColor;           
+            while (x < bmp.Width - 1 && currColor.ToArgb() == bgColor.ToArgb())
             {
-                while (x < bmp.Width - 1 && currColor.ToArgb() == bgColor.ToArgb())
-                {
-                    x++;
-                    currColor = bmp.GetPixel(x, y);
-                }
-                y--;
+                x++;
                 currColor = bmp.GetPixel(x, y);
             }
+             
             return new Point(x, y);
         }
 
