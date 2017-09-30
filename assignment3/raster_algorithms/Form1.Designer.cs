@@ -36,16 +36,19 @@
             this.radioFillTexture = new System.Windows.Forms.RadioButton();
             this.fillColorPan = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioSelectBorder = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chooseBorderColorBtn = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.borderColorPan = new System.Windows.Forms.Panel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.clearButton = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -123,14 +126,27 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioSelectBorder);
             this.groupBox1.Controls.Add(this.radioPen);
             this.groupBox1.Controls.Add(this.radioFillColor);
             this.groupBox1.Controls.Add(this.radioFillTexture);
             this.groupBox1.Location = new System.Drawing.Point(640, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 100);
+            this.groupBox1.Size = new System.Drawing.Size(154, 118);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
+            // 
+            // radioSelectBorder
+            // 
+            this.radioSelectBorder.AutoSize = true;
+            this.radioSelectBorder.Location = new System.Drawing.Point(6, 89);
+            this.radioSelectBorder.Name = "radioSelectBorder";
+            this.radioSelectBorder.Size = new System.Drawing.Size(128, 17);
+            this.radioSelectBorder.TabIndex = 11;
+            this.radioSelectBorder.TabStop = true;
+            this.radioSelectBorder.Text = "Выделение границы";
+            this.radioSelectBorder.UseVisualStyleBackColor = true;
+            this.radioSelectBorder.CheckedChanged += new System.EventHandler(this.radioSelectBorder_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -140,9 +156,9 @@
             this.groupBox2.Controls.Add(this.chooseColorBtn);
             this.groupBox2.Controls.Add(this.chooseImageBtn);
             this.groupBox2.Controls.Add(this.fillColorPan);
-            this.groupBox2.Location = new System.Drawing.Point(640, 118);
+            this.groupBox2.Location = new System.Drawing.Point(640, 136);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 118);
+            this.groupBox2.Size = new System.Drawing.Size(154, 118);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             // 
@@ -176,34 +192,44 @@
             this.borderColorPan.Size = new System.Drawing.Size(26, 26);
             this.borderColorPan.TabIndex = 13;
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(645, 253);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(119, 17);
-            this.checkBox1.TabIndex = 15;
-            this.checkBox1.Text = "Выделить границу";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(645, 292);
+            this.clearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearButton.Location = new System.Drawing.Point(708, 398);
             this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(109, 23);
+            this.clearButton.Size = new System.Drawing.Size(81, 23);
             this.clearButton.TabIndex = 16;
             this.clearButton.Text = "Очистить";
             this.clearButton.UseVisualStyleBackColor = true;
             this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(640, 277);
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(154, 45);
+            this.trackBar1.TabIndex = 17;
+            this.trackBar1.Value = 1;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(640, 261);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(85, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Толщина кисти";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 433);
+            this.ClientSize = new System.Drawing.Size(801, 433);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.clearButton);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
@@ -216,6 +242,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,8 +262,10 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button chooseBorderColorBtn;
         private System.Windows.Forms.Panel borderColorPan;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button clearButton;
+        private System.Windows.Forms.RadioButton radioSelectBorder;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Label label1;
     }
 }
 

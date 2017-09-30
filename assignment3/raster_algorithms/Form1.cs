@@ -85,10 +85,9 @@ namespace raster_algorithms
                 Point p = m.Location;
                 textureFill(p);
             }
-            if (checkBox1.Checked)
+            if (radioSelectBorder.Checked)
             {
-                selectBorder(Color.Red);
-                checkBox1.Checked = false;
+                selectBorder(borderColor);
             }
             pictureBox1.Invalidate();
 
@@ -248,23 +247,13 @@ namespace raster_algorithms
                 return;
             }
         }
-        
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+
+        private void radioSelectBorder_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked)
-            {
+            if (radioSelectBorder.Checked)
                 pictureBox1.Cursor = Cursors.Cross;
-                groupBox1.Enabled = false;
-                groupBox2.Enabled = false;
-                radioPen.Checked = false;
-            }
             else
-            {
                 pictureBox1.Cursor = Cursors.Default;
-                groupBox1.Enabled = true;
-                groupBox2.Enabled = true;
-                radioPen.Checked = true;
-            }
         }
 
         // найти точку, принадлежащую границе
@@ -342,6 +331,12 @@ namespace raster_algorithms
         {
             g.Clear(Color.White);
             pictureBox1.Invalidate();
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            penThickness = trackBar1.Value;
+            update_pens();
         }
     }
 }
