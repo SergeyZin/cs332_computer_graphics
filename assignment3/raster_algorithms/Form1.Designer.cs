@@ -31,7 +31,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.chooseColorBtn = new System.Windows.Forms.Button();
             this.chooseImageBtn = new System.Windows.Forms.Button();
-            this.floodRedrawBtn = new System.Windows.Forms.Button();
             this.radioPen = new System.Windows.Forms.RadioButton();
             this.radioFillColor = new System.Windows.Forms.RadioButton();
             this.radioFillTexture = new System.Windows.Forms.RadioButton();
@@ -41,7 +40,8 @@
             this.chooseBorderColorBtn = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.borderColorPan = new System.Windows.Forms.Panel();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.clearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -82,17 +82,6 @@
             this.chooseImageBtn.UseVisualStyleBackColor = true;
             this.chooseImageBtn.Click += new System.EventHandler(this.chooseImageBtn_Click);
             // 
-            // floodRedrawBtn
-            // 
-            this.floodRedrawBtn.Location = new System.Drawing.Point(646, 368);
-            this.floodRedrawBtn.Margin = new System.Windows.Forms.Padding(2);
-            this.floodRedrawBtn.Name = "floodRedrawBtn";
-            this.floodRedrawBtn.Size = new System.Drawing.Size(109, 44);
-            this.floodRedrawBtn.TabIndex = 4;
-            this.floodRedrawBtn.Text = "Прорисовать границу";
-            this.floodRedrawBtn.UseVisualStyleBackColor = true;
-            this.floodRedrawBtn.Click += new System.EventHandler(this.floodRedrawBtn_Click);
-            // 
             // radioPen
             // 
             this.radioPen.AutoSize = true;
@@ -102,7 +91,6 @@
             this.radioPen.TabIndex = 8;
             this.radioPen.Text = "Карандаш";
             this.radioPen.UseVisualStyleBackColor = true;
-            this.radioPen.CheckedChanged += new System.EventHandler(this.radioPen_CheckedChanged);
             // 
             // radioFillColor
             // 
@@ -113,7 +101,6 @@
             this.radioFillColor.TabIndex = 9;
             this.radioFillColor.Text = "Заливка цветом";
             this.radioFillColor.UseVisualStyleBackColor = true;
-            this.radioFillColor.CheckedChanged += new System.EventHandler(this.radioFillColor_CheckedChanged);
             // 
             // radioFillTexture
             // 
@@ -124,7 +111,6 @@
             this.radioFillTexture.TabIndex = 10;
             this.radioFillTexture.Text = "Заливка текстурой";
             this.radioFillTexture.UseVisualStyleBackColor = true;
-            this.radioFillTexture.CheckedChanged += new System.EventHandler(this.radioFillTexture_CheckedChanged);
             // 
             // fillColorPan
             // 
@@ -190,24 +176,36 @@
             this.borderColorPan.Size = new System.Drawing.Size(26, 26);
             this.borderColorPan.TabIndex = 13;
             // 
-            // groupBox3
+            // checkBox1
             // 
-            this.groupBox3.Location = new System.Drawing.Point(640, 242);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 100);
-            this.groupBox3.TabIndex = 14;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(645, 253);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(119, 17);
+            this.checkBox1.TabIndex = 15;
+            this.checkBox1.Text = "Выделить границу";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(645, 292);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(109, 23);
+            this.clearButton.TabIndex = 16;
+            this.clearButton.Text = "Очистить";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(853, 433);
-            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.clearButton);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.floodRedrawBtn);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -219,6 +217,7 @@
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -227,17 +226,17 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button chooseColorBtn;
         private System.Windows.Forms.Button chooseImageBtn;
-        private System.Windows.Forms.Button floodRedrawBtn;
         private System.Windows.Forms.RadioButton radioPen;
         private System.Windows.Forms.RadioButton radioFillColor;
         private System.Windows.Forms.RadioButton radioFillTexture;
         private System.Windows.Forms.Panel fillColorPan;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button chooseBorderColorBtn;
         private System.Windows.Forms.Panel borderColorPan;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button clearButton;
     }
 }
 

@@ -23,12 +23,15 @@ namespace raster_algorithms
         Pen fillPen;
         TextureBrush textureBrush;
         HashSet<Point> filledPoints = new HashSet<Point>();
+        Point mouseCoord;
+        Bitmap bmp;
 
         public Form1()
         {
             InitializeComponent();
 
-            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            pictureBox1.Image = bmp;
             g = Graphics.FromImage(pictureBox1.Image);
             g.Clear(Color.White);
 
@@ -37,9 +40,6 @@ namespace raster_algorithms
             update_pens();
 
             radioPen.Checked = true;
-
-            g.DrawRectangle(new Pen(borderColor, 2), 5, 5, 200, 200);
-
         }
 
         private void update_pens()
@@ -52,6 +52,7 @@ namespace raster_algorithms
         {
             lastPoint = e.Location;
             isMouseDown = true;
+            mouseCoord = e.Location;
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -59,7 +60,7 @@ namespace raster_algorithms
             if (isMouseDown && radioPen.Checked && lastPoint != null)
             {
                     g.DrawLine(borderPen, lastPoint, e.Location);
-                    lastPoint = e.Location; //keep assigning the lastPoint to the current mouse position
+                    lastPoint = e.Location; 
                     pictureBox1.Invalidate();    
             }
         }
@@ -77,15 +78,20 @@ namespace raster_algorithms
                 MouseEventArgs m = (MouseEventArgs)e;
                 Point p = m.Location;
                 simpleFloodFill(p);
-                pictureBox1.Invalidate();
             }
             if (radioFillTexture.Checked)
             {
                 MouseEventArgs m = (MouseEventArgs)e;
                 Point p = m.Location;
                 textureFill(p);
-                pictureBox1.Invalidate();
             }
+            if (checkBox1.Checked)
+            {
+                selectBorder(Color.Red);
+                checkBox1.Checked = false;
+            }
+            pictureBox1.Invalidate();
+
         }
 
         private void chooseBorderColorBtn_Click(object sender, EventArgs e)
@@ -136,12 +142,6 @@ namespace raster_algorithms
             loadFillImage();
         }
 
-        private void floodRedrawBtn_Click(object sender, EventArgs e)
-        {
-            if (pictureBox1.ClientRectangle.Contains(new Point(0, 20)))
-                floodRedrawBtn.Visible = false;
-        }
-
         private Color getColorAt(Point point)
         {
             if (pictureBox1.ClientRectangle.Contains(point))
@@ -150,6 +150,7 @@ namespace raster_algorithms
                 return Color.Black;
         }
 
+        // заливка цветом
         private void simpleFloodFill(Point p)
         {
             Color curr = getColorAt(p);
@@ -208,6 +209,7 @@ namespace raster_algorithms
             }
         }
 
+        // заливка текстурой
         private void textureFill2(Point p)
         {
             Color curr = getColorAt(p);
@@ -246,32 +248,100 @@ namespace raster_algorithms
                 return;
             }
         }
-
-     
-        private void radioPen_CheckedChanged(object sender, EventArgs e)
+        
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (((RadioButton)sender).Checked)
+            if (checkBox1.Checked)
             {
-
+                pictureBox1.Cursor = Cursors.Cross;
+                groupBox1.Enabled = false;
+                groupBox2.Enabled = false;
+                radioPen.Checked = false;
+            }
+            else
+            {
+                pictureBox1.Cursor = Cursors.Default;
+                groupBox1.Enabled = true;
+                groupBox2.Enabled = true;
+                radioPen.Checked = true;
             }
         }
 
-        private void radioFillColor_CheckedChanged(object sender, EventArgs e)
+        // найти точку, принадлежащую границе
+        private Point findStartPoint()
         {
-            if (((RadioButton)sender).Checked)
-            {
+            int x = mouseCoord.X;
+            int y = mouseCoord.Y;
 
+            Color bgColor = bmp.GetPixel(mouseCoord.X, mouseCoord.Y);
+            Color currColor = bgColor;
+            while (y > 1 && currColor.ToArgb() == bgColor.ToArgb())
+            {
+                while (x < bmp.Width - 1 && currColor.ToArgb() == bgColor.ToArgb())
+                {
+                    x++;
+                    currColor = bmp.GetPixel(x, y);
+                }
+                y--;
+                currColor = bmp.GetPixel(x, y);
             }
+            return new Point(x, y);
         }
 
-        private void radioFillTexture_CheckedChanged(object sender, EventArgs e)
+        // выделить границу
+        private void selectBorder(Color c)
         {
-            if (((RadioButton)sender).Checked)
-            {
+            LinkedList<Point> pixels = new LinkedList<Point>();
+            Point curr = findStartPoint();
+            Point start = curr;
+            pixels.AddLast(start);
+            Color borderColor = bmp.GetPixel(curr.X, curr.Y);
 
-            }
+            Point next = new Point();
+            int currDir = 6;
+            int nextDir = -1;
+            int moveTo = 0;
+            do
+            {
+                moveTo = (currDir - 2 + 8) % 8;
+                int mt = moveTo;
+                do
+                {
+                    next = curr;
+                    switch (moveTo)
+                    {
+                        case 0: next.X++; nextDir = 0; break;
+                        case 1: next.X++; next.Y--; nextDir = 1; break;
+                        case 2: next.Y--; nextDir = 2; break;
+                        case 3: next.X--; next.Y--; nextDir = 3; break;
+                        case 4: next.X--; nextDir = 4; break;
+                        case 5: next.X--; next.Y++; nextDir = 5; break;
+                        case 6: next.Y++; nextDir = 6; break;
+                        case 7: next.X++; next.Y++; nextDir = 7; break;
+                    }
+
+                    if (next == start)
+                        break;
+
+                    if (bmp.GetPixel(next.X, next.Y) == borderColor)
+                    {
+                        pixels.AddLast(next);
+                        curr = next;
+                        currDir = nextDir;
+                        break;
+                    }
+                    moveTo = (moveTo + 1) % 8;
+                } while (moveTo != mt);
+            } while (next != start);
+
+            foreach (var p in pixels)
+                bmp.SetPixel(p.X, p.Y, c);
         }
 
-
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            g.Clear(Color.White);
+            pictureBox1.Invalidate();
+        }
     }
 }
