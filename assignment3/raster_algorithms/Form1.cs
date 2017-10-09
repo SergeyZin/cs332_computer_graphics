@@ -87,7 +87,7 @@ namespace raster_algorithms
             }
             if (radioSelectBorder.Checked)
             {
-                selectBorder(borderColor);
+                selectBorder(Color.Red);
             }
             pictureBox1.Invalidate();
 
@@ -96,8 +96,9 @@ namespace raster_algorithms
         private void chooseBorderColorBtn_Click(object sender, EventArgs e)
         {
             ColorDialog colorDlg = new ColorDialog();
+            colorDlg.Color = borderColor;
             if (colorDlg.ShowDialog() == DialogResult.OK)
-            {
+            { 
                 borderColor = colorDlg.Color;
                 borderColorPan.BackColor = colorDlg.Color;
                 update_pens();
@@ -107,6 +108,8 @@ namespace raster_algorithms
         private void chooseColorBtn_Click(object sender, EventArgs e)
         {
             ColorDialog colorDlg = new ColorDialog();
+            colorDlg.Color = fillColor;
+
             if (colorDlg.ShowDialog() == DialogResult.OK)
             {
                 fillColor = colorDlg.Color;
@@ -264,7 +267,7 @@ namespace raster_algorithms
 
             Color bgColor = bmp.GetPixel(mouseCoord.X, mouseCoord.Y);
             Color currColor = bgColor;           
-            while (x < bmp.Width - 1 && currColor.ToArgb() == bgColor.ToArgb())
+            while (x < bmp.Width - 2 && currColor.ToArgb() == bgColor.ToArgb())
             {
                 x++;
                 currColor = bmp.GetPixel(x, y);
@@ -276,10 +279,10 @@ namespace raster_algorithms
         // выделить границу
         private void selectBorder(Color c)
         {
-            LinkedList<Point> pixels = new LinkedList<Point>();
+            List<Point> pixels = new List<Point>();
             Point curr = findStartPoint();
             Point start = curr;
-            pixels.AddLast(start);
+            pixels.Add(start);
             Color borderColor = bmp.GetPixel(curr.X, curr.Y);
 
             Point next = new Point();
@@ -310,7 +313,7 @@ namespace raster_algorithms
 
                     if (bmp.GetPixel(next.X, next.Y) == borderColor)
                     {
-                        pixels.AddLast(next);
+                        pixels.Add(next);
                         curr = next;
                         currDir = nextDir;
                         break;
@@ -321,6 +324,27 @@ namespace raster_algorithms
 
             foreach (var p in pixels)
                 bmp.SetPixel(p.X, p.Y, c);
+
+            pixels.Sort(compareY);
+            HashSet<Point> pixset = new HashSet<Point>();
+
+            foreach (var p in pixels)
+            {
+                pixset.Add(p);
+            }
+
+
+            Console.WriteLine(pixset.Count);
+            Console.WriteLine(pixels.Count);
+        }
+
+        private int compareY(Point p1, Point p2)
+        {
+            if (p1.Y < p2.Y)
+                return 1;
+            else if (p1.Y == p2.Y)
+                return 0;
+            return -1;
         }
 
         private void clearButton_Click(object sender, EventArgs e)
@@ -329,10 +353,9 @@ namespace raster_algorithms
             pictureBox1.Invalidate();
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void radioPen_CheckedChanged(object sender, EventArgs e)
         {
-            penThickness = trackBar1.Value;
-            update_pens();
+
         }
     }
 }
