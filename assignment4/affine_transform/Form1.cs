@@ -68,6 +68,14 @@ namespace affine_transform
             points.Add(new TwoPoints(startPoint, endPoint));
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            g.Clear(Color.White);
+            pictureBox1.Invalidate();
+            points.Clear();
+            startPoint = endPoint = Point.Empty;
+        }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             foreach (TwoPoints tp in points)
