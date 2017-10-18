@@ -84,6 +84,10 @@
   <ItemGroup>
     <None Include="img\line.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="img\icons8-Line2-96.png" />
+    <Content Include="img\icons8-Polygon-80.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
