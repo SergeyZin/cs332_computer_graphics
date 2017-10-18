@@ -164,6 +164,18 @@ namespace affine_transform
 
         }
 
+        private void ninetyDegBtn_Click(object sender, EventArgs e)
+        {
+            if (lineChk.Checked)
+            {
+                Matrix matr = new Matrix();
+                matr.RotateAt(90, new PointF((edge[0].X + edge[1].X) / 2, (edge[0].Y + edge[1].Y) / 2), MatrixOrder.Append);
+                matr.TransformPoints(edge);
+                startPoint = endPoint = Point.Empty;
+                pictureBox1.Invalidate();
+            }
+        }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             for (int i = 0; i < edge.Length; i += 2)

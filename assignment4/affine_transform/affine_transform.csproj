@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="img\icons8-Line2-96.png" />
+    <None Include="img\90.png" />
     <Content Include="img\icons8-Polygon-80.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -63,6 +63,16 @@ namespace affine_transform.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _90 {
+            get {
+                object obj = ResourceManager.GetObject("90", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_Line2_96 {
             get {
                 object obj = ResourceManager.GetObject("icons8-Line2-96", resourceCulture);
