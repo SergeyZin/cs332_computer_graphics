@@ -18,7 +18,6 @@ namespace affine_transform
 
         private Graphics g;
         private Point startPoint, endPoint = Point.Empty;
-        private bool isMouseDown = false;
         private Point[] edge = new Point[2];
         private Point[] polygon = new Point[0];
         private Pen penColor = Pens.BlueViolet;
@@ -33,7 +32,7 @@ namespace affine_transform
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(pictureBox1.Image);
             g.Clear(Color.White);
-            textBox1.Text = textBox2.Text = textBox3.Text = textBox4.Text = textBox5.Text = "0";
+            numericUpDown1.Value = numericUpDown2.Value = numericUpDown3.Value = numericUpDown4.Value = numericUpDown5.Value = 0;
             chosenPointTb.Text = string.Format("X: {0} Y: {1}", clickedPosition.X, clickedPosition.Y);
         }
 
@@ -46,19 +45,14 @@ namespace affine_transform
                 if (lineChk.Checked)
                 {
                     startPoint = e.Location;
-                    isMouseDown = true;
                 }
-                else if (polyChk.Checked)
+                else if (polyChk.Checked && polygon.Length == 0)
                 {
-                    isMouseDown = true;
-                    if (polygon.Length == 0)
-                    {
-                        startPoint = e.Location;
-                        minPolyCoordinates = e.Location;
-                        maxPolyCoordinates = e.Location;
-                        Array.Resize(ref polygon, 1);
-                        polygon[polygon.Length - 1] = startPoint;
-                    }
+                    startPoint = e.Location;
+                    minPolyCoordinates = e.Location;
+                    maxPolyCoordinates = e.Location;
+                    Array.Resize(ref polygon, 1);
+                    polygon[polygon.Length - 1] = startPoint;
                 }
             }
         }
@@ -67,19 +61,15 @@ namespace affine_transform
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (isMouseDown)
+                if (lineChk.Checked)
                 {
-                    if (lineChk.Checked)
-                    {
-                        endPoint = e.Location;
-                        pictureBox1.Invalidate();
-                    }
-                    else if (polyChk.Checked)
-                    {
-                        endPoint = e.Location;
-                        pictureBox1.Invalidate();
-                    }
-
+                    endPoint = e.Location;
+                    pictureBox1.Invalidate();
+                }
+                else if (polyChk.Checked)
+                {
+                    endPoint = e.Location;
+                    pictureBox1.Invalidate();
                 }
             }
         }
@@ -88,8 +78,6 @@ namespace affine_transform
         {
             if (e.Button == MouseButtons.Left)
             {
-                isMouseDown = false;
-
                 if (lineChk.Checked)
                 {
                     edge[edge.Length - 2] = new Point(startPoint.X, startPoint.Y);
@@ -109,9 +97,6 @@ namespace affine_transform
                     if (endPoint.Y > maxPolyCoordinates.Y)
                         maxPolyCoordinates.Y = endPoint.Y;
                     startPoint = endPoint;
-
-
-                    pictureBox1.Invalidate();
                 }
             }
             else
@@ -119,8 +104,46 @@ namespace affine_transform
                 clickedPosition.X = e.Location.X;
                 clickedPosition.Y = e.Location.Y;
                 chosenPointTb.Text = string.Format("X: {0} Y: {1}", e.Location.X, e.Location.Y);
+            }
 
-                // belongsToConvexLbl.Text = isInside(polygon, clickedPosition).ToString();
+
+            pictureBox1.Invalidate();
+        }
+
+        private void refresh_labels()
+        {
+            if (polygon.Length > 2)
+            {
+                bool res = isInside(polygon, clickedPosition);
+                if (isInside(polygon, clickedPosition))
+                {
+                    label11.Text = "Принадлежит многоугольнику";
+                }
+                else
+                {
+                    label11.Text = "Не принадлежит многоугольнику";
+                }
+            }
+            else
+            {
+                label11.Text = "";
+            }
+
+            if (edge.Length > 3)
+            {
+                int n = edge.Length - 3;
+                int pos = findWhereThePointIs(clickedPosition, edge[n - 1], edge[n]);
+                if (pos == 0)
+                    label13.Text = "Лежит на линии";
+                else
+                    if (pos > 0)
+                    label13.Text = "Лежит слева от линии";
+                else
+                    label13.Text = "Лежит справа от линии";
+            }
+            else
+            {
+                label13.Text = "";
             }
         }
 
@@ -151,12 +174,6 @@ namespace affine_transform
                 lineChk.Checked = false;
 
             }
-            else
-            {
-                g.DrawLine(penColor, polygon[0], polygon[polygon.Length - 1]);
-                pictureBox1.Invalidate();
-
-            }
         }
 
         private void applyBtn_Click(object sender, EventArgs e)
@@ -167,16 +184,11 @@ namespace affine_transform
             float scaleX = 0;
             float scaleY = 0;
 
-            if (!string.IsNullOrWhiteSpace(textBox1.Text))
-                x = (float)Convert.ToDouble(textBox1.Text);
-            if (!string.IsNullOrWhiteSpace(textBox2.Text))
-                y = (float)Convert.ToDouble(textBox2.Text);
-            if (!string.IsNullOrWhiteSpace(textBox3.Text))
-                scaleX = (float)Convert.ToDouble(textBox3.Text);
-            if (!string.IsNullOrWhiteSpace(textBox4.Text))
-                scaleY = (float)Convert.ToDouble(textBox4.Text);
-            if (!string.IsNullOrWhiteSpace(textBox5.Text))
-                angle = (float)Convert.ToDouble(textBox5.Text);
+            x = (float)numericUpDown1.Value;
+            y = (float)numericUpDown2.Value;
+            scaleX = (float)numericUpDown3.Value;
+            scaleY = (float)numericUpDown4.Value;
+            angle = (float)numericUpDown5.Value;
 
             Matrix matr = new Matrix();
 
@@ -206,14 +218,7 @@ namespace affine_transform
 
         private void ninetyDegBtn_Click(object sender, EventArgs e)
         {
-            if (lineChk.Checked)
-            {
-                Matrix matr = new Matrix();
-                matr.RotateAt(90, new PointF((edge[0].X + edge[1].X) / 2, (edge[0].Y + edge[1].Y) / 2), MatrixOrder.Append);
-                matr.TransformPoints(edge);
-                startPoint = endPoint = Point.Empty;
-                pictureBox1.Invalidate();
-            }
+            numericUpDown5.Value = 90;
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -223,34 +228,33 @@ namespace affine_transform
                 e.Graphics.DrawLine(penColor, edge[i], edge[i + 1]);
             }
 
-            for (int i = 1; i < polygon.Length; ++i)
-            {
-                e.Graphics.DrawLine(penColor, polygon[i - 1], polygon[i]);
-            }
+            if (polygon.Length > 1)
+                e.Graphics.DrawPolygon(penColor, polygon);
+
             e.Graphics.DrawLine(penColor, startPoint, endPoint);
+            e.Graphics.DrawEllipse(Pens.Red, clickedPosition.X-1, clickedPosition.Y-1, 3, 3);
+
+            refresh_labels();
         }
 
         private void intersectionBtn_Click(object sender, EventArgs e)
         {
             int n = edge.Length - 3;
-            intersectionTb.Text = findIntersection(edge[n - 3], edge[n - 2], edge[n - 1], edge[n]).ToString();
-        }
-
-        private void pointPositionBtn_Click(object sender, EventArgs e)
-        {
-            int n = edge.Length - 3;
-            int pos = findWhereThePointIs(clickedPosition, edge[n - 1], edge[n]);
-            string tbText;
-            if (pos == 0)
-                tbText = "На линии";
+            PointF intersection = findIntersection(edge[n - 3], edge[n - 2], edge[n - 1], edge[n]);
+            if (intersection.X == -1 && intersection.Y == -1)
+            {
+                intersectionTb.Text = "Не найдено";
+            }
             else
-                if (pos > 0)
-                    tbText = "Слева";
-                else
-                     tbText = "Справа";
-            pointPositionTb.Text = tbText;
+            {
+                intersectionTb.Text = string.Format("X: {0:N2} Y: {1:N2}", intersection.X, intersection.Y);
+                g.DrawEllipse(Pens.Green, intersection.X - 2, intersection.Y - 2, 5, 5);
+                pictureBox1.Invalidate();
+            }
+
 
         }
+
 
 
         // ALGORITHMS
@@ -304,7 +308,10 @@ namespace affine_transform
             return count % 2 == 1;
         }
 
-
+        private void ResetBtn_Click(object sender, EventArgs e)
+        {
+            numericUpDown1.Value = numericUpDown2.Value = numericUpDown3.Value = numericUpDown4.Value = numericUpDown5.Value = 0;
+        }
 
         PointF findIntersection(PointF p0, PointF p1, PointF p2, PointF p3)
         {
@@ -317,7 +324,7 @@ namespace affine_transform
             s2.Y = p3.Y - p2.Y;
             float s, t;
             s = (-s1.Y * (p0.X - p2.X) + s1.X * (p0.Y - p2.Y)) / (-s2.X * s1.Y + s1.X * s2.Y);
-            t = (-s2.X * (p0.Y - p2.Y) - s2.Y * (p0.X - p2.X)) / (-s2.X * s1.Y + s1.X * s2.Y);
+            t = (s2.X * (p0.Y - p2.Y) - s2.Y * (p0.X - p2.X)) / (-s2.X * s1.Y + s1.X * s2.Y);
 
             if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
             {
@@ -328,8 +335,8 @@ namespace affine_transform
             return i;
         }
 
-        //0 - belongs to the line, > 0 - left side, < 0 - right side
-        int findWhereThePointIs(PointF p, Point A, Point B)
+    //0 - belongs to the line, > 0 - left side, < 0 - right side
+    int findWhereThePointIs(PointF p, Point A, Point B)
         {
             float result = (B.X - A.X) * (p.Y - B.Y) - (B.Y - A.Y) * (p.X - B.X);
             return (int)result;
