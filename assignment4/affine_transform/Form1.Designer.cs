@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.belongsToConvexLbl = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.rotateAroundPointCb = new System.Windows.Forms.CheckBox();
             this.chosenPointTb = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -53,12 +55,20 @@
             this.lineChk = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.intersectionTb = new System.Windows.Forms.TextBox();
+            this.intersectionBtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.intersectionBtn);
+            this.groupBox1.Controls.Add(this.intersectionTb);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.belongsToConvexLbl);
+            this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.rotateAroundPointCb);
             this.groupBox1.Controls.Add(this.chosenPointTb);
             this.groupBox1.Controls.Add(this.label10);
@@ -85,9 +95,28 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1027, 139);
+            this.groupBox1.Size = new System.Drawing.Size(1295, 139);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
+            // 
+            // belongsToConvexLbl
+            // 
+            this.belongsToConvexLbl.Location = new System.Drawing.Point(931, 41);
+            this.belongsToConvexLbl.Margin = new System.Windows.Forms.Padding(4);
+            this.belongsToConvexLbl.Name = "belongsToConvexLbl";
+            this.belongsToConvexLbl.Size = new System.Drawing.Size(132, 22);
+            this.belongsToConvexLbl.TabIndex = 25;
+            this.belongsToConvexLbl.Text = "Неизвестно";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(928, 19);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(259, 17);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "Принадлежность выпуклому полигону";
             // 
             // rotateAroundPointCb
             // 
@@ -101,17 +130,16 @@
             // 
             // chosenPointTb
             // 
-            this.chosenPointTb.Location = new System.Drawing.Point(733, 44);
+            this.chosenPointTb.Location = new System.Drawing.Point(743, 41);
             this.chosenPointTb.Margin = new System.Windows.Forms.Padding(4);
             this.chosenPointTb.Name = "chosenPointTb";
             this.chosenPointTb.Size = new System.Drawing.Size(132, 22);
             this.chosenPointTb.TabIndex = 22;
-//            this.chosenPointTb.TextChanged += new System.EventHandler(this.chosenPointTb_TextChanged);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(730, 19);
+            this.label10.Location = new System.Drawing.Point(740, 19);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(125, 17);
@@ -122,7 +150,7 @@
             // 
             this.ninetyDegBtn.BackgroundImage = global::affine_transform.Properties.Resources._90;
             this.ninetyDegBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ninetyDegBtn.Location = new System.Drawing.Point(933, 23);
+            this.ninetyDegBtn.Location = new System.Drawing.Point(1224, 20);
             this.ninetyDegBtn.Margin = new System.Windows.Forms.Padding(4);
             this.ninetyDegBtn.Name = "ninetyDegBtn";
             this.ninetyDegBtn.Size = new System.Drawing.Size(53, 49);
@@ -133,7 +161,7 @@
             // label9
             // 
             this.label9.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.label9.Location = new System.Drawing.Point(904, 18);
+            this.label9.Location = new System.Drawing.Point(1215, 14);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(1, 117);
@@ -311,20 +339,50 @@
             this.pictureBox1.Location = new System.Drawing.Point(16, 161);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1027, 566);
+            this.pictureBox1.Size = new System.Drawing.Size(1295, 566);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(928, 77);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(143, 17);
+            this.label12.TabIndex = 26;
+            this.label12.Text = "Точка пересечения ";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // intersectionTb
+            // 
+            this.intersectionTb.Location = new System.Drawing.Point(931, 98);
+            this.intersectionTb.Margin = new System.Windows.Forms.Padding(4);
+            this.intersectionTb.Name = "intersectionTb";
+            this.intersectionTb.Size = new System.Drawing.Size(132, 22);
+            this.intersectionTb.TabIndex = 27;
+            this.intersectionTb.Text = "Неизвестно";
+            // 
+            // intersectionBtn
+            // 
+            this.intersectionBtn.Location = new System.Drawing.Point(1079, 87);
+            this.intersectionBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.intersectionBtn.Name = "intersectionBtn";
+            this.intersectionBtn.Size = new System.Drawing.Size(113, 37);
+            this.intersectionBtn.TabIndex = 28;
+            this.intersectionBtn.Text = "Найти";
+            this.intersectionBtn.UseVisualStyleBackColor = true;
+            this.intersectionBtn.Click += new System.EventHandler(this.intersectionBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1059, 742);
+            this.ClientSize = new System.Drawing.Size(1354, 742);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -363,6 +421,11 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox chosenPointTb;
         private System.Windows.Forms.CheckBox rotateAroundPointCb;
+        private System.Windows.Forms.TextBox belongsToConvexLbl;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox intersectionTb;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button intersectionBtn;
     }
 }
 

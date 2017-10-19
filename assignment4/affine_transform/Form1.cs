@@ -37,6 +37,8 @@ namespace affine_transform
             chosenPointTb.Text = string.Format("X: {0} Y: {1}", clickedPosition.X, clickedPosition.Y);
         }
 
+        //INTERFACE
+
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -59,8 +61,7 @@ namespace affine_transform
                     }
                 }
             }
-        }
-		
+        }		
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
@@ -108,7 +109,8 @@ namespace affine_transform
                     if (endPoint.Y > maxPolyCoordinates.Y)
                         maxPolyCoordinates.Y = endPoint.Y;
                     startPoint = endPoint;
-                   // chosenPointTb.Text = string.Format("X: {0} Y: {1}", (minPolyCoordinates.X + maxPolyCoordinates.X) / 2, (minPolyCoordinates.Y + maxPolyCoordinates.Y) / 2);
+                    
+                    
                     pictureBox1.Invalidate();
                 }
             }
@@ -117,11 +119,9 @@ namespace affine_transform
                 clickedPosition.X = e.Location.X;
                 clickedPosition.Y = e.Location.Y;
                 chosenPointTb.Text = string.Format("X: {0} Y: {1}", e.Location.X, e.Location.Y);
+               
+               // belongsToConvexLbl.Text = isInside(polygon, clickedPosition).ToString();
             }
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -140,10 +140,6 @@ namespace affine_transform
 			if (lineChk.Checked)
 			{
 				polyChk.Checked = false;
-
-			}
-			else
-			{
 
 			}
 		}
@@ -203,6 +199,7 @@ namespace affine_transform
             }
 
             startPoint = endPoint = Point.Empty;
+
             pictureBox1.Invalidate();
 
         }
@@ -232,8 +229,88 @@ namespace affine_transform
             }
             e.Graphics.DrawLine(penColor, startPoint, endPoint);
         }
+
+        private void intersectionBtn_Click(object sender, EventArgs e)
+        {
+            int n = edge.Length - 3;
+            intersectionTb.Text = findIntersection(edge[n - 3], edge[n - 2], edge[n - 1], edge[n]).ToString();
+        }
+
+
+        // ALGORITHMS
+
+        bool onSegment(PointF q, PointF p, PointF r)
+        {
+            if (q.X <= Math.Max(p.X, r.X) && q.X >= Math.Min(p.X, r.X) &&
+                    q.Y <= Math.Max(p.Y, r.Y) && q.Y >= Math.Min(p.Y, r.Y))
+                return true;
+            return false;
+        }
+
+        // 0 --> p, q and r are colinear
+        // 1 --> Clockwise
+        // 2 --> Counterclockwise
+        int orientation(PointF p, PointF q, PointF r)
+        {
+            float val = (q.Y - p.Y) * (r.X - q.X) -
+                      (q.X - p.X) * (r.Y - q.Y);
+
+            if (val == 0) return 0;  // colinear
+            return (val > 0) ? 1 : 2; // clock or counterclock wise
+        }
+
+
+        bool isInside(Point[] polygon, PointF p)
+        {
+            int n = polygon.Length;
+            if (n < 3) return false;
+
+            PointF extreme = new PointF(pictureBox1.Width, p.Y);
+
+            int count = 0, i = 0;
+            do
+            {
+                int next = (i + 1) % n;
+                PointF intersection = findIntersection(polygon[i], polygon[next], p, extreme);
+                if (intersection.X != -1)
+                {
+                    // If the point 'p' is colinear with line segment 'i-next',
+                    // then check if it lies on segment. If it lies, return true,
+                    // otherwise false
+                    if (orientation(polygon[i], p, polygon[next]) == 0)
+                        return onSegment(polygon[i], p, polygon[next]);
+
+                    count++;
+                }
+                i = next;
+            } while (i != 0);
+
+            // Return true if count is odd, false otherwise
+            return count % 2 == 1;
+        }
+
+
+        PointF findIntersection(PointF p0, PointF p1, PointF p2, PointF p3)
+        {
+            PointF i = new PointF(-1, -1);
+            PointF s1 = new PointF();
+            PointF s2 = new PointF();
+            s1.X = p1.X - p0.X;
+            s1.Y = p1.Y - p0.Y;
+            s2.X = p3.X - p2.X;
+            s2.Y = p3.Y - p2.Y;
+            float s, t;
+            s = (-s1.Y * (p0.X - p2.X) + s1.X * (p0.Y - p2.Y)) / (-s2.X * s1.Y + s1.X * s2.Y);
+            t = (-s2.X * (p0.Y - p2.Y) - s2.Y * (p0.X - p2.X)) / (-s2.X * s1.Y + s1.X * s2.Y);
+
+            if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
+            {
+                i.X = p0.X + (t * s1.X);
+                i.Y = p0.Y + (t * s1.Y);
+                
+            }
+            return i;
+        }
     }
-
-
 
 }
