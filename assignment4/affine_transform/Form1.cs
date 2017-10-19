@@ -20,8 +20,8 @@ namespace affine_transform
         private Point startPoint, endPoint = Point.Empty;
         private bool isMouseDown = false;
         private Point[] edge = new Point[2];
-		private Point[] polygon = new Point[0];
-		private Pen penColor = Pens.BlueViolet;
+        private Point[] polygon = new Point[0];
+        private Pen penColor = Pens.BlueViolet;
         private PointF clickedPosition = new PointF(0, 0);
         private Point minPolyCoordinates, maxPolyCoordinates;
 
@@ -57,11 +57,11 @@ namespace affine_transform
                         minPolyCoordinates = e.Location;
                         maxPolyCoordinates = e.Location;
                         Array.Resize(ref polygon, 1);
-                        polygon[polygon.Length - 1] = startPoint;                        
+                        polygon[polygon.Length - 1] = startPoint;
                     }
                 }
             }
-        }		
+        }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
@@ -109,8 +109,8 @@ namespace affine_transform
                     if (endPoint.Y > maxPolyCoordinates.Y)
                         maxPolyCoordinates.Y = endPoint.Y;
                     startPoint = endPoint;
-                    
-                    
+
+
                     pictureBox1.Invalidate();
                 }
             }
@@ -119,8 +119,8 @@ namespace affine_transform
                 clickedPosition.X = e.Location.X;
                 clickedPosition.Y = e.Location.Y;
                 chosenPointTb.Text = string.Format("X: {0} Y: {1}", e.Location.X, e.Location.Y);
-               
-               // belongsToConvexLbl.Text = isInside(polygon, clickedPosition).ToString();
+
+                // belongsToConvexLbl.Text = isInside(polygon, clickedPosition).ToString();
             }
         }
 
@@ -135,24 +135,24 @@ namespace affine_transform
             startPoint = endPoint = Point.Empty;
         }
 
-		private void lineChk_CheckedChanged(object sender, EventArgs e)
-		{
-			if (lineChk.Checked)
-			{
-				polyChk.Checked = false;
+        private void lineChk_CheckedChanged(object sender, EventArgs e)
+        {
+            if (lineChk.Checked)
+            {
+                polyChk.Checked = false;
 
-			}
-		}
+            }
+        }
 
-		private void polyChk_CheckedChanged(object sender, EventArgs e)
-		{
-			if (polyChk.Checked)
-			{
-				lineChk.Checked = false;
+        private void polyChk_CheckedChanged(object sender, EventArgs e)
+        {
+            if (polyChk.Checked)
+            {
+                lineChk.Checked = false;
 
-			}
-			else
-			{
+            }
+            else
+            {
                 g.DrawLine(penColor, polygon[0], polygon[polygon.Length - 1]);
                 pictureBox1.Invalidate();
 
@@ -167,7 +167,7 @@ namespace affine_transform
             float scaleX = 0;
             float scaleY = 0;
 
-            if (!string.IsNullOrWhiteSpace(textBox1.Text)) 
+            if (!string.IsNullOrWhiteSpace(textBox1.Text))
                 x = (float)Convert.ToDouble(textBox1.Text);
             if (!string.IsNullOrWhiteSpace(textBox2.Text))
                 y = (float)Convert.ToDouble(textBox2.Text);
@@ -184,7 +184,7 @@ namespace affine_transform
 
             if (lineChk.Checked)
             {
-                rotationPoint = rotateAroundPointCb.Checked ? new PointF(clickedPosition.X, clickedPosition.Y): new PointF((edge[0].X + edge[1].X) / 2, (edge[0].Y + edge[1].Y) / 2);
+                rotationPoint = rotateAroundPointCb.Checked ? new PointF(clickedPosition.X, clickedPosition.Y) : new PointF((edge[0].X + edge[1].X) / 2, (edge[0].Y + edge[1].Y) / 2);
                 matr.RotateAt(angle, rotationPoint, MatrixOrder.Append);
                 matr.Translate(x, y, MatrixOrder.Append);
                 matr.TransformPoints(edge);
@@ -215,7 +215,7 @@ namespace affine_transform
                 pictureBox1.Invalidate();
             }
         }
-    
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             for (int i = 0; i < edge.Length; i += 2)
@@ -234,6 +234,22 @@ namespace affine_transform
         {
             int n = edge.Length - 3;
             intersectionTb.Text = findIntersection(edge[n - 3], edge[n - 2], edge[n - 1], edge[n]).ToString();
+        }
+
+        private void pointPositionBtn_Click(object sender, EventArgs e)
+        {
+            int n = edge.Length - 3;
+            int pos = findWhereThePointIs(clickedPosition, edge[n - 1], edge[n]);
+            string tbText;
+            if (pos == 0)
+                tbText = "На линии";
+            else
+                if (pos > 0)
+                    tbText = "Слева";
+                else
+                     tbText = "Справа";
+            pointPositionTb.Text = tbText;
+
         }
 
 
@@ -258,7 +274,6 @@ namespace affine_transform
             if (val == 0) return 0;  // colinear
             return (val > 0) ? 1 : 2; // clock or counterclock wise
         }
-
 
         bool isInside(Point[] polygon, PointF p)
         {
@@ -290,6 +305,7 @@ namespace affine_transform
         }
 
 
+
         PointF findIntersection(PointF p0, PointF p1, PointF p2, PointF p3)
         {
             PointF i = new PointF(-1, -1);
@@ -307,9 +323,16 @@ namespace affine_transform
             {
                 i.X = p0.X + (t * s1.X);
                 i.Y = p0.Y + (t * s1.Y);
-                
+
             }
             return i;
+        }
+
+        //0 - belongs to the line, > 0 - left side, < 0 - right side
+        int findWhereThePointIs(PointF p, Point A, Point B)
+        {
+            float result = (B.X - A.X) * (p.Y - B.Y) - (B.Y - A.Y) * (p.X - B.X);
+            return (int)result;
         }
     }
 

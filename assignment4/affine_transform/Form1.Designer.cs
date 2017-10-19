@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.intersectionTb = new System.Windows.Forms.TextBox();
+            this.intersectionBtn = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
             this.belongsToConvexLbl = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.rotateAroundPointCb = new System.Windows.Forms.CheckBox();
@@ -55,17 +58,20 @@
             this.lineChk = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.intersectionTb = new System.Windows.Forms.TextBox();
-            this.intersectionBtn = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.pointPositionTb = new System.Windows.Forms.TextBox();
+            this.pointPositionBtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.intersectionBtn);
+            this.groupBox1.Controls.Add(this.pointPositionBtn);
+            this.groupBox1.Controls.Add(this.pointPositionTb);
+            this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.intersectionTb);
+            this.groupBox1.Controls.Add(this.intersectionBtn);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.belongsToConvexLbl);
             this.groupBox1.Controls.Add(this.label11);
@@ -95,9 +101,39 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1295, 139);
+            this.groupBox1.Size = new System.Drawing.Size(1408, 139);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
+            // 
+            // intersectionTb
+            // 
+            this.intersectionTb.Location = new System.Drawing.Point(931, 103);
+            this.intersectionTb.Margin = new System.Windows.Forms.Padding(4);
+            this.intersectionTb.Name = "intersectionTb";
+            this.intersectionTb.Size = new System.Drawing.Size(132, 22);
+            this.intersectionTb.TabIndex = 28;
+            this.intersectionTb.Text = "Неизвестно";
+            // 
+            // intersectionBtn
+            // 
+            this.intersectionBtn.Location = new System.Drawing.Point(1092, 100);
+            this.intersectionBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.intersectionBtn.Name = "intersectionBtn";
+            this.intersectionBtn.Size = new System.Drawing.Size(227, 29);
+            this.intersectionBtn.TabIndex = 27;
+            this.intersectionBtn.Text = "Найти пересечение";
+            this.intersectionBtn.UseVisualStyleBackColor = true;
+            this.intersectionBtn.Click += new System.EventHandler(this.intersectionBtn_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(928, 77);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(139, 17);
+            this.label12.TabIndex = 26;
+            this.label12.Text = "Точка пересечения";
             // 
             // belongsToConvexLbl
             // 
@@ -114,9 +150,9 @@
             this.label11.Location = new System.Drawing.Point(928, 19);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(259, 17);
+            this.label11.Size = new System.Drawing.Size(184, 17);
             this.label11.TabIndex = 24;
-            this.label11.Text = "Принадлежность выпуклому полигону";
+            this.label11.Text = "Принадлежность полигону";
             // 
             // rotateAroundPointCb
             // 
@@ -150,7 +186,7 @@
             // 
             this.ninetyDegBtn.BackgroundImage = global::affine_transform.Properties.Resources._90;
             this.ninetyDegBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ninetyDegBtn.Location = new System.Drawing.Point(1224, 20);
+            this.ninetyDegBtn.Location = new System.Drawing.Point(1347, 19);
             this.ninetyDegBtn.Margin = new System.Windows.Forms.Padding(4);
             this.ninetyDegBtn.Name = "ninetyDegBtn";
             this.ninetyDegBtn.Size = new System.Drawing.Size(53, 49);
@@ -161,7 +197,7 @@
             // label9
             // 
             this.label9.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.label9.Location = new System.Drawing.Point(1215, 14);
+            this.label9.Location = new System.Drawing.Point(1338, 14);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(1, 117);
@@ -339,7 +375,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(16, 161);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1295, 566);
+            this.pictureBox1.Size = new System.Drawing.Size(1408, 566);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -347,42 +383,41 @@
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
-            // label12
+            // label13
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(928, 77);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(143, 17);
-            this.label12.TabIndex = 26;
-            this.label12.Text = "Точка пересечения ";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(1133, 19);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(125, 17);
+            this.label13.TabIndex = 29;
+            this.label13.Text = "Положение точки";
             // 
-            // intersectionTb
+            // pointPositionTb
             // 
-            this.intersectionTb.Location = new System.Drawing.Point(931, 98);
-            this.intersectionTb.Margin = new System.Windows.Forms.Padding(4);
-            this.intersectionTb.Name = "intersectionTb";
-            this.intersectionTb.Size = new System.Drawing.Size(132, 22);
-            this.intersectionTb.TabIndex = 27;
-            this.intersectionTb.Text = "Неизвестно";
+            this.pointPositionTb.Location = new System.Drawing.Point(1136, 41);
+            this.pointPositionTb.Margin = new System.Windows.Forms.Padding(4);
+            this.pointPositionTb.Name = "pointPositionTb";
+            this.pointPositionTb.Size = new System.Drawing.Size(132, 22);
+            this.pointPositionTb.TabIndex = 30;
+            this.pointPositionTb.Text = "Неизвестно";
             // 
-            // intersectionBtn
+            // pointPositionBtn
             // 
-            this.intersectionBtn.Location = new System.Drawing.Point(1079, 87);
-            this.intersectionBtn.Margin = new System.Windows.Forms.Padding(4);
-            this.intersectionBtn.Name = "intersectionBtn";
-            this.intersectionBtn.Size = new System.Drawing.Size(113, 37);
-            this.intersectionBtn.TabIndex = 28;
-            this.intersectionBtn.Text = "Найти";
-            this.intersectionBtn.UseVisualStyleBackColor = true;
-            this.intersectionBtn.Click += new System.EventHandler(this.intersectionBtn_Click);
+            this.pointPositionBtn.Location = new System.Drawing.Point(1092, 71);
+            this.pointPositionBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.pointPositionBtn.Name = "pointPositionBtn";
+            this.pointPositionBtn.Size = new System.Drawing.Size(227, 29);
+            this.pointPositionBtn.TabIndex = 31;
+            this.pointPositionBtn.Text = "Найти положение точки";
+            this.pointPositionBtn.UseVisualStyleBackColor = true;
+            this.pointPositionBtn.Click += new System.EventHandler(this.pointPositionBtn_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1354, 742);
+            this.ClientSize = new System.Drawing.Size(1437, 742);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -424,8 +459,11 @@
         private System.Windows.Forms.TextBox belongsToConvexLbl;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox intersectionTb;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button intersectionBtn;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox pointPositionTb;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button pointPositionBtn;
     }
 }
 
