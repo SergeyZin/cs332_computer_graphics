@@ -23,6 +23,7 @@ namespace affine_transform
         private Pen penColor = Pens.BlueViolet;
         private PointF clickedPosition = new PointF(0, 0);
         private Point minPolyCoordinates, maxPolyCoordinates;
+        private Point minEdgeCoordinates, maxEdgeCoordinates;
 
         //private int edgeLen = 0;
 
@@ -32,7 +33,8 @@ namespace affine_transform
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(pictureBox1.Image);
             g.Clear(Color.White);
-            numericUpDown1.Value = numericUpDown2.Value = numericUpDown3.Value = numericUpDown4.Value = numericUpDown5.Value = 0;
+            minEdgeCoordinates = new Point(9999999, 9999999);
+            maxEdgeCoordinates = new Point(-1, -1);
             chosenPointTb.Text = string.Format("X: {0} Y: {1}", clickedPosition.X, clickedPosition.Y);
         }
 
@@ -83,6 +85,24 @@ namespace affine_transform
                     edge[edge.Length - 2] = new Point(startPoint.X, startPoint.Y);
                     edge[edge.Length - 1] = new Point(endPoint.X, endPoint.Y);
                     Array.Resize(ref edge, edge.Length + 2);
+
+                    if (endPoint.X < minEdgeCoordinates.X)
+                        minEdgeCoordinates.X = endPoint.X;
+                    if (endPoint.Y < minEdgeCoordinates.Y)
+                        minEdgeCoordinates.Y = endPoint.Y;
+                    if (endPoint.X > maxEdgeCoordinates.X)
+                        maxEdgeCoordinates.X = endPoint.X;
+                    if (endPoint.Y > maxEdgeCoordinates.Y)
+                        maxEdgeCoordinates.Y = endPoint.Y;
+
+                    if (startPoint.X < minEdgeCoordinates.X)
+                        minEdgeCoordinates.X = startPoint.X;
+                    if (startPoint.Y < minEdgeCoordinates.Y)
+                        minEdgeCoordinates.Y = startPoint.Y;
+                    if (startPoint.X > maxEdgeCoordinates.X)
+                        maxEdgeCoordinates.X = startPoint.X;
+                    if (startPoint.Y > maxEdgeCoordinates.Y)
+                        maxEdgeCoordinates.Y = startPoint.Y;
                 }
                 else if (polyChk.Checked)
                 {
@@ -156,6 +176,8 @@ namespace affine_transform
             Array.Resize(ref edge, 2);
             Array.Resize(ref polygon, 0);
             startPoint = endPoint = Point.Empty;
+            minEdgeCoordinates = new Point(9999999, 9999999);
+            maxEdgeCoordinates = new Point(-1, -1);
         }
 
         private void lineChk_CheckedChanged(object sender, EventArgs e)
@@ -186,8 +208,8 @@ namespace affine_transform
 
             x = (float)numericUpDown1.Value;
             y = (float)numericUpDown2.Value;
-            scaleX = (float)numericUpDown3.Value;
-            scaleY = (float)numericUpDown4.Value;
+            scaleX = (float)numericUpDown3.Value / 100;
+            scaleY = (float)numericUpDown4.Value / 100;
             angle = (float)numericUpDown5.Value;
 
             Matrix matr = new Matrix();
@@ -200,14 +222,42 @@ namespace affine_transform
                 matr.RotateAt(angle, rotationPoint, MatrixOrder.Append);
                 matr.Translate(x, y, MatrixOrder.Append);
                 matr.TransformPoints(edge);
+
+                PointF TransformVector = new PointF(minEdgeCoordinates.X + (maxEdgeCoordinates.X - minEdgeCoordinates.X) / 2, minEdgeCoordinates.Y + (maxEdgeCoordinates.Y - minEdgeCoordinates.Y) / 2);
+
+                matr = new Matrix();
+                matr.Translate(-1 * TransformVector.X, -1 * TransformVector.Y);
+                matr.TransformPoints(edge);
+
+                matr = new Matrix();
+                matr.Scale(scaleX, scaleY);
+                matr.TransformPoints(edge);
+
+                matr = new Matrix();
+                matr.Translate(TransformVector.X, TransformVector.Y);
+                matr.TransformPoints(edge);
             }
             else if (polyChk.Checked)
             {
                 rotationPoint = rotateAroundPointCb.Checked ? new PointF(clickedPosition.X, clickedPosition.Y) : new PointF((minPolyCoordinates.X + maxPolyCoordinates.X) / 2, (minPolyCoordinates.Y + maxPolyCoordinates.Y) / 2);
                 matr.RotateAt(angle, rotationPoint, MatrixOrder.Append);
                 matr.Translate(x, y, MatrixOrder.Append);
-                //matr.Scale(scaleX, scaleY);
                 matr.TransformPoints(polygon);
+
+                PointF TransformVector = new PointF(minPolyCoordinates.X + (maxPolyCoordinates.X - minPolyCoordinates.X) / 2, minPolyCoordinates.Y + (maxPolyCoordinates.Y - minPolyCoordinates.Y) / 2);
+
+                matr = new Matrix();
+                matr.Translate(-1 * TransformVector.X, -1 * TransformVector.Y);
+                matr.TransformPoints(polygon);
+
+                matr = new Matrix();
+                matr.Scale(scaleX, scaleY);
+                matr.TransformPoints(polygon);
+
+                matr = new Matrix();
+                matr.Translate(TransformVector.X, TransformVector.Y);
+                matr.TransformPoints(polygon);
+
             }
 
             startPoint = endPoint = Point.Empty;
@@ -320,7 +370,8 @@ namespace affine_transform
 
         private void ResetBtn_Click(object sender, EventArgs e)
         {
-            numericUpDown1.Value = numericUpDown2.Value = numericUpDown3.Value = numericUpDown4.Value = numericUpDown5.Value = 0;
+            numericUpDown1.Value = numericUpDown2.Value = numericUpDown5.Value = 0;
+            numericUpDown3.Value = numericUpDown4.Value = 100;
         }
 
         PointF findIntersection(PointF p0, PointF p1, PointF p2, PointF p3)

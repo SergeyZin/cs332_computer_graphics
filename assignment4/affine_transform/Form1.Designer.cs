@@ -60,6 +60,10 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.какЗадатьТочкуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.правойКнопкойМышиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -70,6 +74,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label13
@@ -189,9 +194,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(109, 18);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 13);
+            this.label5.Size = new System.Drawing.Size(64, 13);
             this.label5.TabIndex = 12;
-            this.label5.Text = "Масштаб";
+            this.label5.Text = "Масштаб %";
             // 
             // applyBtn
             // 
@@ -266,9 +271,9 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 127);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 142);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(836, 464);
+            this.pictureBox1.Size = new System.Drawing.Size(836, 449);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -281,7 +286,7 @@
             this.groupBox2.Controls.Add(this.lineChk);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.polyChk);
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Location = new System.Drawing.Point(12, 27);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(100, 109);
             this.groupBox2.TabIndex = 3;
@@ -305,7 +310,7 @@
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.ninetyDegBtn);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(118, 12);
+            this.groupBox3.Location = new System.Drawing.Point(118, 27);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(380, 109);
             this.groupBox3.TabIndex = 4;
@@ -342,35 +347,45 @@
             // 
             this.numericUpDown4.Location = new System.Drawing.Point(112, 73);
             this.numericUpDown4.Maximum = new decimal(new int[] {
-            10000,
+            1000,
             0,
             0,
             0});
             this.numericUpDown4.Minimum = new decimal(new int[] {
-            10000,
+            1,
             0,
             0,
-            -2147483648});
+            0});
             this.numericUpDown4.Name = "numericUpDown4";
             this.numericUpDown4.Size = new System.Drawing.Size(60, 20);
             this.numericUpDown4.TabIndex = 3;
+            this.numericUpDown4.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // numericUpDown3
             // 
             this.numericUpDown3.Location = new System.Drawing.Point(112, 34);
             this.numericUpDown3.Maximum = new decimal(new int[] {
-            10000,
+            1000,
             0,
             0,
             0});
             this.numericUpDown3.Minimum = new decimal(new int[] {
-            10000,
+            1,
             0,
             0,
-            -2147483648});
+            0});
             this.numericUpDown3.Name = "numericUpDown3";
             this.numericUpDown3.Size = new System.Drawing.Size(60, 20);
             this.numericUpDown3.TabIndex = 2;
+            this.numericUpDown3.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // numericUpDown2
             // 
@@ -411,7 +426,7 @@
             this.groupBox4.Controls.Add(this.intersectionBtn);
             this.groupBox4.Controls.Add(this.intersectionTb);
             this.groupBox4.Controls.Add(this.label12);
-            this.groupBox4.Location = new System.Drawing.Point(510, 12);
+            this.groupBox4.Location = new System.Drawing.Point(510, 27);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(137, 109);
             this.groupBox4.TabIndex = 5;
@@ -423,11 +438,44 @@
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Location = new System.Drawing.Point(653, 12);
+            this.groupBox1.Location = new System.Drawing.Point(653, 27);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(195, 109);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.помощьToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(855, 24);
+            this.menuStrip1.TabIndex = 7;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // помощьToolStripMenuItem
+            // 
+            this.помощьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.какЗадатьТочкуToolStripMenuItem});
+            this.помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
+            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.помощьToolStripMenuItem.Text = "Помощь!";
+            // 
+            // какЗадатьТочкуToolStripMenuItem
+            // 
+            this.какЗадатьТочкуToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.правойКнопкойМышиToolStripMenuItem});
+            this.какЗадатьТочкуToolStripMenuItem.Name = "какЗадатьТочкуToolStripMenuItem";
+            this.какЗадатьТочкуToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.какЗадатьТочкуToolStripMenuItem.Text = "Как задать точку?";
+            // 
+            // правойКнопкойМышиToolStripMenuItem
+            // 
+            this.правойКнопкойМышиToolStripMenuItem.Name = "правойКнопкойМышиToolStripMenuItem";
+            this.правойКнопкойМышиToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.правойКнопкойМышиToolStripMenuItem.Text = "Правой кнопкой мыши!";
             // 
             // Form1
             // 
@@ -439,7 +487,9 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(871, 642);
             this.Name = "Form1";
@@ -457,7 +507,10 @@
             this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -494,6 +547,10 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button ResetBtn;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem какЗадатьТочкуToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem правойКнопкойМышиToolStripMenuItem;
     }
 }
 
