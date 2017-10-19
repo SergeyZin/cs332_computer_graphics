@@ -239,8 +239,18 @@ namespace affine_transform
 
         private void intersectionBtn_Click(object sender, EventArgs e)
         {
-            int n = edge.Length - 3;
-            PointF intersection = findIntersection(edge[n - 3], edge[n - 2], edge[n - 1], edge[n]);
+            PointF intersection;
+
+            if (edge.Length > 4)
+            {
+                int n = edge.Length - 3;
+                intersection = findIntersection(edge[n - 3], edge[n - 2], edge[n - 1], edge[n]);
+            }
+            else
+            {
+                intersection = new PointF(-1, -1);
+            }
+
             if (intersection.X == -1 && intersection.Y == -1)
             {
                 intersectionTb.Text = "Не найдено";
