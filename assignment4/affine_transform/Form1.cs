@@ -223,18 +223,18 @@ namespace affine_transform
                 matr.Translate(x, y, MatrixOrder.Append);
                 matr.TransformPoints(edge);
 
-                PointF TransformVector = new PointF(minEdgeCoordinates.X + (maxEdgeCoordinates.X - minEdgeCoordinates.X) / 2, minEdgeCoordinates.Y + (maxEdgeCoordinates.Y - minEdgeCoordinates.Y) / 2);
+                PointF TransformVector = new PointF((edge[0].X + edge[1].X) / 2, (edge[0].Y + edge[1].Y) / 2);
 
                 matr = new Matrix();
-                matr.Translate(-1 * TransformVector.X, -1 * TransformVector.Y);
-                matr.TransformPoints(edge);
+                matr.Translate(-1 * TransformVector.X, -1 * TransformVector.Y, MatrixOrder.Append);
+                //matr.TransformPoints(edge);
 
-                matr = new Matrix();
-                matr.Scale(scaleX, scaleY);
-                matr.TransformPoints(edge);
+                //matr = new Matrix();
+                matr.Scale(scaleX, scaleY, MatrixOrder.Append);
+                //matr.TransformPoints(edge);
 
-                matr = new Matrix();
-                matr.Translate(TransformVector.X, TransformVector.Y);
+                //matr = new Matrix();
+                matr.Translate(TransformVector.X, TransformVector.Y, MatrixOrder.Append);
                 matr.TransformPoints(edge);
             }
             else if (polyChk.Checked)
