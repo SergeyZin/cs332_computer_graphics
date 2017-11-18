@@ -52,13 +52,13 @@ namespace affine_transforms_in_space
         }
 
 
-        private Polyhedron initTetrahedron(int size)
+        private void initTetrahedron(int size)
         {
             double h = size * Math.Sqrt(3);
 
-            Point3D p1 = new Point3D(-size, -h / 2, 0);
-            Point3D p2 = new Point3D(0, -h / 2, -h);
-            Point3D p3 = new Point3D(size, -h / 2, 0);
+            Point3D p1 = new Point3D(-size, -h / 2, -h / 2);
+            Point3D p2 = new Point3D(size, -h / 2, -h / 2);
+            Point3D p3 = new Point3D(0, -h / 2, h / 2);
             Point3D p4 = new Point3D(0, h / 2, 0);
 
             Edge e1 = new Edge(p1, p2);
@@ -88,22 +88,397 @@ namespace affine_transforms_in_space
             f4.edges.Add(e4);
             f4.edges.Add(e6);
 
-            Polyhedron polyhedron = new Polyhedron(); 
+            polyhedron = new Polyhedron(); 
             polyhedron.facets.Add(f1);
             polyhedron.facets.Add(f2);
             polyhedron.facets.Add(f3);
             polyhedron.facets.Add(f4);
+        }
 
-            return polyhedron;
+        private void initHexahedron(int size)
+        {
+            Point3D p1 = new Point3D(-size / 2, -size / 2, -size / 2);
+            Point3D p2 = new Point3D(size / 2, -size / 2, -size / 2);
+            Point3D p3 = new Point3D(size / 2, -size / 2, size / 2);
+            Point3D p4 = new Point3D(-size / 2, -size / 2, size / 2);
+            Point3D p5 = new Point3D(-size / 2, size / 2, -size / 2);
+            Point3D p6 = new Point3D(size / 2, size / 2, -size / 2);
+            Point3D p7 = new Point3D(size / 2, size / 2, size / 2);
+            Point3D p8 = new Point3D(-size / 2, size / 2, size / 2);
+
+            Edge e1 = new Edge(p1, p2);
+            Edge e2 = new Edge(p2, p3);
+            Edge e3 = new Edge(p3, p4);
+            Edge e4 = new Edge(p1, p4);
+            Edge e5 = new Edge(p5, p6);
+            Edge e6 = new Edge(p6, p7);
+            Edge e7 = new Edge(p7, p8);
+            Edge e8 = new Edge(p5, p8);
+            Edge e9 = new Edge(p4, p8);
+            Edge e10 = new Edge(p1, p5);
+            Edge e11 = new Edge(p2, p6);
+            Edge e12 = new Edge(p3, p7);
+
+            Facet f1 = new Facet();
+            f1.edges.Add(e1);
+            f1.edges.Add(e2);
+            f1.edges.Add(e3);
+            f1.edges.Add(e4);
+
+            Facet f2 = new Facet();
+            f2.edges.Add(e5);
+            f2.edges.Add(e6);
+            f2.edges.Add(e7);
+            f2.edges.Add(e8);
+
+            Facet f3 = new Facet();
+            f3.edges.Add(e4);
+            f3.edges.Add(e10);
+            f3.edges.Add(e8);
+            f3.edges.Add(e9);
+
+            Facet f4 = new Facet();
+            f4.edges.Add(e10);
+            f4.edges.Add(e1);
+            f4.edges.Add(e11);
+            f4.edges.Add(e5);
+
+            Facet f5 = new Facet();
+            f5.edges.Add(e6);
+            f5.edges.Add(e11);
+            f5.edges.Add(e2);
+            f5.edges.Add(e12);
+
+            Facet f6 = new Facet();
+            f6.edges.Add(e7);
+            f6.edges.Add(e12);
+            f6.edges.Add(e3);
+            f6.edges.Add(e9);
+
+            polyhedron = new Polyhedron();
+            polyhedron.facets.Add(f1);
+            polyhedron.facets.Add(f2);
+            polyhedron.facets.Add(f3);
+            polyhedron.facets.Add(f4);
+            polyhedron.facets.Add(f5);
+            polyhedron.facets.Add(f6);
+        }
+
+        private void initOctahedron(int size)
+        {
+            Point3D p1 = new Point3D(-size / 2, 0, 0);
+            Point3D p2 = new Point3D(0, 0, -size / 2);
+            Point3D p3 = new Point3D(size / 2, 0, 0);
+            Point3D p4 = new Point3D(0, 0, size / 2);
+            Point3D p5 = new Point3D(0, size / 2, 0);
+            Point3D p6 = new Point3D(0, -size / 2, 0);
+
+            Edge e1 = new Edge(p1, p2);
+            Edge e2 = new Edge(p2, p3);
+            Edge e3 = new Edge(p3, p4);
+            Edge e4 = new Edge(p1, p4);
+            Edge e5 = new Edge(p1, p5);
+            Edge e6 = new Edge(p2, p5);
+            Edge e7 = new Edge(p3, p5);
+            Edge e8 = new Edge(p4, p5);
+            Edge e9 = new Edge(p1, p6);
+            Edge e10 = new Edge(p2, p6);
+            Edge e11 = new Edge(p3, p6);
+            Edge e12 = new Edge(p4, p6);
+
+            Facet f1 = new Facet();
+            f1.edges.Add(e1);
+            f1.edges.Add(e6);
+            f1.edges.Add(e5);
+
+            Facet f2 = new Facet();
+            f2.edges.Add(e2);
+            f2.edges.Add(e7);
+            f2.edges.Add(e6);
+
+            Facet f3 = new Facet();
+            f3.edges.Add(e3);
+            f3.edges.Add(e7);
+            f3.edges.Add(e8);
+
+            Facet f4 = new Facet();
+            f4.edges.Add(e4);
+            f4.edges.Add(e8);
+            f4.edges.Add(e5);
+
+            Facet f5 = new Facet();
+            f5.edges.Add(e1);
+            f5.edges.Add(e9);
+            f5.edges.Add(e10);
+
+            Facet f6 = new Facet();
+            f6.edges.Add(e2);
+            f6.edges.Add(e10);
+            f6.edges.Add(e11);
+
+            Facet f7 = new Facet();
+            f7.edges.Add(e3);
+            f7.edges.Add(e11);
+            f7.edges.Add(e12);
+
+            Facet f8 = new Facet();
+            f1.edges.Add(e4);
+            f1.edges.Add(e9);
+            f1.edges.Add(e12);
+
+            polyhedron = new Polyhedron();
+            polyhedron.facets.Add(f1);
+            polyhedron.facets.Add(f2);
+            polyhedron.facets.Add(f3);
+            polyhedron.facets.Add(f4);
+            polyhedron.facets.Add(f5);
+            polyhedron.facets.Add(f6);
+            polyhedron.facets.Add(f7);
+            polyhedron.facets.Add(f8);
+
+        }
+
+        private void initIcosahedron(int radius)
+        {
+            var magicAngle = Math.PI * 26.565f / 180;
+            var segmentAngle = Math.PI * 72 / 180;
+            var currentAngle = 0f;
+
+            var v = new Point3D[12];
+            v[0] = new Point3D(0, radius, 0);
+            v[11] = new Point3D(0, -radius, 0);
+
+            for (var i = 1; i < 6; i++)
+            {
+                v[i] = new Point3D(radius * Math.Sin(currentAngle) * Math.Cos(magicAngle),
+                    radius * Math.Sin(magicAngle),
+                    radius * Math.Cos(currentAngle) * Math.Cos(magicAngle));
+                currentAngle += (float)segmentAngle;
+            }
+            currentAngle = (float)Math.PI * 36 / 180;
+            for (var i = 6; i < 11; i++)
+            {
+                v[i] = new Point3D(radius * Math.Sin(currentAngle) * Math.Cos(-magicAngle),
+                    radius * Math.Sin(-magicAngle),
+                    radius * Math.Cos(currentAngle) * Math.Cos(-magicAngle));
+                currentAngle += (float)segmentAngle;
+            }
+
+            Edge e1 = new Edge(v[0], v[1]);
+            Edge e2 = new Edge(v[1], v[2]);
+            Edge e3 = new Edge(v[0], v[2]);
+
+            Edge e4 = new Edge(v[0], v[2]);
+            Edge e5 = new Edge(v[2], v[3]);
+            Edge e6 = new Edge(v[0], v[3]);
+
+            Edge e7 = new Edge(v[0], v[3]);
+            Edge e8 = new Edge(v[3], v[4]);
+            Edge e9 = new Edge(v[0], v[4]);
+
+            Edge e10 = new Edge(v[0], v[4]);
+            Edge e11 = new Edge(v[4], v[5]);
+            Edge e12 = new Edge(v[0], v[5]);
+
+            Edge e13 = new Edge(v[0], v[5]);
+            Edge e14 = new Edge(v[5], v[1]);
+            Edge e15 = new Edge(v[0], v[1]);
+
+            Edge e16 = new Edge(v[11], v[7]);
+            Edge e17 = new Edge(v[7], v[6]);
+            Edge e18 = new Edge(v[11], v[6]);
+
+            Edge e19 = new Edge(v[11], v[8]);
+            Edge e20 = new Edge(v[8], v[7]);
+            Edge e21 = new Edge(v[11], v[7]);
+
+            Edge e22 = new Edge(v[11], v[9]);
+            Edge e23 = new Edge(v[9], v[8]);
+            Edge e24 = new Edge(v[11], v[8]);
+
+            Edge e25 = new Edge(v[11], v[10]);
+            Edge e26 = new Edge(v[10], v[9]);
+            Edge e27 = new Edge(v[11], v[9]);
+
+            Edge e28 = new Edge(v[11], v[6]);
+            Edge e29 = new Edge(v[6], v[10]);
+            Edge e30 = new Edge(v[11], v[10]);
+
+            Edge e31 = new Edge(v[2], v[1]);
+            Edge e32 = new Edge(v[1], v[6]);
+            Edge e33 = new Edge(v[2], v[6]);
+
+            Edge e34 = new Edge(v[3], v[2]);
+            Edge e35 = new Edge(v[2], v[7]);
+            Edge e36 = new Edge(v[3], v[7]);
+
+            Edge e37 = new Edge(v[4], v[3]);
+            Edge e38 = new Edge(v[3], v[8]);
+            Edge e39 = new Edge(v[4], v[8]);
+
+            Edge e40 = new Edge(v[5], v[4]);
+            Edge e41 = new Edge(v[4], v[9]);
+            Edge e42 = new Edge(v[5], v[9]);
+
+            Edge e43 = new Edge(v[1], v[5]);
+            Edge e44 = new Edge(v[5], v[10]);
+            Edge e45 = new Edge(v[1], v[10]);
+
+            Edge e46 = new Edge(v[6], v[7]);
+            Edge e47 = new Edge(v[7], v[2]);
+            Edge e48 = new Edge(v[6], v[2]);
+
+            Edge e49 = new Edge(v[7], v[8]);
+            Edge e50 = new Edge(v[8], v[3]);
+            Edge e51 = new Edge(v[7], v[3]);
+
+            Edge e52 = new Edge(v[8], v[9]);
+            Edge e53 = new Edge(v[9], v[4]);
+            Edge e54 = new Edge(v[8], v[4]);
+
+            Edge e55 = new Edge(v[9], v[10]);
+            Edge e56 = new Edge(v[10], v[5]);
+            Edge e57 = new Edge(v[9], v[5]);
+
+            Edge e58 = new Edge(v[10], v[6]);
+            Edge e59 = new Edge(v[6], v[1]);
+            Edge e60 = new Edge(v[10], v[1]);
+
+            Facet f1 = new Facet();
+            f1.edges.Add(e1);
+            f1.edges.Add(e2);
+            f1.edges.Add(e3);
+
+            Facet f2 = new Facet();
+            f2.edges.Add(e4);
+            f2.edges.Add(e5);
+            f2.edges.Add(e6);
+
+            Facet f3 = new Facet();
+            f3.edges.Add(e7);
+            f3.edges.Add(e8);
+            f3.edges.Add(e9);
+
+            Facet f4 = new Facet();
+            f4.edges.Add(e10);
+            f4.edges.Add(e11);
+            f4.edges.Add(e12);
+
+            Facet f5 = new Facet();
+            f5.edges.Add(e13);
+            f5.edges.Add(e14);
+            f5.edges.Add(e15);
+
+            Facet f6 = new Facet();
+            f6.edges.Add(e16);
+            f6.edges.Add(e17);
+            f6.edges.Add(e18);
+
+            Facet f7 = new Facet();
+            f7.edges.Add(e19);
+            f7.edges.Add(e20);
+            f7.edges.Add(e21);
+
+            Facet f8 = new Facet();
+            f8.edges.Add(e22);
+            f8.edges.Add(e23);
+            f8.edges.Add(e24);
+
+            Facet f9 = new Facet();
+            f9.edges.Add(e25);
+            f9.edges.Add(e26);
+            f9.edges.Add(e27);
+
+            Facet f10 = new Facet();
+            f10.edges.Add(e28);
+            f10.edges.Add(e29);
+            f10.edges.Add(e30);
+
+            Facet f11 = new Facet();
+            f11.edges.Add(e31);
+            f11.edges.Add(e32);
+            f11.edges.Add(e33);
+
+            Facet f12 = new Facet();
+            f12.edges.Add(e34);
+            f12.edges.Add(e35);
+            f12.edges.Add(e36);
+
+            Facet f13 = new Facet();
+            f13.edges.Add(e37);
+            f13.edges.Add(e38);
+            f13.edges.Add(e39);
+
+            Facet f14 = new Facet();
+            f14.edges.Add(e40);
+            f14.edges.Add(e41);
+            f14.edges.Add(e42);
+
+            Facet f15 = new Facet();
+            f15.edges.Add(e43);
+            f15.edges.Add(e44);
+            f15.edges.Add(e45);
+
+            Facet f16 = new Facet();
+            f16.edges.Add(e46);
+            f16.edges.Add(e47);
+            f16.edges.Add(e48);
+
+            Facet f17 = new Facet();
+            f17.edges.Add(e49);
+            f17.edges.Add(e50);
+            f17.edges.Add(e51);
+
+            Facet f18 = new Facet();
+            f18.edges.Add(e52);
+            f18.edges.Add(e53);
+            f18.edges.Add(e54);
+
+            Facet f19 = new Facet();
+            f19.edges.Add(e55);
+            f19.edges.Add(e56);
+            f19.edges.Add(e57);
+
+            Facet f20 = new Facet();
+            f20.edges.Add(e58);
+            f20.edges.Add(e59);
+            f20.edges.Add(e60);
+
+            polyhedron = new Polyhedron();
+            polyhedron.facets.Add(f1);
+            polyhedron.facets.Add(f2);
+            polyhedron.facets.Add(f3);
+            polyhedron.facets.Add(f4);
+            polyhedron.facets.Add(f5);
+            polyhedron.facets.Add(f6);
+            polyhedron.facets.Add(f7);
+            polyhedron.facets.Add(f8);
+            polyhedron.facets.Add(f9);
+            polyhedron.facets.Add(f10);
+            polyhedron.facets.Add(f11);
+            polyhedron.facets.Add(f12);
+            polyhedron.facets.Add(f13);
+            polyhedron.facets.Add(f14);
+            polyhedron.facets.Add(f15);
+            polyhedron.facets.Add(f16);
+            polyhedron.facets.Add(f17);
+            polyhedron.facets.Add(f18);
+            polyhedron.facets.Add(f19);
+            polyhedron.facets.Add(f20);
         }
 
         private void phComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
             polyhedron = new Polyhedron();
             if (phComboBox.SelectedItem.ToString() == "Tetrahedron")
-            {
-                polyhedron = initTetrahedron(100);
-            }
+                initTetrahedron(100);
+            else if (phComboBox.SelectedItem.ToString() == "Hexahedron")
+                initHexahedron(200);
+            else if (phComboBox.SelectedItem.ToString() == "Octahedron")
+                initOctahedron(200);
+            else if (phComboBox.SelectedItem.ToString() == "Icosahedron")
+                initIcosahedron(200);
+
             drawPolyhedron();
         }
 

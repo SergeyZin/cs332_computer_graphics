@@ -438,7 +438,10 @@
             // 
             this.phComboBox.FormattingEnabled = true;
             this.phComboBox.Items.AddRange(new object[] {
-            "Tetrahedron"});
+            "Tetrahedron",
+            "Hexahedron",
+            "Octahedron",
+            "Icosahedron"});
             this.phComboBox.Location = new System.Drawing.Point(12, 396);
             this.phComboBox.Name = "phComboBox";
             this.phComboBox.Size = new System.Drawing.Size(121, 21);
