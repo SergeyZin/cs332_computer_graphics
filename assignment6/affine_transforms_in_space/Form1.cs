@@ -809,10 +809,17 @@ namespace affine_transforms_in_space
 
         private void applyRotationAround(double a, double l, double m, double n)
         {
+            double d = Math.Sqrt(m * m + n * n);
+            double psi = -Math.Asin(m / d);
+            double teta = Math.Asin(l);
             foreach (Facet f in polyhedron.facets)
             {
                 foreach (Edge e in f.edges)
                 {
+                   // e.P1.X -= 
+
+
+                    /*
                     e.P1.X = e.P1.X * (l * l + Math.Cos(a) * (1 - l * l)) +
                             e.P1.Y * (l * (1 - Math.Cos(a)) * m - n * Math.Sin(a)) +
                             e.P1.Z * (l * (1 - Math.Cos(a)) * n + m * Math.Sin(a));
@@ -832,6 +839,10 @@ namespace affine_transforms_in_space
                     e.P2.Z = e.P2.X * (l * (1 - Math.Cos(a)) * n - m * Math.Sin(a)) +
                             e.P2.Y * (m * (1 - Math.Cos(a)) * n + l * Math.Sin(a)) +
                             e.P2.Z * (n * n + Math.Cos(a) * (1 - n * n));
+                    */
+
+
+                    
                 }
             }
         }
@@ -893,7 +904,7 @@ namespace affine_transforms_in_space
             double x2 = (double)rotAroundX2NUD.Value;
             double y2 = (double)rotAroundY2NUD.Value;
             double z2 = (double)rotAroundZ2NUD.Value;
-            double angle = (double)rotAroundAngleNUD.Value;
+            double angle = ((double)rotAroundAngleNUD.Value * Math.PI) / 180;
 
             double x = Math.Abs(x1 - x2);
             double y = Math.Abs(y1 - y2);
@@ -904,7 +915,36 @@ namespace affine_transforms_in_space
             double m = y / absVec;
             double n = z / absVec;
 
-            applyRotationAround(angle, l, m, m);
+            double d = Math.Sqrt(m * m + n * n);
+            double psi = -Math.Asin(m / d);
+            double teta = Math.Asin(l);
+            foreach (Facet f in polyhedron.facets)
+            {
+                foreach (Edge edge in f.edges)
+                {
+                    edge.P1.X -= x1;
+                    edge.P2.X -= x1;
+                    edge.P1.Y -= y1;
+                    edge.P2.Y -= y1;
+                    edge.P1.Z -= z1;
+                    edge.P2.Z -= z1;
+
+                    rotateOX(edge, psi);
+                    rotateOY(edge, teta);
+                    rotateOZ(edge, angle);
+                    rotateOY(edge, -teta);
+                    rotateOX(edge, -psi);
+
+                    edge.P1.X += x1;
+                    edge.P2.X += x1;
+                    edge.P1.Y += y1;
+                    edge.P2.Y += y1;
+                    edge.P1.Z += z1;
+                    edge.P2.Z += z1;
+
+                }
+            }
+
             drawPolyhedron();
 
         }
