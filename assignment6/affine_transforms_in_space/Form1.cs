@@ -772,14 +772,10 @@ namespace affine_transforms_in_space
 
         private void reflectByYoZ()
         {
-            foreach (Facet f in polyhedron.facets)
             for (int i = 0; i < polyhedron.facets.Count; ++i)
             {
-                foreach (Edge e in f.edges)
                 for (int j = 0; j < polyhedron.facets[i].edges.Count; ++j)
                 {
-                    e.P1.X = -e.P1.X;
-                    e.P2.X = -e.P2.X;
                     Point3D p1 = polyhedron.facets[i].edges[j].P1.Copy();
                     Point3D p2 = polyhedron.facets[i].edges[j].P2.Copy();
                     p1.X = -p1.X;
@@ -792,14 +788,10 @@ namespace affine_transforms_in_space
 
         private void reflectByZoX()
         {
-            foreach (Facet f in polyhedron.facets)
             for (int i = 0; i < polyhedron.facets.Count; ++i)
             {
-                foreach (Edge e in f.edges)
                 for (int j = 0; j < polyhedron.facets[i].edges.Count; ++j)
                 {
-                    e.P1.Y *= -1;
-                    e.P2.Y *= -1;
                     Point3D p1 = polyhedron.facets[i].edges[j].P1.Copy();
                     Point3D p2 = polyhedron.facets[i].edges[j].P2.Copy();
                     p1.Y = -p1.Y;
@@ -812,14 +804,10 @@ namespace affine_transforms_in_space
 
         private void reflectByXoY()
         {
-            foreach (Facet f in polyhedron.facets)
             for (int i = 0; i < polyhedron.facets.Count; ++i)
             {
-                foreach (Edge e in f.edges)
                 for (int j = 0; j < polyhedron.facets[i].edges.Count; ++j)
                 {
-                    e.P1.Z = -e.P1.Z;
-                    e.P2.Z = -e.P2.Z;
                     Point3D p1 = polyhedron.facets[i].edges[j].P1.Copy();
                     Point3D p2 = polyhedron.facets[i].edges[j].P2.Copy();
                     p1.Z = -p1.Z;
@@ -928,11 +916,9 @@ namespace affine_transforms_in_space
             double x2 = (double)rotAroundX2NUD.Value;
             double y2 = (double)rotAroundY2NUD.Value;
             double z2 = (double)rotAroundZ2NUD.Value;
-<<<<<<< HEAD
+
             double angle = ((double)rotAroundAngleNUD.Value * Math.PI) / 180;
-=======
-            double angle = (double)rotAroundAngleNUD.Value * Math.PI / 180;
->>>>>>> 3b41929fceb39342d628bd7e4f4b52b00d21a096
+
 
             double x = Math.Abs(x1 - x2);
             double y = Math.Abs(y1 - y2);
