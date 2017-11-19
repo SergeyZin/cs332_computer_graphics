@@ -519,7 +519,7 @@ namespace affine_transforms_in_space
             double z1 = e.P1.Z;
             double x2 = e.P2.X;
             double z2 = e.P2.Z;
-
+            
             e.P1.X = x1 * Math.Cos(angle) + z1 * Math.Sin(angle);
             e.P1.Z = -x1 * Math.Sin(angle) + z1 * Math.Cos(angle);
 
@@ -572,7 +572,7 @@ namespace affine_transforms_in_space
             }
         }
 
-        private void reflectByX()
+        private void reflectByYoZ()
         {
             foreach (Facet f in polyhedron.facets)
             {
@@ -584,19 +584,19 @@ namespace affine_transforms_in_space
             }
         }
 
-        private void reflectByY()
+        private void reflectByZoX()
         {
             foreach (Facet f in polyhedron.facets)
             {
                 foreach (Edge e in f.edges)
                 {
-                    e.P1.Y = -e.P1.Y;
-                    e.P2.Y = -e.P2.Y;
+                    e.P1.Y *= -1;
+                    e.P2.Y *= -1;
                 }
             }
         }
 
-        private void reflectByZ()
+        private void reflectByXoY()
         {
             foreach (Facet f in polyhedron.facets)
             {
@@ -604,6 +604,36 @@ namespace affine_transforms_in_space
                 {
                     e.P1.Z = -e.P1.Z;
                     e.P2.Z = -e.P2.Z;
+                }
+            }
+        }
+
+
+        private void applyRotationAround(double a, double l, double m, double n)
+        {
+            foreach (Facet f in polyhedron.facets)
+            {
+                foreach (Edge e in f.edges)
+                {
+                    e.P1.X = e.P1.X * (l * l + Math.Cos(a) * (1 - l * l)) +
+                            e.P1.Y * (l * (1 - Math.Cos(a)) * m - n * Math.Sin(a)) +
+                            e.P1.Z * (l * (1 - Math.Cos(a)) * n + m * Math.Sin(a));
+                    e.P1.Y = e.P1.X * (l * (1 - Math.Cos(a)) * m + n * Math.Sin(a)) +
+                            e.P1.Y * (m * m + Math.Cos(a) * (1 - m * m)) +
+                            e.P1.Z * (m * (1 - Math.Cos(a)) * n - l * Math.Sin(a));
+                    e.P1.Z = e.P1.X * (l * (1 - Math.Cos(a)) * n - m * Math.Sin(a)) +
+                            e.P1.Y * (m * (1 - Math.Cos(a)) * n + l * Math.Sin(a)) +
+                            e.P1.Z * (n * n + Math.Cos(a) * (1 - n * n));
+
+                    e.P2.X = e.P2.X * (l * l + Math.Cos(a) * (1 - l * l)) +
+                            e.P2.Y * (l * (1 - Math.Cos(a)) * m - n * Math.Sin(a)) +
+                            e.P2.Z * (l * (1 - Math.Cos(a)) * n + m * Math.Sin(a));
+                    e.P2.Y = e.P2.X * (l * (1 - Math.Cos(a)) * m + n * Math.Sin(a)) +
+                            e.P2.Y * (m * m + Math.Cos(a) * (1 - m * m)) +
+                            e.P2.Z * (m * (1 - Math.Cos(a)) * n - l * Math.Sin(a));
+                    e.P2.Z = e.P2.X * (l * (1 - Math.Cos(a)) * n - m * Math.Sin(a)) +
+                            e.P2.Y * (m * (1 - Math.Cos(a)) * n + l * Math.Sin(a)) +
+                            e.P2.Z * (n * n + Math.Cos(a) * (1 - n * n));
                 }
             }
         }
@@ -628,23 +658,24 @@ namespace affine_transforms_in_space
             drawPolyhedron();
         }
 
-        private void reflectByXBtn_Click(object sender, EventArgs e)
+        private void reflectByYoZBtn_Click(object sender, EventArgs e)
         {
-            reflectByX();
+            reflectByYoZ();
             drawPolyhedron();
         }
 
-        private void reflectByYBtn_Click(object sender, EventArgs e)
+        private void reflectByZoXBtn_Click(object sender, EventArgs e)
         {
-            reflectByY();
+            reflectByZoX();
             drawPolyhedron();
         }
 
-        private void reflectByZBtn_Click(object sender, EventArgs e)
+        private void reflectByXoYBtn_Click(object sender, EventArgs e)
         {
-            reflectByZ();
+            reflectByXoY();
             drawPolyhedron();
         }
+
 
         private void applyScaleBtn_Click(object sender, EventArgs e)
         {
@@ -654,6 +685,30 @@ namespace affine_transforms_in_space
 
             scale(mx, my, mz);
             drawPolyhedron();
+        }
+
+        private void applyRotationAroundBtn_Click(object sender, EventArgs e)
+        {
+            double x1 = (double)rotAroundX1NUD.Value;
+            double y1 = (double)rotAroundY1NUD.Value;
+            double z1 = (double)rotAroundZ1NUD.Value;
+            double x2 = (double)rotAroundX2NUD.Value;
+            double y2 = (double)rotAroundY2NUD.Value;
+            double z2 = (double)rotAroundZ2NUD.Value;
+            double angle = (double)rotAroundAngleNUD.Value;
+
+            double x = Math.Abs(x1 - x2);
+            double y = Math.Abs(y1 - y2);
+            double z = Math.Abs(z1 - z2);
+            double absVec = Math.Sqrt(x*x+y*y+z*z);
+
+            double l = x / absVec;
+            double m = y / absVec;
+            double n = z / absVec;
+
+            applyRotationAround(angle, l, m, m);
+            drawPolyhedron();
+
         }
     }   
 }
