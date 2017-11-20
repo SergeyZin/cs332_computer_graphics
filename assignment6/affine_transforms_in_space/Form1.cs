@@ -32,7 +32,8 @@ namespace affine_transforms_in_space
 
         private void drawFacet(Facet f)
         {
-            foreach (Edge e in f.edges) {
+            foreach (Edge e in f.edges)
+            {
                 g.DrawLine(pen, (int)e.P1.X + centerX,
                     (int)e.P1.Y + centerY,
                     (int)e.P2.X + centerX,
@@ -88,7 +89,7 @@ namespace affine_transforms_in_space
             f4.edges.Add(e4);
             f4.edges.Add(e6);
 
-            polyhedron = new Polyhedron(); 
+            polyhedron = new Polyhedron();
             polyhedron.facets.Add(f1);
             polyhedron.facets.Add(f2);
             polyhedron.facets.Add(f3);
@@ -697,7 +698,7 @@ namespace affine_transforms_in_space
             }
         }
 
-       private void rotateOX(Edge e, double angle)
+        private void rotateOX(Edge e, double angle)
         {
             double y1 = e.P1.Y;
             double z1 = e.P1.Z;
@@ -711,13 +712,13 @@ namespace affine_transforms_in_space
             e.P2.Z = y2 * Math.Sin(angle) + z2 * Math.Cos(angle);
         }
 
-       private void rotateOY(Edge e, double angle)
+        private void rotateOY(Edge e, double angle)
         {
             double x1 = e.P1.X;
             double z1 = e.P1.Z;
             double x2 = e.P2.X;
             double z2 = e.P2.Z;
-            
+
             e.P1.X = x1 * Math.Cos(angle) + z1 * Math.Sin(angle);
             e.P1.Z = -x1 * Math.Sin(angle) + z1 * Math.Cos(angle);
 
@@ -750,7 +751,7 @@ namespace affine_transforms_in_space
                     rotateOZ(edge, angleZ);
                 }
             }
-        } 
+        }
 
 
         private void scale(double mx, double my, double mz)
@@ -818,45 +819,19 @@ namespace affine_transforms_in_space
             }
         }
 
-
-        private void applyRotationAround(double a, double l, double m, double n)
+        private void orthographicYoZ()
         {
-            double d = Math.Sqrt(m * m + n * n);
-            double psi = -Math.Asin(m / d);
-            double teta = Math.Asin(l);
-            foreach (Facet f in polyhedron.facets)
-            {
-                foreach (Edge e in f.edges)
-                {
-                   // e.P1.X -= 
 
+        }
 
-                    /*
-                    e.P1.X = e.P1.X * (l * l + Math.Cos(a) * (1 - l * l)) +
-                            e.P1.Y * (l * (1 - Math.Cos(a)) * m - n * Math.Sin(a)) +
-                            e.P1.Z * (l * (1 - Math.Cos(a)) * n + m * Math.Sin(a));
-                    e.P1.Y = e.P1.X * (l * (1 - Math.Cos(a)) * m + n * Math.Sin(a)) +
-                            e.P1.Y * (m * m + Math.Cos(a) * (1 - m * m)) +
-                            e.P1.Z * (m * (1 - Math.Cos(a)) * n - l * Math.Sin(a));
-                    e.P1.Z = e.P1.X * (l * (1 - Math.Cos(a)) * n - m * Math.Sin(a)) +
-                            e.P1.Y * (m * (1 - Math.Cos(a)) * n + l * Math.Sin(a)) +
-                            e.P1.Z * (n * n + Math.Cos(a) * (1 - n * n));
+        private void orthographicZoX()
+        {
 
-                    e.P2.X = e.P2.X * (l * l + Math.Cos(a) * (1 - l * l)) +
-                            e.P2.Y * (l * (1 - Math.Cos(a)) * m - n * Math.Sin(a)) +
-                            e.P2.Z * (l * (1 - Math.Cos(a)) * n + m * Math.Sin(a));
-                    e.P2.Y = e.P2.X * (l * (1 - Math.Cos(a)) * m + n * Math.Sin(a)) +
-                            e.P2.Y * (m * m + Math.Cos(a) * (1 - m * m)) +
-                            e.P2.Z * (m * (1 - Math.Cos(a)) * n - l * Math.Sin(a));
-                    e.P2.Z = e.P2.X * (l * (1 - Math.Cos(a)) * n - m * Math.Sin(a)) +
-                            e.P2.Y * (m * (1 - Math.Cos(a)) * n + l * Math.Sin(a)) +
-                            e.P2.Z * (n * n + Math.Cos(a) * (1 - n * n));
-                    */
+        }
 
+        private void orthographicXoY()
+        {
 
-                    
-                }
-            }
         }
 
         private void applyTransBtn_Click(object sender, EventArgs e)
@@ -908,6 +883,7 @@ namespace affine_transforms_in_space
             drawPolyhedron();
         }
 
+
         private void applyRotationAroundBtn_Click(object sender, EventArgs e)
         {
             double x1 = (double)rotAroundX1NUD.Value;
@@ -923,7 +899,7 @@ namespace affine_transforms_in_space
             double x = Math.Abs(x1 - x2);
             double y = Math.Abs(y1 - y2);
             double z = Math.Abs(z1 - z2);
-            double absVec = Math.Sqrt(x*x+y*y+z*z);
+            double absVec = Math.Sqrt(x * x + y * y + z * z);
 
             double l = x / absVec;
             double m = y / absVec;
@@ -962,5 +938,63 @@ namespace affine_transforms_in_space
             drawPolyhedron();
 
         }
-    }   
+
+        private void perspectiveProjBtn_Click(object sender, EventArgs e)
+        {
+            double focus = (double)perspectiveProjNUD.Value;
+            foreach (Facet f in polyhedron.facets)
+            {
+                foreach (Edge edge in f.edges)
+                {
+                    edge.P1.X = edge.P1.X * focus / edge.P1.Z;
+                    edge.P1.Y = edge.P1.Y * focus / edge.P1.Z;
+                    edge.P1.Z = focus;
+                    edge.P2.X = edge.P2.X * focus / edge.P2.Z;
+                    edge.P2.Y = edge.P2.Y * focus / edge.P2.Z;
+                    edge.P2.Z = focus;
+                }
+            }
+            drawPolyhedron();
+        }
+
+        private void orthographicCB_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            /*
+            switch (orthographicCB.SelectedItem.ToString())
+            {
+                case "YoZ":
+                    orthographicYoZ();
+                    break;
+                case "ZoX":
+                    orthographicZoX();
+                    break;
+                case "XoY":
+                    orthographicXoY();
+                    break;
+                default:
+                    Console.WriteLine("Error");
+                    break;
+            }
+            */
+        }
+
+        private void orthographicProjBtn_Click(object sender, EventArgs e)
+        {
+            switch (orthographicCB.SelectedItem.ToString())
+            {
+                case "YoZ":
+                    orthographicYoZ();
+                    break;
+                case "ZoX":
+                    orthographicZoX();
+                    break;
+                case "XoY":
+                    orthographicXoY();
+                    break;
+                default:
+                    Console.WriteLine("Error");
+                    break;
+            }
+        }
+    }
 }
